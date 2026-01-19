@@ -118,18 +118,19 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 
 ---
 
-## 6. Autopilotti-integraatio
+## 6. Autopilotin NMEA-integraatio (tiivistetty)
 
-**Autopilotti**
-- Raymarine ST5000 (säilytetään)
+Autohelm ST5000 käyttää NMEA 0183 -dataa Track Control -ohjaukseen.
+Viestintä on yksisuuntainen: Raspberry Pi / plotteri → autopilotti.
 
-**Integraatio**
-- USB–RS422-adapteri Raspberry Pi:hin
-- Tavoite: tilatieto ja mahdollinen ohjaus rajapinnan yli
-- Ei muutoksia alkuperäiseen toimintalogiikkaan
+Minimisetti:
+- APB
 
-**Periaate**
-- Digitaalinen integraatio ei saa heikentää manuaalista toimintaa tai autopilotin perusluotettavuutta.
+Suositeltu setti:
+- APB, RMB, RMC
+
+ST5000 ei lähetä NMEA 0183 -dataa takaisin. Sisäinen kompassi on rajallinen,
+ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 ---
 
