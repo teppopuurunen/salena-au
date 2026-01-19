@@ -73,4 +73,112 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Tilatietojen jakaminen Raspberry Pi:lle
 
 **Liitännät**
-- Ethernet ens
+- Ethernet ensisijaisena väylänä
+- Digitaaliset inputit painikkeille
+- Relelähtö (kuorman katkaisu / kytkentä)
+
+**Kriittisyys**
+- Kriittiset kuormat toteutetaan siten, että manuaalinen ohitus säilyy
+
+#### 3.2.2 Anturi-/Mittaus-ESP (“Home-ESP”)
+
+**Rooli**
+- Tankkimittaukset
+- Virta- ja jännitemittaukset
+- Datan välitys Raspberry Pi:lle
+
+**Liitännät**
+- USB ↔ Raspberry Pi
+- Anturiliitännät (analog/digitaalinen/I²C riippuen toteutuksesta)
+
+**Kriittisyys**
+- Ei kriittinen; mittaus tukee päätöksentekoa ja valvontaa
+
+#### 3.2.3 Valaistus-ESP:t (tuleva)
+
+**Rooli**
+- PWM-himmennys
+- Ei turvallisuuskriittisiä kuormia
+- Paikallinen ohjaus painikkeilla
+
+**Liitännät**
+- Ethernet tai paikallinen ohjaus, toteutus päätetään myöhemmin
+
+---
+
+### 3.3 Taso 3 – Kenttätaso (12 V Loads & Protection)
+
+**Rooli**
+- Kuormat (valot, pumput, elektroniikka, ym.)
+- Sulakkeet ja jakelu
+- Manuaalinen ohitus kriittisille toiminnoille
+
+**Periaate**
+- Sulake suojaa johdotuksen ja kuorman
+- Rele/MOSFET ohjaa, ei suojaa
+- Kriittisissä kuormissa säilyy käsikäyttö
+
+---
+
+## 4. Fyysinen topologia (korkean tason)
+
+Korkean tason kytkentälogiikka:
+
+- Raspberry Pi 5 on navigointi- ja integraatiokeskus
+- Rele-ESP:t hoitavat kuormien ohjauksen
+- Anturi-ESP tuottaa mittausdatan
+- Autopilotti liitetään erillisellä adapterilla
+
+---
+
+## 5. Tiedonsiirto ja protokollat
+
+### 5.1 Ensisijaiset yhteydet
+- **Ethernet:** ESP32-S3 ↔ Raspberry Pi
+- **USB:** anturit/mittaukset + autopilotti-adapteri
+
+### 5.2 Wi-Fi:n rooli
+- Wi-Fi on käyttöliittymille (tablet/puhelin)
+- Wi-Fi ei ole kriittinen ohjausväylä
+
+### 5.3 Home Assistantin rooli
+- Home Assistant toimii käyttöliittymänä ja ei-kriittisenä automaatiokerroksena
+- Järjestelmä toimii ilman Home Assistantia
+
+---
+
+## 6. Vikasietoisuus ja turvallisuus
+
+### 6.1 Periaatteet
+- Ei yksittäistä kriittistä vikapistettä
+- Manuaalinen ohitus kriittisille kuormille
+- Verkko ja palvelut ovat “lisäkerros”
+
+### 6.2 Käyttötilat (konseptitaso)
+- **Manual:** kuormat käsin, automaatio sivussa
+- **Local automation:** ESP-ohjaimet toimivat paikallisesti painikkeilla ja omalla logiikalla
+- **Integrated:** Raspberry Pi + (valinnainen) HA tarjoaa käyttöliittymän, lokituksen ja integraatiot
+
+---
+
+## 7. Rajaukset (tässä versiossa)
+
+- Ei pilvipalveluita
+- Ei Wi-Fi-riippuvaista kuormaohjausta
+- Ei keskitettyä monoliittista ohjainta
+- Ei CAN/NMEA2000-ydinohjausta tässä vaiheessa
+
+Nämä rajaukset ovat tietoisia suunnittelupäätöksiä: ensisijainen tavoite on determinismi ja huollettavuus.
+
+---
+
+## 8. Yhteenveto
+
+Salena AU on kerroksellinen ja modulaarinen kokonaisuus, jossa:
+- Raspberry Pi 5 hoitaa navigoinnin ja integraatiot
+- ESP32-S3 -moduulit hoitavat kuormien ohjauksen ja mittaukset
+- 12 V kenttätaso on suojattu sulakkein ja säilyttää manuaalisen käytettävyyden
+
+Järjestelmän kehitys voidaan tehdä vaiheittain ilman, että veneen perustoimintoihin syntyy uusia riippuvuuksia.
+
+---
