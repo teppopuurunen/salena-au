@@ -2,4 +2,10 @@
 secrets.yaml
 *.log
 .DS_Store
+# Home Assistant roskat ja salaisuudet
+core-rpi5/home-assistant/.storage/
+core-rpi5/home-assistant/*.db
+core-rpi5/home-assistant/*.log
+core-rpi5/home-assistant/.cloud/
+core-rpi5/home-assistant/deps/
 
