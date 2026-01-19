@@ -1,0 +1,5 @@
+# Salaisuudet
+secrets.yaml
+*.log
+.DS_Store
+
