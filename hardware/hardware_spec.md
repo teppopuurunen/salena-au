@@ -1,6 +1,3 @@
-# Lisää legacy-huomautus tiedoston alkuun (safe prepend)
-tmpfile="$(mktemp)"
-cat > "$tmpfile" <<'EOF'
 > **Huomautus – legacy-dokumentti**
 >
 > Tämä tiedosto sisältää varhaisia laitteisto-oletuksia ja luonnoksia.
