@@ -13,3 +13,4 @@ core-rpi5/home-assistant/.ha_run.lock
 core-rpi5/home-assistant/home-assistant.log*
 core-rpi5/home-assistant/home-assistant_v2.db*
 core-rpi5/home-assistant/blueprints/
+core-rpi5/mosquitto/data/
