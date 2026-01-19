@@ -8,4 +8,8 @@ core-rpi5/home-assistant/*.db
 core-rpi5/home-assistant/*.log
 core-rpi5/home-assistant/.cloud/
 core-rpi5/home-assistant/deps/
-
+core-rpi5/home-assistant/.HA_VERSION
+core-rpi5/home-assistant/.ha_run.lock
+core-rpi5/home-assistant/home-assistant.log*
+core-rpi5/home-assistant/home-assistant_v2.db*
+core-rpi5/home-assistant/blueprints/
