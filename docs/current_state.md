@@ -51,7 +51,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 ### Rele-ESP:t (automaatiotaso)
 
 **Laitteet**
-- 2 × ESP32-S3 Ethernet -relemoduuli
+- 2 × ESP32-S3-ETH-8DI-8RO
   - 8 relelähtöä / moduuli
   - galvaanisesti erotetut I/O:t
   - syöttö 7–36 VDC
@@ -68,22 +68,25 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 
 ---
 
-### Mittaus- ja anturi-ESP (“Home-ESP”)
+## Suunnitellut mutta ei vielä toteutetut osiot
 
-**Laite**
-- ESP32-S3 dev board (USB)
+### Hankkimatta olevat kuormat
+
+Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitteet eivät ole vielä hankittuja:
+- Jääkaappi (Danfoss, FRIDGE / M2-R4)
+- Bilssipumppu (BILGE / M2-R7)
+- Lämmitin VEVOR 5kW Diesel (HEATER / M2-R6)
+
+---
+
+### Mittaus- ja anturi-ESP ("Home-ESP")
 
 **Suunniteltu käyttö**
 - tankkimittaukset
 - virran- ja jänniteseuranta
 
 **Tila**
-- Laitteisto olemassa
-- Firmware tekemättä
-
----
-
-## Suunnitellut mutta ei vielä toteutetut osiot
+- Ei hankittu – ks. [relay_map.md](../hardware/relay_map.md)
 
 ### PWM / älyvalaistus (varaus ja suunta)
 

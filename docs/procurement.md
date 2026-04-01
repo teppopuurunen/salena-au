@@ -14,12 +14,13 @@
 - [x] RS422 -> USB Adapteri (ST5000 varten)
 
 ## C. I/O ja Solmut
-- [ ] (tilattu)2x Waveshare WS-31130 (Ethernet Relemoduuli)
-- [x] Home ESP (ESP32-S3 Dev Kit + Expansion)
+- [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
+- [ ] Home ESP / virtojen- ja tankkimittaus (ESP32-S3)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
 
 ## D. LVI ja Valvonta
 - [x] Mastokamera (Tapo C500)
+- [ ] Jääkaappi (Danfoss kompressori)
 - [ ] Bilssipumppu (Johnson L2200)
 - [ ] Lämmitin (VEVOR 5kW Diesel)

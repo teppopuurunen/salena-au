@@ -1,6 +1,7 @@
 # Salena AU - Relekartta v5.0.0
 
 ## 1. Yleisasetukset
+- **Laite:** ESP32-S3-ETH-8DI-8RO
 - **Väylä:** Ethernet (RJ45)
 - **Protokolla:** MQTT / REST
 - **Käyttöjännite:** 12V DC

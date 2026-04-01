@@ -74,7 +74,7 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Tilatiedot ja ohjaus Ethernetin yli (RPi / valinnainen HA)
 
 **Laiteluokka**
-- ESP32-S3 Ethernet -relemoduuli
+- ESP32-S3-ETH-8DI-8RO
 - 8 relelähtöä / moduuli
 - Galvaanisesti erotetut I/O:t
 - Syöttö 7–36 VDC
