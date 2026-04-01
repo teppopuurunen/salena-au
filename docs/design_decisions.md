@@ -149,10 +149,11 @@ Verkko pysyy oletuksena päällä myös automaatiotason vikatilanteessa.
 
 ---
 
-## DD-14: RST-painikkeet MCP23017-laajentimen kautta
+## DD-14: Lisäpainikkeet MCP23017-laajentimen kautta
 
 **Päätös**  
-RST-painikkeet luetaan MCP23017 I2C-laajentimella, eikä niitä kytketä suoraan rele-ESP:n inputteihin.
+Jokaiselle releelle kytketään oma painike suoraan rele-ESP:n inputtiin.
+Lisäksi 8 lisäpainiketta luetaan MCP23017 I2C-laajentimella.
 
 **Perustelu**  
 Säästää ESP32:n GPIO-resursseja ja helpottaa kaapelointia.

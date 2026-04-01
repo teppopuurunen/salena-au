@@ -61,7 +61,8 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 
 **Suunniteltu käyttö**
 - 12 V kuormien on/off-ohjaus
-- fyysiset painikkeet MCP23017-laajentimen kautta
+- jokaiselle releelle oma painike suoraan rele-ESP:n inputtiin
+- lisäksi 8 lisäpainiketta MCP23017 I2C-laajentimen GPIO-linjoissa
 - tilatiedot ja ohjaus Raspberry Pi:lle (ja myöhemmin valinnainen HA)
 
 **Tila**
@@ -112,7 +113,7 @@ Peruste: kuormat ylittävät rele-ESP:n 10A kuormitusrajan.
 
 ### Painikkeiden I/O-laajennus
 
-- RST-painikkeet luetaan MCP23017 I2C-laajentimen kautta.
+- 8 lisäpainiketta luetaan MCP23017 I2C-laajentimen kautta.
 
 ### PWM / älyvalaistus (varaus ja suunta)
 

@@ -74,7 +74,8 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 
 **Rooli**
 - 12 V kuormien on/off-ohjaus
-- Paikallinen ohjaus fyysisillä painikkeilla MCP23017 I2C-laajentimen kautta
+- Jokaiselle releelle oma painike suoraan rele-ESP:n inputtiin
+- Lisäksi 8 lisäpainiketta MCP23017 I2C-laajentimen GPIO-linjoissa
 - Tilatiedot ja ohjaus Ethernetin yli (RPi / valinnainen HA)
 
 **Laiteluokka**

@@ -20,7 +20,7 @@
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
 - [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
 - [ ] PC817-optoerottimet (RPi 5 J2 hard reset)
-- [ ] MCP23017 I2C I/O-laajentimet (RST-painikkeet)
+- [ ] MCP23017 I2C I/O-laajentimet (8 lisäpainiketta)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
 

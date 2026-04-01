@@ -93,7 +93,8 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 
 **Käyttö**
 - 12 V kuormien ohjaus (on/off)
-- Painikkeet luetaan MCP23017 I2C-laajentimen kautta (ei suoraan rele-ESP:n inputteihin)
+- Jokaiselle releelle liitetään oma painike suoraan rele-ESP:n inputtiin.
+- Lisäksi 8 lisäpainiketta luetaan MCP23017 I2C-laajentimen kautta GPIO:lla.
 - Tilatiedot ja ohjaus verkon yli (RPi / HA)
 
 **Periaate**
