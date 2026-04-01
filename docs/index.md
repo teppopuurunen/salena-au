@@ -1,4 +1,3 @@
-cat > docs/index.md <<'EOF'
 # Dokumentaatioindeksi
 
 Tämä hakemisto sisältää Salena AU -järjestelmän “current truth” -dokumentit.
@@ -15,5 +14,4 @@ Tämä hakemisto sisältää Salena AU -järjestelmän “current truth” -doku
 ## Laitteisto (hardware/)
 
 - `../hardware/relay_map.md` – Relekartta / kanavointi
-- `../hardware/hardware_spec.md` – Laitteistohuomiot (sisältää myös legacy-oletuksia)
-EOF
+- `../hardware/power-setup.md` – Akut, laturit ja paneelit

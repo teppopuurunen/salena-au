@@ -1,4 +1,3 @@
-cat > docs/design_decisions.md <<'EOF'
 # Suunnittelupäätökset
 
 Tähän dokumenttiin kirjataan Salena AU -järjestelmän keskeiset arkkitehtuuri- ja suunnittelupäätökset. Tarkoitus on kuvata erityisesti *miksi* päätökset on tehty, jotta järjestelmää voidaan kehittää johdonmukaisesti myöhemmin.
@@ -97,4 +96,63 @@ Valaistus toteutetaan erillisenä, ei-kriittisenä mukavuusjärjestelmänä. Tä
 
 **Perustelu**  
 Valaistuksen vika ei saa vaikuttaa navigointiin tai turvallisuuteen, ja toteutuksen kannattaa elää käytännön kokeilun mukaan.
-EOF
+
+---
+
+## DD-09: RPi 5 Hard Reset optoeristyksellä (PC817 → J2)
+
+**Päätös**  
+Raspberry Pi 5 hard reset toteutetaan PC817-optoerottimella RPi 5:n J2-virtapainikeliitäntään.
+
+**Perustelu**  
+Ratkaisu säästää releitä ja erottaa älytason sekä automaatiotason maat.
+
+---
+
+## DD-10: I2C-eristys mittausväylään
+
+**Päätös**  
+INA226-mittausväylä erotetaan digitaalisella I2C-erottimella (ISO1540 tai Si8600) Mittaus-ESP:n suuntaan.
+
+**Perustelu**  
+Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan.
+
+---
+
+## DD-11: INA226 virtamittauksen peruspiirinä
+
+**Päätös**  
+Virtamittaus toteutetaan INA226-piireillä (16-bit), enintään 16 laitetta samalla I2C-väylällä osoitteistuksen avulla.
+
+**Perustelu**  
+Tarkkuus ja skaalautuvuus riittävät venejärjestelmän monikanavaiseen mittaukseen.
+
+---
+
+## DD-12: Kriittiset >10A kuormat pois rele-ESP:ltä
+
+**Päätös**  
+AUTO_PL, FRIDGE ja HEATER ohjataan kenttätasolla 1-0-Auto-kytkimillä, ei rele-ESP-kanavilla.
+
+**Perustelu**  
+Relekortin käytettävä jatkuva kuormitusraja on 10A, joten suuremmat kuormat siirretään erilliseen ohjaukseen.
+
+---
+
+## DD-13: IT-verkon NC fail-safe
+
+**Päätös**  
+IT-laitteiden syöttö reititetään releen NC-koskettimen kautta.
+
+**Perustelu**  
+Verkko pysyy oletuksena päällä myös automaatiotason vikatilanteessa.
+
+---
+
+## DD-14: RST-painikkeet MCP23017-laajentimen kautta
+
+**Päätös**  
+RST-painikkeet luetaan MCP23017 I2C-laajentimella, eikä niitä kytketä suoraan rele-ESP:n inputteihin.
+
+**Perustelu**  
+Säästää ESP32:n GPIO-resursseja ja helpottaa kaapelointia.

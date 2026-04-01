@@ -71,6 +71,10 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Ethernet → Mittaus-ESP (PoE)
 - USB–RS422 → autopilotti (Raymarine ST5000)
 
+**Hallinta ja resetointi**
+- Hard Reset toteutetaan optoerottimella (PC817) RPi 5:n J2-virtapainikeliitäntään.
+- Ratkaisu säästää relekanavia ja pitää äly- ja automaatiotason maat erotettuina.
+
 **Rooli**
 - Navigointi, dataloggaus, integraatiot ja käyttöliittymät.
 - Ei kriittinen veneen perustoimintojen kannalta.
@@ -89,7 +93,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 
 **Käyttö**
 - 12 V kuormien ohjaus (on/off)
-- Painikkeet inputteihin kuormien paikallista ohjausta varten
+- Painikkeet luetaan MCP23017 I2C-laajentimen kautta (ei suoraan rele-ESP:n inputteihin)
 - Tilatiedot ja ohjaus verkon yli (RPi / HA)
 
 **Periaate**
@@ -107,8 +111,13 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Tankkien mittaukset
 - Virran- ja jänniteseuranta
 
+**Mittausperiaate**
+- Virtamittaus toteutetaan INA226-piireillä (16-bit), enintään 16 osoitetta samalla I2C-väylällä.
+- INA226-väylä erotetaan digitaalisella I2C-erottimella (ISO1540 tai Si8600).
+- Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan.
+
 **Tila**
-- Laitteisto valmiina
+- Laitteisto hankkimatta
 - Firmware odottaa toteutusta
 
 ## 6. Autopilotin NMEA-integraatio (tiivistetty)
@@ -150,6 +159,8 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - Kaikki kuormat sulakkeilla.
 - Rele ohjaa, sulake suojaa.
 - Kriittisissä toiminnoissa säilyy manuaalinen ohitus.
+- IT-verkko syötetään releen NC-koskettimen kautta, jolloin verkko jää oletuksena päälle myös rele-ESP-vikatilanteessa.
+- AUTO_PL, FRIDGE, HEATER ja BILGE eivät ole rele-ESP:n kuormia (relekeston raja 10A).
 - Järjestelmä voidaan eristää huoltotilaan ilman että veneen perustoiminnot menetetään.
 
 ---
@@ -160,7 +171,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - NVMe ja UPS HAT toiminnassa
 - UPS HAT (WS-27966) syöttö: Lenovo 65W USB-C DC Travel Adapter
 - 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE)
-- Mittaus-ESP tilattu, firmware tekemättä
+- Mittaus-ESP hankkimatta, firmware tekemättä
 - PWM-valaistuksen suunnitelu ja toteutus tehdään myöhemmin
 
 ---

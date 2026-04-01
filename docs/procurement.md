@@ -5,6 +5,7 @@
 - [x] Akkupankki (v4.2 mukainen)
 - [ ] Victron SmartSolar MPPT 75/15 (LUKKOON LYÖTY)
 - [ ] Akun valvonta (Shuntti 300A + INA226 I2C)
+- [ ] I2C-eristin (ISO1540 tai Si8600)
 
 ## B. Ohjaus ja IT (Core)
 - [x] Raspberry Pi 5 (8GB RAM)
@@ -18,6 +19,8 @@
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
 - [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
+- [ ] PC817-optoerottimet (RPi 5 J2 hard reset)
+- [ ] MCP23017 I2C I/O-laajentimet (RST-painikkeet)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
 

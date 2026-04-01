@@ -1,4 +1,3 @@
-cat > docs/current_state.md <<'EOF'
 # Nykytila
 
 **Päivitetty:** 01/2026  
@@ -62,7 +61,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 
 **Suunniteltu käyttö**
 - 12 V kuormien on/off-ohjaus
-- fyysiset painikkeet suoraan inputteihin
+- fyysiset painikkeet MCP23017-laajentimen kautta
 - tilatiedot ja ohjaus Raspberry Pi:lle (ja myöhemmin valinnainen HA)
 
 **Tila**
@@ -76,9 +75,18 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 ### Hankkimatta olevat kuormat
 
 Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitteet eivät ole vielä hankittuja:
-- Jääkaappi (Danfoss, FRIDGE / M2-R4)
-- Bilssipumppu (BILGE / M2-R7)
-- Lämmitin VEVOR 5kW Diesel (HEATER / M2-R6)
+- Jääkaappi (Danfoss, FRIDGE)
+- Bilssipumppu (BILGE)
+- Lämmitin VEVOR 5kW Diesel (HEATER)
+
+### Releiden ulkopuoliset kuormat (kenttätaso)
+
+- AUTO_PL (autopilotti, ST5000) - käytössä
+- FRIDGE (jääkaappi) - hankkimatta
+- HEATER (lämmitin) - hankkimatta
+- BILGE (bilssipumppu) - hankkimatta
+
+Peruste: kuormat ylittävät rele-ESP:n 10A kuormitusrajan.
 
 ---
 
@@ -91,9 +99,20 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 **Suunniteltu käyttö**
 - tankkimittaukset
 - virran- ja jänniteseuranta
+- INA226 16-bit mittauspiirit (osoitteistus enintään 16 kpl / väylä)
+- I2C-eristys (ISO1540 tai Si8600)
 
 **Tila**
 - Ei hankittu – ks. [relay_map.md](../hardware/relay_map.md)
+
+### RPi 5 hallinta ja resetointi
+
+- Hard Reset toteutetaan PC817-optoerottimella RPi 5:n J2-virtapainikeliitäntään.
+- Ratkaisu pitää äly- ja automaatiotason maat erotettuina.
+
+### Painikkeiden I/O-laajennus
+
+- RST-painikkeet luetaan MCP23017 I2C-laajentimen kautta.
 
 ### PWM / älyvalaistus (varaus ja suunta)
 
@@ -140,4 +159,3 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 3. Rele-ESP pilotointi: 1 painike → 1 rele → 1 kuorma (paikallinen logiikka)
 4. Mittaus-ESP pilotointi: 1–3 mittausta luotettavasti Ethernet/PoE:n yli
 5. Home Assistant käyttöliittymäksi (ei-kriittinen), kun dataa on mitä näyttää
-EOF

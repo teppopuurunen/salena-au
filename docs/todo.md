@@ -1,4 +1,3 @@
-cat > docs/todo.md <<'EOF'
 # TODO
 
 **Tavoite:** Edetä vaiheittain siten, että jokainen askel tuottaa testattavan “valmiin palan” eikä lisää kriittisiä riippuvuuksia.  
@@ -90,4 +89,3 @@ cat > docs/todo.md <<'EOF'
 - [ ] Pilotoi 1 ohjain (paikallinen käyttö)
 - [ ] Testaa PWM-taajuudet ja mahdolliset häiriöt
 - [ ] Lisää integraatio vasta lopuksi
-EOF

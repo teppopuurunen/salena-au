@@ -1,4 +1,3 @@
-cat > docs/network.md <<'EOF'
 # Verkko ja väylät
 
 Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja rajaukset.
@@ -103,4 +102,3 @@ kompassi- tai IMU-lähde.
 - Useiden päällekkäisten reittilauseiden samanaikaista lähettämistä ei
   suositella.
 - Paikkalauseet (esim. GGA, GLL) eivät ole tarpeellisia Track Control -käytössä.
-EOF

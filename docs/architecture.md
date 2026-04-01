@@ -1,4 +1,3 @@
- cat > docs/architecture.md <<'EOF'
 # Järjestelmäarkkitehtuuri
 
 **Versio:** v5.0.0  
@@ -53,6 +52,10 @@ Järjestelmä jakautuu kolmeen tasoon:
 - WS-27966 UPS HAT (E)
 - Syöttö: Lenovo 65W USB-C DC Travel Adapter
 
+**Hallinta ja resetointi**
+- Hard Reset toteutetaan optoerottimella (PC817) RPi 5:n J2-virtapainikeliitäntään.
+- Toteutus pitää äly- ja automaatiotason maat erotettuina.
+
 **Rajapinnat**
 - Ethernet ↔ ESP32-S3 rele- ja I/O-moduulit
 - Ethernet ↔ Mittaus-ESP (tankit, virrat, jännitteet, PoE)
@@ -71,7 +74,7 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 
 **Rooli**
 - 12 V kuormien on/off-ohjaus
-- Paikallinen ohjaus fyysisillä painikkeilla (inputit)
+- Paikallinen ohjaus fyysisillä painikkeilla MCP23017 I2C-laajentimen kautta
 - Tilatiedot ja ohjaus Ethernetin yli (RPi / valinnainen HA)
 
 **Laiteluokka**
@@ -90,6 +93,10 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Tankkimittaukset
 - Virran- ja jänniteseuranta
 - Datan välitys Raspberry Pi:lle
+
+**Mittausperiaate**
+- Virtamittaus toteutetaan INA226-piireillä (16-bit).
+- INA226-väylä erotetaan digitaalisella I2C-erottimella (ISO1540 tai Si8600).
 
 **Laitetiedot**
 - SKU: 28771
@@ -126,6 +133,8 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 - Sulake suojaa johdotuksen ja kuorman
 - Rele/MOSFET ohjaa, ei suojaa
 - Kriittisissä kuormissa säilyy käsikäyttö
+- AUTO_PL, FRIDGE, HEATER ja BILGE ohjataan kenttätasolla (ei rele-ESP-kanavissa), koska kuormat ylittävät 10A relekestoluokan.
+- Kriittiset kuormat toteutetaan 1-0-Auto -ohituksella.
 
 ---
 
@@ -169,6 +178,7 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 - Manuaalinen ohitus kriittisille kuormille
 - Verkko ja palvelut ovat lisäkerros, eivät edellytys
 - Käyttöönotto etenee testipenkki ensin -periaatteella
+- IT-verkon syöttö toteutetaan releen NC-koskettimen kautta (fail-safe oletuksena päällä).
 
 ---
 
@@ -189,4 +199,3 @@ Salena AU on kerroksellinen ja modulaarinen kokonaisuus, jossa:
 - 12 V kenttätaso on suojattu sulakkein ja säilyttää manuaalisen käytettävyyden
 
 Järjestelmä kehittyy vaiheittain ilman, että veneen perustoiminnot muuttuvat riippuvaisiksi automaatiosta.
-EOF
