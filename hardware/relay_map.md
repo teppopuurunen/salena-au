@@ -19,19 +19,7 @@
 | R7 | CAM | Kamerat | 5A (F14) | Rele | Mastokamera (Tapo) |
 | R8 | USB_PWR | USB-lataukset | 10A (F16)| Rele | Kabiinin latauspisteet|
 
-## 3. Moduuli 2: Tekniikka ja Mukavuus (IP: 10.10.10.12)
-| Ch | Tunnus | Kuorma | Sulake | Hallinta | Huomio |
-|:---|:---|:---|:---|:---|:---|
-| R1 | SPARE | Varaus | - | - | >10A kuormat eivät rele-ESP:lle |
-| R2 | MEDIA | Audio / Radio | 10A (F15)| Rele | |
-| R3 | BATT_MON| Akkumonitori | 2A (F17) | Rele | |
-| R4 | SPARE | Varaus | - | - | >10A kuormat eivät rele-ESP:lle |
-| R5 | WTR_PUMP| Painevesipumppu| 10A (F18)| 1-0-Auto | |
-| R6 | SPARE | Varaus | - | - | >10A kuormat eivät rele-ESP:lle |
-| R7 | SPARE | Varaus | - | - | >10A kuormat eivät rele-ESP:lle |
-| R8 | SPARE | Varaus | - | - | |
-
-## 4. Releiden ulkopuoliset kuormat (kenttätaso)
+## 3. Releiden ulkopuoliset kuormat (kenttätaso)
 
 Seuraavat kuormat ovat rele-ESP:n ulkopuolella ja ohjataan kenttätasolla:
 
