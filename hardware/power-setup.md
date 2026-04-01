@@ -9,7 +9,7 @@ Järjestelmä on jaettu kolmeen sähköisesti eristettyyn kokonaisuuteen kriitti
 
 * **Starttiakku**: Omistettu Volvo Penta 2003 (1997) -moottorin käynnistykseen.
 * **Hupiakusto**: Syöttää yleistä kulutusta, kuten valot, pumput ja jääkaapin.
-* **Brain-akku (UPS)**: Pyhitetty elektroniikalle (Raspberry Pi, 10x ESP32-S3-ETH, reititin, kamerat). Toimii puskurina jännitevaihteluita vastaan.
+* **Brain-akku (UPS)**: Pyhitetty elektroniikalle (Raspberry Pi, 2x rele-ESP + 1x Mittaus-ESP, reititin, kytkin, kamerat). Toimii puskurina jännitevaihteluita vastaan.
 
 ---
 

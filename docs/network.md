@@ -9,7 +9,7 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 
 - Ethernet on ensisijainen väylä automaatiolle (ESP ↔ RPi)
 - Wi-Fi on käyttöliittymille (tabletti/puhelin), ei kriittiselle ohjaukselle
-- USB:llä hoidetaan mittaukset ja erikoisliitännät (esim. RS422)
+- USB:llä hoidetaan erikoisliitännät (esim. RS422)
 
 ---
 
@@ -24,7 +24,6 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 - Ei oleteta toimivaksi ohjauspoluksi
 
 ### USB
-- Anturi-/mittaus-ESP (USB sarja tai vastaava)
 - Autopilotti (USB–RS422-adapteri)
 
 ---

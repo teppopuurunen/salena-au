@@ -51,10 +51,11 @@ Järjestelmä jakautuu kolmeen tasoon:
 - WS-27709 PCIe → M.2 NVMe HAT+
 - NVMe SSD
 - WS-27966 UPS HAT (E)
+- Syöttö: Lenovo 65W USB-C DC Travel Adapter
 
 **Rajapinnat**
 - Ethernet ↔ ESP32-S3 rele- ja I/O-moduulit
-- USB ↔ anturi-/mittaus-ESP (tankit, virrat, jännitteet)
+- Ethernet ↔ Mittaus-ESP (tankit, virrat, jännitteet, PoE)
 - USB–RS422 ↔ Raymarine ST5000 (autopilotti)
 
 **Kriittisyys**
@@ -77,21 +78,25 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - ESP32-S3-ETH-8DI-8RO
 - 8 relelähtöä / moduuli
 - Galvaanisesti erotetut I/O:t
-- Syöttö 7–36 VDC
+- Syöttö: PoE
 
 **Periaate**
 - Toimii itsenäisesti myös ilman RPi:tä ja ilman HA:ta
 - Ohjaus ei ole Wi-Fi-riippuvainen (Wi-Fi vain käyttöliittymille)
 
-#### Mittaus-/anturi-ESP (“Home-ESP”)
+#### Mittaus-ESP
 
 **Rooli**
 - Tankkimittaukset
 - Virran- ja jänniteseuranta
 - Datan välitys Raspberry Pi:lle
 
+**Laitetiedot**
+- SKU: 28771
+- Part No.: ESP32-S3-POE-ETH
+
 **Yhteys**
-- USB ↔ Raspberry Pi
+- Ethernet (PoE) ↔ Raspberry Pi
 
 **Kriittisyys**
 - Ei kriittinen; mittaus tukee valvontaa ja päätöksentekoa
@@ -104,14 +109,9 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 - 2 × sulake (valaistuksen varaus)
 - 2 × relekanava (valaistuksen varaus)
 
-**Todennäköinen suunta**
-- Paikalliset ESP-ohjaukset Ethernet-väylällä
-- Pieni kosketusnäyttö (ESPHome) käyttöön ja himmennykseen
-- Äly-LED-nauhat lattiaan ja kattoon tunnelma-/mukavuusvalaistukseen
-
 **Rajaus**
 - Valaistus ei ole turvallisuuskriittinen toiminto
-- Toteutus ei saa luoda uusia kriittisiä riippuvuuksia
+- Toteutus tehdään myöhemmin
 
 ---
 
@@ -147,7 +147,11 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 
 ### Ensisijaiset yhteydet
 - **Ethernet:** ESP32-S3 ↔ Raspberry Pi (ohjaus/tilat)
-- **USB:** anturit/mittaukset + autopilotti-adapteri (RS422)
+- **USB:** autopilotti-adapteri (RS422)
+
+**Verkkolaitteet**
+- Reititin: Huawei B818-263 4G LTE
+- Perässä kytkin: Teltonika TSW101
 
 ### Wi-Fi:n rooli
 - Wi-Fi on käyttöliittymille (tablet/puhelin)
@@ -181,7 +185,7 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 
 Salena AU on kerroksellinen ja modulaarinen kokonaisuus, jossa:
 - Raspberry Pi 5 hoitaa navigoinnin ja integraatiot
-- ESP32-S3-moduulit hoitavat kuormien ohjauksen ja mittaukset
+- 2x rele-ESP ja 1x Mittaus-ESP (PoE) hoitavat kuormien ohjauksen ja mittaukset
 - 12 V kenttätaso on suojattu sulakkein ja säilyttää manuaalisen käytettävyyden
 
 Järjestelmä kehittyy vaiheittain ilman, että veneen perustoiminnot muuttuvat riippuvaisiksi automaatiosta.

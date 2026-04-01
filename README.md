@@ -59,6 +59,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Raspberry Pi 5
 - WS-27709: PCIe → M.2 NVMe HAT+
 - WS-27966: UPS HAT (E)
+- Syöttö: Lenovo 65W USB-C DC Travel Adapter
 
 **Ohjelmisto**
 - OpenPlotter
@@ -67,7 +68,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 
 **Rajapinnat**
 - Ethernet → rele-ESP:t (ENSISIJAINEN ohjaus- ja tilaväylä)
-- USB → mittaus-/anturimoduuli
+- Ethernet → Mittaus-ESP (PoE)
 - USB–RS422 → autopilotti (Raymarine ST5000)
 
 **Rooli**
@@ -81,10 +82,10 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 ### 5.1 Rele-ESP (2 kpl)
 
 **Tyyppi**
-- ESP32-S3 Ethernet -relemoduuli
+- ESP32-S3-ETH-8DI-8RO
 - 8 IO-kanavaa / moduuli
 - Ethernet, RS485 (varaus), galvaaninen erotus
-- Syöttö 7–36 VDC
+- Syöttö: PoE
 
 **Käyttö**
 - 12 V kuormien ohjaus (on/off)
@@ -95,11 +96,12 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Toimii itsenäisesti myös ilman RPi:tä ja HA:ta.
 - Ohjaus ei ole Wi-Fi-riippuvainen.
 
-### 5.2 Mittaus-/Anturi-ESP (“Home-ESP”)
+### 5.2 Mittaus-ESP
 
 **Tyyppi**
-- ESP32-S3 dev board (USB)
-- Yhteys Raspberry Pi:hin USB:n kautta
+- SKU: 28771
+- Part No.: ESP32-S3-POE-ETH
+- Yhteys Raspberry Pi:hin Ethernetin kautta (PoE)
 
 **Käyttö**
 - Tankkien mittaukset
@@ -108,15 +110,6 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 **Tila**
 - Laitteisto valmiina
 - Firmware odottaa toteutusta
-
-### 5.3 Tuleva PWM-valaistus
-
-- 1–3 × ESP32 (valaistusmoduulit)
-- Himmennys (PWM)
-- Ei turvallisuuskriittisiä kuormia
-- Painikkeet ensisijaisena ohjauksena
-
----
 
 ## 6. Autopilotin NMEA-integraatio (tiivistetty)
 
@@ -139,8 +132,10 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - **Ethernet**
   - ESP32-S3 ↔ Raspberry Pi
   - ohjaus ja tilat ensisijaisesti tätä kautta
+  - Reititin: Huawei B818-263 4G LTE
+  - Perässä kytkin: Teltonika TSW101
 - **USB**
-  - mittaukset, anturit, autopilotti (RS422)
+  - autopilotti NMEA 0183 (RS422)
 - **Wi-Fi**
   - käyttöliittymät (tablet/puhelin), ei kriittinen ohjaus
 - **Home Assistant**
@@ -163,9 +158,10 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 - Raspberry Pi 5: OpenPlotter, SignalK ja OpenCPN käytössä
 - NVMe ja UPS HAT toiminnassa
-- 2 × ESP32-S3 Ethernet -relemoduulia tulossa / käytettävissä
-- Anturi-ESP olemassa, firmware tekemättä
-- PWM-valaistus suunniteltu myöhempään vaiheeseen
+- UPS HAT (WS-27966) syöttö: Lenovo 65W USB-C DC Travel Adapter
+- 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE)
+- Mittaus-ESP tilattu, firmware tekemättä
+- PWM-valaistuksen suunnitelu ja toteutus tehdään myöhemmin
 
 ---
 
@@ -173,7 +169,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 Salena AU on vikasietoinen ja selkeästi kerrostettu venejärjestelmä, jossa:
 - navigointi ja käyttöliittymät sijaitsevat Raspberry Pi:ssä,
-- kuormien ohjaus toteutetaan itsenäisillä ESP32-S3 Ethernet -moduuleilla,
+- kuormien ohjaus toteutetaan 2x rele-ESP:llä ja mittaus 1x Mittaus-ESP:llä (PoE),
 - manuaalinen käyttö ja sulakesuojaus säilyvät aina.
 
 Järjestelmän päätavoite ei ole “älykäs vene”, vaan hallittava, dokumentoitu ja luotettava vene-elektroniikka.

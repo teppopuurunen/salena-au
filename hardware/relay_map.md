@@ -4,7 +4,8 @@
 - **Laite:** ESP32-S3-ETH-8DI-8RO
 - **Väylä:** Ethernet (RJ45)
 - **Protokolla:** MQTT / REST
-- **Käyttöjännite:** 12V DC
+- **Syöttö:** PoE
+- **Kuormajännite:** 12V DC
 
 ## 2. Moduuli 1: Navigointi ja IT (IP: 10.10.10.11)
 | Ch | Tunnus | Kuorma | Sulake | Hallinta | Huomio |
@@ -14,7 +15,7 @@
 | R3 | NAV_MOT | Ajovalo | 7.5A (F3) | 1-0-Auto | Maston etuosa |
 | R4 | NAV_COM | Kompassivalo | 2A (F4) | Rele | |
 | R5 | NAV_IO | Mittaristo/NMEA | 5A (F11) | Rele | Elektroniikan syöttö |
-| R6 | NET_IT | Reititin/Kytkin | 5A (F12) | Aina päällä| 12V DC IT-laitteet |
+| R6 | NET_IT | Reititin/Kytkin | 5A (F12) | Aina päällä| Huawei B818-263 + Teltonika TSW101 |
 | R7 | CAM | Kamerat | 5A (F14) | Rele | Mastokamera (Tapo) |
 | R8 | USB_PWR | USB-lataukset | 10A (F16)| Rele | Kabiinin latauspisteet|
 

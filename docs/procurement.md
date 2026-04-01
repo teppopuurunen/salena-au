@@ -12,10 +12,12 @@
 - [x] Waveshare UPS HAT (E) (WS-27966)
 - [x] SSD NVMe 256GB/512GB
 - [x] RS422 -> USB Adapteri (ST5000 varten)
+- [x] Reititin Huawei B818-263 4G LTE
+- [x] Kytkin Teltonika TSW101
 
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
-- [ ] Home ESP / virtojen- ja tankkimittaus (ESP32-S3)
+- [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
 

@@ -92,10 +92,8 @@ Testipenkki vähentää riskiä, nopeuttaa debuggausta ja estää ketjuvikaantum
 **Päätös**  
 Valaistus toteutetaan erillisenä, ei-kriittisenä mukavuusjärjestelmänä. Tässä vaiheessa pidetään vain kapasiteettivaraus (2 sulaketta + 2 relettä).
 
-**Todennäköinen suunta**
-- paikalliset ESP-ohjaukset Ethernet-väylällä
-- pieni kosketusnäyttö (ESPHome) käyttöön ja himmennykseen
-- äly-LED-nauhat lattiaan ja kattoon
+**Tila**
+- PWM-valaistuksen suunnittelu ja toteutus tehdään myöhemmin
 
 **Perustelu**  
 Valaistuksen vika ei saa vaikuttaa navigointiin tai turvallisuuteen, ja toteutuksen kannattaa elää käytännön kokeilun mukaan.

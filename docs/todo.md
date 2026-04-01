@@ -65,13 +65,13 @@ cat > docs/todo.md <<'EOF'
 
 ---
 
-## 5) Anturi-ESP (kun relepilotointi on valmis)
+## 5) Mittaus-ESP (kun relepilotointi on valmis)
 
 - [ ] Päätä minimimittauspaketti:
   - [ ] 1 tankki
   - [ ] 1 akkujännite
   - [ ] 1 virta (päävirta tai kuormavirta)
-- [ ] Toteuta firmware ja USB-datan ulostulo
+- [ ] Toteuta firmware ja Ethernet/PoE-datan ulostulo
 - [ ] Dokumentoi kalibrointi ja rajat
 
 ---
@@ -87,7 +87,7 @@ cat > docs/todo.md <<'EOF'
 ## 7) Valaistus (myöhemmin)
 
 - [ ] Päätä kanavamäärät ja ryhmät
-- [ ] Pilotoi 1 ohjain (ESP + paikallinen käyttö)
+- [ ] Pilotoi 1 ohjain (paikallinen käyttö)
 - [ ] Testaa PWM-taajuudet ja mahdolliset häiriöt
 - [ ] Lisää integraatio vasta lopuksi
 EOF

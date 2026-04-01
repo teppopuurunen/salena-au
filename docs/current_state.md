@@ -18,6 +18,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - WS-27709 PCIe → M.2 NVMe HAT+
 - NVMe SSD
 - WS-27966 UPS HAT (E)
+- Syöttö: Lenovo 65W USB-C DC Travel Adapter
 
 **Ohjelmisto**
 - OpenPlotter
@@ -29,6 +30,8 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - SignalK jakaa dataa sisäverkossa
 - Tallennus NVMe-levylle
 - UPS HAT tukee hallittua sammutusta ja parantaa virrankatkokestävyyttä
+- Reititin: Huawei B818-263 4G LTE
+- Perässä kytkin: Teltonika TSW101
 
 ---
 
@@ -54,7 +57,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - 2 × ESP32-S3-ETH-8DI-8RO
   - 8 relelähtöä / moduuli
   - galvaanisesti erotetut I/O:t
-  - syöttö 7–36 VDC
+  - syöttö PoE
   - Ethernet ensisijaisena väylänä
 
 **Suunniteltu käyttö**
@@ -79,7 +82,11 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 
 ---
 
-### Mittaus- ja anturi-ESP ("Home-ESP")
+### Mittaus-ESP
+
+**Laitetiedot**
+- SKU: 28771
+- Part No.: ESP32-S3-POE-ETH
 
 **Suunniteltu käyttö**
 - tankkimittaukset
@@ -94,10 +101,8 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 - 2 × sulake
 - 2 × relekanava
 
-**Todennäköinen suunta**
-- paikalliset ESP-ohjaukset Ethernet-väylällä
-- pieni kosketusnäyttö (ESPHome) käyttöön ja himmennykseen
-- äly-LED-nauhat lattiaan ja kattoon
+**Tila**
+- toteutus tehdään myöhemmin
 
 **Rajaus**
 - valaistus ei ole turvallisuuskriittinen
@@ -133,6 +138,6 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 1. Sähkökeskuksen mitoitus ja layout (mitat, sijoitteluperiaatteet)
 2. Autopilotin testipenkki: RS422-datan kaappaus ja lokitus
 3. Rele-ESP pilotointi: 1 painike → 1 rele → 1 kuorma (paikallinen logiikka)
-4. Anturi-ESP pilotointi: 1–3 mittausta luotettavasti USB:n yli
+4. Mittaus-ESP pilotointi: 1–3 mittausta luotettavasti Ethernet/PoE:n yli
 5. Home Assistant käyttöliittymäksi (ei-kriittinen), kun dataa on mitä näyttää
 EOF
