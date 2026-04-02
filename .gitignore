@@ -27,3 +27,8 @@ core-rpi5/home-assistant/secrets.yaml
 # Mosquitto runtime/data (adjust if used)
 core-rpi5/mosquitto/data/
 core-rpi5/mosquitto-data/
+
+# Generated document exports
+salena-au-kooste*.md
+salena-au-kooste*.docx
+~$*.docx
