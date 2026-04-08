@@ -1,18 +1,48 @@
 version: '3.8'
 
+# Salena AU - Home Assistant + Mosquitto Docker deployment
+# Sijainti: Raspberry Pi 5, OpenPlotter-ympäristön sisällä
+# Hallinta: VS Code Remote-SSH + Container Tools (Tailscale VPN:n yli)
+# Katso: docs/deployment.md
+
 services:
-  # Home Assistant - Automaation aivot
-  homeassistant:
-    container_name: homeassistant
+  home-assistant:
+    container_name: home-assistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
-    volumes:
-      - ./home-assistant:/config
-      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
     network_mode: host
 
-  # Mosquitto - Viestinvälitys (MQTT)
+    volumes:
+      - ./home-assistant:/config
+      - /etc/localtime:/etc/localtime:ro
+
+    environment:
+      TZ: Europe/Helsinki
+      PYTHONUNBUFFERED: '1'
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
@@ -25,4 +55,4 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     environment:
-      - TZ=Europe/Helsinki
+      TZ: Europe/Helsinki

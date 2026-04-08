@@ -5,7 +5,25 @@
 
 ---
 
-## 1) Mittaukset ja mekaaninen layout
+## 0) Kehitysympäristö: Tailscale + VS Code Remote-SSH + Container Tools
+
+Yleiset ohjeet: [docs/deployment.md](deployment.md)
+
+- [ ] Asenna Tailscale kehityskoneeseen ja RPi 5:lle
+  - [ ] Varmista Tailscale-linkit aktiivisina (100.x.x.x adressi)
+- [ ] Asenna VS Code laajennukset:
+  - [ ] Remote - SSH (Microsoft)
+  - [ ] Container Tools (Microsoft)
+- [ ] Konfiguroi SSH config (~/.ssh/config):
+  ```
+  Host salena-rpi
+      HostName 100.x.x.x
+      User pi
+      IdentityFile ~/.ssh/id_rsa
+  ```
+- [ ] Testaa yhteys: **Remote-SSH: Connect** → `salena-rpi`
+- [ ] Tarkista että Docker/Podman on käynnissä RPi:llä
+  - [ ] Testaa: `docker ps` (SSH terminaalissa)
 
 - [ ] Ota sähkökeskuksen mitat layouttia varten:
   - [ ] kaapin sisämitat (leveys/korkeus/syvyys)
@@ -75,11 +93,21 @@
 
 ---
 
-## 6) Home Assistant käyttöliittymäksi (ei-kriittinen)
+## 6) Home Assistant kehitys (Container Tools + Remote-SSH)
 
-- [ ] Käynnistä HA konttina
-- [ ] Lisää 3–5 ensimmäistä entiteettiä (releet + mittaus)
-- [ ] Tee yksi selkeä dashboard (veneessä käytettävä)
+- [ ] Käynnistä HA kontti:
+  - [ ] Avaa VS Code, kytkeytyminen `salena-rpi` (Remote-SSH)
+  - [ ] Avaa `core-rpi5/docker-compose.yml`
+  - [ ] Container Tools: Oikeanklikkaa yaml → **Compose Up**
+  - [ ] Tarkista logit (Output panel)
+- [ ] Asetus HA-konfiguraation pohjat (ensikerran):
+  - [ ] Lisää `core-rpi5/home-assistant/configuration.yaml`
+  - [ ] Lisää integraatiot tarpeen mukaan
+- [ ] Lisää 3–5 ensimmäistä entiteettiä:
+  - [ ] Releet (ESP32 IP:t, MQTT topicsit)
+  - [ ] Mittaukset (Mittaus-ESP:n sensorities)
+  - [ ] Autopilotti tila (read-only)
+- [ ] Tee yksi yksinkertainen dashboard (tablet-käyttöä varten)
 
 ---
 
