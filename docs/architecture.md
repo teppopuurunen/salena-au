@@ -1,6 +1,6 @@
 # Järjestelmäarkkitehtuuri
 
-**Versio:** v5.0.0  
+**Versio:** v5.1.0  
 **Projekti:** Integroitu veneautomaatio- ja navigointijärjestelmä (Amigo 40 “Salena”)  
 **Periaate:** Vene toimii täysin ilman automaatiota. Automaatiokerros parantaa hallittavuutta ja näkyvyyttä, mutta ei ole kriittinen riippuvuus.
 
@@ -13,7 +13,7 @@ Salena AU on kerroksellinen järjestelmä, jossa navigointi, automaatio ja 12 V 
 Järjestelmä jakautuu kolmeen tasoon:
 
 - **Taso 1: Älytaso / navigointi** – Raspberry Pi 5 (OpenPlotter, SignalK, OpenCPN)
-- **Taso 2: Automaatiotaso** – ESP32-S3 (Ethernet) kuormaohjauksiin ja mittauksiin
+- **Taso 2: Automaatiotaso** – ESP32-S3 + RS485 Modbus kuormaohjauksiin ja mittauksiin
 - **Taso 3: Kenttätaso** – 12 V kuormat, sulakkeet, manuaalinen ohitus
 
 ---
@@ -66,7 +66,7 @@ Järjestelmä jakautuu kolmeen tasoon:
 
 ---
 
-### Taso 2 – ESP32-S3 (automaatiotaso)
+### Taso 2 – ESP32-S3 + RS485 Modbus (automaatiotaso)
 
 Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimella on selkeä vastuualue. Ohjainten logiikka ja fyysiset painikkeet toimivat paikallisesti, jolloin keskuskoneen tai verkon vika ei estä käyttöä.
 
@@ -87,6 +87,19 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 **Periaate**
 - Toimii itsenäisesti myös ilman RPi:tä ja ilman HA:ta
 - Ohjaus ei ole Wi-Fi-riippuvainen (Wi-Fi vain käyttöliittymille)
+- Rele-ESP 1 toimii RS485 Modbus -masterina (RS-portti valmiina)
+- Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena
+
+#### Modbus RTU I/O -moduulit
+
+**Laitteet**
+- 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- 30A/40A ulkoiset releet tarpeen mukaan SKU:26244 DO-kanavien taakse
+
+**Rooli**
+- Tilatiedot: optoeristetyt DI-tulot
+- Ulkoinen releohjaus: DO-lähdöt (Darlington sinking)
+- Keskisuuret kuormat: autoreleet tai DIN-kiskokannalliset releet SKU:26244-kanaville (10A-20A)
 
 #### Mittaus-ESP
 
@@ -96,8 +109,10 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Datan välitys Raspberry Pi:lle
 
 **Mittausperiaate**
-- Virtamittaus toteutetaan INA226-piireillä (16-bit).
-- INA226-väylä erotetaan digitaalisella I2C-erottimella (ISO1540 tai Si8600).
+- Mittaus-ESP lukee INA-piirit ja välittää datan Ethernetin yli.
+- Pääakku: INA228 (MIKROE-4810) + 5705-HoFL2-250A-50mV-0.1%.
+- Pienkuormat: INA3221 (MIKROE-4126) + 3 x HoFL2-20A-75mV-0.1%.
+- I2C-väylä erotetaan ISO1540-erottimella (MIKROE-1878).
 
 **Laitetiedot**
 - SKU: 28771
@@ -157,6 +172,8 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 
 ### Ensisijaiset yhteydet
 - **Ethernet:** ESP32-S3 ↔ Raspberry Pi (ohjaus/tilat)
+- **RS485 Modbus RTU:** Rele-ESP 1 (master) ↔ kenttämoduulit (SKU:26244)
+- **I2C (eristetty):** Mittaus-ESP ↔ INA228/INA3221 mittausmoduulit
 - **USB:** autopilotti-adapteri (RS422)
 
 **Verkkolaitteet**
@@ -196,7 +213,8 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 
 Salena AU on kerroksellinen ja modulaarinen kokonaisuus, jossa:
 - Raspberry Pi 5 hoitaa navigoinnin ja integraatiot
-- 2x rele-ESP ja 1x Mittaus-ESP (PoE) hoitavat kuormien ohjauksen ja mittaukset
+- Rele-ESP 1 hoitaa RS485 Modbus -masteroinnin ja Rele-ESP 2 paikallisen I/O-ohjauksen
+- Mittaus-ESP hoitaa INA-mittauslinjan (INA228 + INA3221, eristetty I2C)
 - 12 V kenttätaso on suojattu sulakkein ja säilyttää manuaalisen käytettävyyden
 
 Järjestelmä kehittyy vaiheittain ilman, että veneen perustoiminnot muuttuvat riippuvaisiksi automaatiosta.

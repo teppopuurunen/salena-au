@@ -1,28 +1,37 @@
-# Salena AU - Hankintalista v5.0.0
+# Salena AU - Hankintalista v5.1.0
 
 ## A. Energia ja mittaus
 - [x] Pääkytkin & Rele (Blue Sea Systems Add-A-Battery)
 - [x] Akkupankki (v4.2 mukainen)
 - [ ] Victron SmartSolar MPPT 75/15 (LUKKOON LYÖTY)
-- [ ] Akun valvonta (Shuntti 300A + INA226 I2C)
-- [ ] I2C-eristin (ISO1540 tai Si8600)
+- [ ] Pääakun shuntti: 5705-HoFL2-250A-50mV-0.1%
+- [ ] Pienkuormien shuntit: 3 x HoFL2-20A-75mV-0.1%
+- [ ] MIKROE-4810 (INA228, 20-bit)
+- [ ] MIKROE-4126 (INA3221, 3-kanavainen)
+- [ ] MIKROE-1878 (ISO1540 I2C-eristin)
 
 ## B. Ohjaus ja IT (Core)
 - [x] Raspberry Pi 5 (8GB RAM)
 - [x] Waveshare NVMe HAT+ (WS-27709)
-- [x] Waveshare UPS HAT (E) (WS-27966)
+- [ ] Waveshare UPS HAT (E) (WS-27966)
 - [x] SSD NVMe 256GB/512GB
 - [x] RS422 -> USB Adapteri (ST5000 varten)
 - [x] Reititin Huawei B818-263 4G LTE
-- [x] Kytkin Teltonika TSW101
+- [ ] Kytkin Teltonika TSW101
 
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
+- [ ] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
 - [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
 - [ ] PC817-optoerottimet (RPi 5 J2 hard reset)
 - [ ] MCP23017 I2C I/O-laajentimet (8 lisäpainiketta)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
+- [ ] 12V -> 5V DC/DC-muunnin (I2C-eristetyn mittauspuolen syöttö)
+
+## C2. Täydentävät releet
+- [ ] 30A/40A ulkoiset releet (tarpeen mukaan)
+- [ ] Parempi ratkaisu: autoreleitä tai DIN-kiskokantoja SKU:26244-kanaville, joilla ohjataan keskisuuria kuormia (10A-20A)
 
 ## D. LVI ja Valvonta
 - [x] Mastokamera (Tapo C500)

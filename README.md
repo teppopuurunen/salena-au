@@ -1,4 +1,4 @@
-# Salena AU - Järjestelmämäärittely v5.0.0
+# Salena AU - Järjestelmämäärittely v5.1.0
 
 **Projekti:** Integroitu veneautomaatio- ja navigointijärjestelmä (Amigo 40 “Salena”)  
 **Tavoite:** Luotettava, huollettava ja vaiheittain laajennettava kokonaisuus, jossa automaatio täydentää veneen perustoimintoja mutta ei koskaan ole niiden edellytys.
@@ -35,8 +35,10 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Tallennus NVMe:lle
 - UPS-varmistus
 
-2) **Automaatiotaso (ESP32-S3 Ethernet)**
-- 2 × rele-ESP (8 relelähtöä / moduuli)
+2) **Automaatiotaso (ESP32-S3 Ethernet + RS485 Modbus)**
+- 2 × rele-ESP (8 relelähtöä / moduuli, Rele-ESP 1 = RS485 master)
+- 3 × Waveshare SKU:26244 (Modbus RTU IO −tilatiedot ja ulkoinen releohjaus)
+- 30A/40A ulkoiset releet SKU:26244-kanaville (keskisuuret kuormat)
 - Painikkeet suoraan inputeihin (paikallinen ohjaus)
 - Ethernet-yhteys RPi:hin
 
@@ -88,7 +90,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 **Tyyppi**
 - ESP32-S3-ETH-8DI-8RO
 - 8 IO-kanavaa / moduuli
-- Ethernet, RS485 (varaus), galvaaninen erotus
+- Ethernet, RS485, galvaaninen erotus
 - Syöttö: PoE
 
 **Käyttö**
@@ -96,10 +98,23 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Jokaiselle releelle liitetään oma painike suoraan rele-ESP:n inputtiin.
 - Lisäksi 8 lisäpainiketta luetaan MCP23017 I2C-laajentimen kautta GPIO:lla.
 - Tilatiedot ja ohjaus verkon yli (RPi / HA)
+- **Rele-ESP 1:** RS485 Modbus -master kenttä-I/O-moduuleille
+- **Rele-ESP 2:** paikallinen I/O- ja releohjain
 
 **Periaate**
 - Toimii itsenäisesti myös ilman RPi:tä ja HA:ta.
 - Ohjaus ei ole Wi-Fi-riippuvainen.
+
+### 5.1b Modbus RTU I/O -moduulit (3 × SKU:26244)
+
+**Tyyppi**
+- Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- 8 DI (optoeristetty) ja 8 DO (Darlington sinking, 500mA) per moduuli
+
+**Käyttö**
+- Tilatiedot: optoeristetyt tulot (kohokytkimet, 1-0-Auto-asennot, releiden todelliset tilat)
+- Ulkoinen releohjaus: DO-lähdöt ulkoisille DIN/Motonet-releille (10A-20A kuormat)
+- 30A/40A ulkoiset releet tarpeen mukaan
 
 ### 5.2 Mittaus-ESP
 
@@ -113,8 +128,9 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Virran- ja jänniteseuranta
 
 **Mittausperiaate**
-- Virtamittaus toteutetaan INA226-piireillä (16-bit), enintään 16 osoitetta samalla I2C-väylällä.
-- INA226-väylä erotetaan digitaalisella I2C-erottimella (ISO1540 tai Si8600).
+- Pääakku: INA228 (MIKROE-4810, 20-bit) + 5705-HoFL2-250A-50mV-0.1% shuntti
+- Pienkuormat (3 kpl pilssipumppuja): INA3221 (MIKROE-4126, 3-kanavainen) + 3 × HoFL2-20A-75mV-0.1% shuntit
+- I2C-väylä erotetaan ISO1540-erottimella (MIKROE-1878).
 - Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan.
 
 **Tila**
@@ -140,10 +156,16 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 ## 7. Väylät ja tietoliikenne
 
 - **Ethernet**
-  - ESP32-S3 ↔ Raspberry Pi
-  - ohjaus ja tilat ensisijaisesti tätä kautta
+  - ESP32-S3 ↔ Raspberry Pi (ohjaus ja tilat)
+  - Mittaus-ESP → Raspberry Pi (PoE)
   - Reititin: Huawei B818-263 4G LTE
-  - Perässä kytkin: Teltonika TSW101
+  - Kytkin: Teltonika TSW101 (hankkimatta)
+- **RS485 Modbus RTU**
+  - Rele-ESP 1 (master) ↔ Modbus I/O -moduulit (SKU:26244)
+  - Tilatiedot ja ulkoisen releohjauksen väylä
+- **I2C (eristetty)**
+  - Mittaus-ESP ↔ INA228 + INA3221 mittausmoduulit
+  - ISO1540-erottimella erotettu
 - **USB**
   - autopilotti NMEA 0183 (RS422)
 - **Wi-Fi**
@@ -166,13 +188,17 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 ---
 
-## 9. Projektin nykytila (01/2026)
+## 9. Projektin nykytila (04/2026)
 
 - Raspberry Pi 5: OpenPlotter, SignalK ja OpenCPN käytössä
-- NVMe ja UPS HAT toiminnassa
-- UPS HAT (WS-27966) syöttö: Lenovo 65W USB-C DC Travel Adapter
-- 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE)
-- Mittaus-ESP hankkimatta, firmware tekemättä
+- NVMe toiminnassa (SSD käytössä)
+- Syöttö: Lenovo 65W USB-C DC Travel Adapter
+- UPS HAT (WS-27966): hankkimatta
+- Kytkin: Teltonika TSW101 hankkimatta
+- 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE, hankittu)
+- 3 × Waveshare SKU:26244 (Modbus RTU IO): hankkimatta
+- Mittaus-ESP (SKU: 28771): hankkimatta, firmware tekemättä
+- Mittauskomponentit (INA228, INA3221, shuntit, ISO1540): hankkimatta
 - PWM-valaistuksen suunnitelu ja toteutus tehdään myöhemmin
 
 ---
@@ -181,7 +207,9 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 Salena AU on vikasietoinen ja selkeästi kerrostettu venejärjestelmä, jossa:
 - navigointi ja käyttöliittymät sijaitsevat Raspberry Pi:ssä,
-- kuormien ohjaus toteutetaan 2x rele-ESP:llä ja mittaus 1x Mittaus-ESP:llä (PoE),
+- kuormien ohjaus ja indikointi toteutetaan kaksiväylien (RS485 Modbus + Ethernet) kautta,
+- tarkka virranmittaus hoituu erillisellä I2C-mittauslinjalla (INA228 + INA3221, eristetty ISO1540:lla),
+- 2× rele-ESP (Rele-ESP 1 = RS485 master, Rele-ESP 2 = paikallinen I/O) ja 3× Modbus I/O -moduuli (SKU:26244) muodostavat ohjaus- ja tilatietojen väylän,
 - manuaalinen käyttö ja sulakesuojaus säilyvät aina.
 
 Järjestelmän päätavoite ei ole “älykäs vene”, vaan hallittava, dokumentoitu ja luotettava vene-elektroniikka.

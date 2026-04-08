@@ -6,24 +6,44 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 
 ## Periaate
 
-- Ethernet on ensisijainen väylä automaatiolle (ESP ↔ RPi)
-- Wi-Fi on käyttöliittymille (tabletti/puhelin), ei kriittiselle ohjaukselle
-- USB:llä hoidetaan erikoisliitännät (esim. RS422)
+- **Ethernet** on ensisijainen väylä automaatiolle ja mittaukselle (ESP32 ↔ RPi)
+- **RS485 Modbus RTU** hoitaa tilatiedot ja releohjauksen kenttä-I/O-moduuleille
+- **I2C (eristetty)** varaa tarkan virranmittauslinjan (ISO1540-erotuksella)
+- **Wi-Fi** on käyttöliittymille (tabletti/puhelin), ei kriittiselle ohjaukselle
+- **USB** hoidetaan erikoisliitännät (esim. RS422 autopilotille)
 
 ---
 
 ## Yhteydet
 
 ### Ethernet
-- ESP32-S3 relemoduulit ja mahdolliset muut ohjaimet
+- **ESP32-S3 rele-ESP:t** ↔ Raspberry Pi (ohjaus- ja tilaväylä)
+- **Mittaus-ESP** → Raspberry Pi (PoE, virran ja tankkidatan toimitus)
 - Tavoite: deterministinen ja helposti debugattava liikenne
+- Reititin: Huawei B818-263 4G LTE
+- Kytkin: Teltonika TSW101 (hankkimatta)
+
+### RS485 Modbus RTU
+- **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244)
+- Tilatiedot: 24 optoeristettyä tuloa (DI) kohokytkimille, 1-0-Auto-asennoille ja releiden todellisille tiloille
+- Releohjaus: 24 transistorilähtöä (DO, Darlington sinking 500mA) ulkoisille HV- ja DIN-releille
+- Keskisuuret kuormat (10A–20A): ulkoiset autorele/DIN-kiskokannalliset releet SKU:26244-lähtöjen perään
+- Häiriönkestävyys: RS485-väylä sopii sähkökeskukseen ja veneen häiriöympäristöön
+
+### I2C (eristetty)
+- **Mittaus-ESP** ↔ Mittausmoduulit (INA228 + INA3221)
+- Galvaaninen erotus: ISO1540-erottimet (MIKROE-1878)
+- Pääakku: INA228 (MIKROE-4810, 20-bit, shuntti 5705-HoFL2-250A)
+- Pienkuormat: INA3221 (MIKROE-4126, 3-kanavainen, 3× shuntti HoFL2-20A)
+- Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan
 
 ### Wi-Fi
 - Käyttöliittymät (esim. selain/HA-näkymä)
 - Ei oleteta toimivaksi ohjauspoluksi
+- Häiriöt eivät vaikuta paikalliseen ohjaukseen
 
 ### USB
-- Autopilotti (USB–RS422-adapteri)
+- Autopilotti (USB–RS422-adapteri Raymarine ST5000:lle)
 
 ---
 

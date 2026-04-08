@@ -1,6 +1,6 @@
 # Nykytila
 
-**Päivitetty:** 01/2026  
+**Päivitetty:** 04/2026  
 **Projekti:** Salena AU – integroitu veneautomaatio- ja navigointijärjestelmä  
 **Vene:** Amigo 40 “Salena”
 
@@ -71,6 +71,49 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 
 ---
 
+## Päivitetty kokonaisuus: kaksiväyläarkkitehtuuri
+
+Kokonaisuus on jaettu kahteen väylään:
+- I2C: tarkka virranmittaus (galvaanisesti erotettu)
+- RS485 Modbus: tilatiedot ja releohjaus
+
+### 1. Tarkka virranmittaus (I2C-väylä)
+
+Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin yli.
+
+**Pääakku (hupiakun SOC-seuranta)**
+- Shuntti: 5705-HoFL2-250A-50mV-0.1% (250A, 0.1 %)
+- Mittausmoduuli: MIKROE-4810 (INA228, 20-bit)
+
+**Pienkuormat (3 kpl pilssipumppuja)**
+- Shuntit: 3 x HoFL2-20A-75mV-0.1% (20A per pumppu)
+- Mittausmoduuli: MIKROE-4126 (INA3221, 3 kanavaa)
+
+**Väylän suojaus (kriittinen)**
+- Erotin: MIKROE-1878 (ISO1540)
+- Tehtävä: erottaa veneen 12V-puolen ja ESP32/Brain-puolen (GND + VCC)
+
+### 2. Tilatiedot ja ohjaus (RS485 Modbus -väylä)
+
+**Master ja reititys**
+- RS485-master: Rele-ESP 1 (RS-portti valmiina)
+- Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena Ethernetin yli
+
+**Tilatiedot ja ulkoinen releohjaus (indikointi)**
+- Moduulit: 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- Tulot: 24 DI (optoeristetty) kohokytkimille, 1-0-Auto-asennoille ja releiden todellisille tiloille
+- Lähdöt: 24 DO (Darlington sinking, 500mA) ulkoisten DIN/Motonet-releiden ohjaukseen
+
+**30A/40A ulkoiset releet (tarpeen mukaan)**
+- Autoreleitä tai DIN-kiskokannoilla niille SKU:26244-kanaville, joilla halutaan ohjata keskisuuria kuormia (10A-20A)
+
+### 3. Täydentävät asennusosat
+
+- Ulkoiset releet SKU:26244-kanaville, joissa kuormat ovat 10A-20A
+- 12V -> 5V DC/DC-muunnin I2C-mittauspuolen eristettyyn syöttöön
+
+---
+
 ## Suunnitellut mutta ei vielä toteutetut osiot
 
 ### Hankkimatta olevat kuormat
@@ -100,8 +143,9 @@ Peruste: kuormat ylittävät rele-ESP:n 10A kuormitusrajan.
 **Suunniteltu käyttö**
 - tankkimittaukset
 - virran- ja jänniteseuranta
-- INA226 16-bit mittauspiirit (osoitteistus enintään 16 kpl / väylä)
-- I2C-eristys (ISO1540 tai Si8600)
+- INA228 (MIKROE-4810) pääakun tarkkaan mittaukseen
+- INA3221 (MIKROE-4126) 3-kanavaiseen pienkuormamittaukseen
+- I2C-eristys ISO1540:lla (MIKROE-1878)
 
 **Tila**
 - Ei hankittu – ks. [relay_map.md](../hardware/relay_map.md)
