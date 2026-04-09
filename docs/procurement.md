@@ -40,4 +40,7 @@
 - [ ] Bilssipumppu suuri (BILGE_LARGE)
 - [ ] Kellukkakytkimet (3 kpl, yksi per pilssipumppu)
 - [ ] Mekaaninen 12V aanimerkki / summeri (pilssihalytys)
+- [ ] PIR-ilmaisin, salonki (Paradox NV5MF tai Bosch ISC-BPR2-W12)
+- [ ] PIR-ilmaisin, keulakajuutta (Paradox NV5MF tai Bosch ISC-BPR2-W12)
+- [ ] PIR-ilmaisin, istumalaatikko / avotila (Bosch ISC-BDL2-WP12G, IP55, dual-tech)
 - [ ] Lämmitin (VEVOR 5kW Diesel)

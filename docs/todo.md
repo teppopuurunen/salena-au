@@ -89,6 +89,26 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
 
 ---
 
+## 4c) Liiketunnistus ja halytystila (DD-18)
+
+- [ ] Varmista testipenkissa PIR-ilmaisimien yhteensopivuus SKU:26244 DI-tuloihin
+  - [ ] 12V syotto ja NC-kosketin toimivat odotetusti
+  - [ ] johtokatko nakyy aktiivisena halytys-/vikatilana
+- [ ] Paata lopulliset anturitilat:
+  - [ ] salonki
+  - [ ] keulakajuutta
+  - [ ] istumalaatikko / avotila
+- [ ] Varaa 3 DI-tuloa PIR-antureille SKU:26244-moduuleilta
+- [ ] Toteuta HA:han halytystilan moodit:
+  - [ ] sisatilat
+  - [ ] sisatilat + istumalaatikko
+- [ ] Toteuta ensimmainen HA-halytys:
+  - [ ] push-ilmoitus tai paikallinen aanimerkki
+  - [ ] lokitus havaintotapahtumista
+- [ ] Valmistele PIR-tiedon uudelleenkaytto valaistusautomaatiolle (DD-08)
+
+---
+
 ## 5) Mittaus-ESP (kun relepilotointi on valmis)
 
 - [ ] Päätä minimimittauspaketti:
@@ -126,6 +146,10 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
   - [ ] Halytys jos pumppu kay > X min
   - [ ] Halytys jos pumppu kay > N kertaa / 24h
   - [ ] Varmista: automaatio ei koskaan katkaise pilssipumpun virtaa
+- [ ] Liiketunnistuksen HA-integraatio (DD-18):
+  - [ ] Luo 3 binary_sensor-entiteettia PIR-ilmaisimille
+  - [ ] Tee halytystilan paalle/pois-ohjaus HA-kayttoliittymaan
+  - [ ] Tee valinnainen istumalaatikon anturin mukaanotto halytystilaan
 - [ ] Tee yksi yksinkertainen dashboard (tablet-käyttöä varten)
 
 ---

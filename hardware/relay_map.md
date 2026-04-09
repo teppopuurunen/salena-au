@@ -33,3 +33,14 @@ Seuraavat kuormat ovat rele-ESP:n ulkopuolella ja ohjataan kenttätasolla:
 | BILGE_LARGE | Bilssipumppu suuri | 20A (F24) | Kelluke suoraan + sulake | Hankkimatta | Sahkomekaaninen, ei rele-ESP |
 
 Peruste: rele-ESP:n käytettävä kuormitusraja on 10A.
+
+## 4. DI-varaukset (SKU:26244)
+
+| DI | Tunnus | Kaytto | Huomio |
+|:---|:---|:---|:---|
+| DI-x | PIR_SALONKI | Salonki liiketunnistin | NC-kosketin, HA-halytys + valaistus |
+| DI-x | PIR_KEULA | Keulakajuutta liiketunnistin | NC-kosketin, HA-halytys + valaistus |
+| DI-x | PIR_COCKPIT | Istumalaatikko / avotila liiketunnistin | NC-kosketin, valinnainen halytystilassa |
+
+Yhteensa 3 DI-varausta liiketunnistukselle. Lopulliset DI-kanavat paatetaan
+johdotus- ja layout-vaiheessa.

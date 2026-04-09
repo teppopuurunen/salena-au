@@ -211,3 +211,96 @@ Keskisuuret kuormat (10A–20A) ohjataan ulkoisilla autorehlyillä tai DIN-disko
 **Vikasietoisuus**
 - Rele-ESP 2 / Ethernet / RPi / HA vika: BILGE_MID ja BILGE_LARGE toimivat edelleen kenttatasolla.
 - Mittausvian vaikutus: valvonta heikkenee, mutta pumppaus ei esty.
+
+---
+
+## DD-18: Liike- ja lasnaolotunnistus - halytysjarjestelma ja valojenohjaus
+
+**Paatos**
+
+Jarjestelmaan lisataan kolme PIR-ilmaisinta: kaksi kuiviin sisatiloihin
+(salonki, keulakajuutta) ja yksi IP55-luokiteltu dual-tech-ilmaisin
+istumalaatikkoon/avotilaan. Halytyskaytto ja valojenohjaus kayttavat samaa
+anturitietoa - erillisia antureita ei tarvita.
+
+Halytysjarjestelman kytkenta (paalle/pois) ja istumalaatikon anturin
+aktivointi hoidetaan ohjelmallisesti HA:ssa. Fyysista erillista kytkinta
+ei tarvita.
+
+PIR-antureiden sahkoinen yhteensopivuus SKU:26244:n DI-tuloihin
+varmistetaan testipenkissa ennen lopullista asennuspaatosta.
+
+**Perustelu**
+
+Halytysjarjestelman PIR-ilmaisimet ovat koteloltaan, jannitteeltaan (12V) ja
+lahtotyypiltaan (potentiaalivapaa NC-kosketin) todennakoisesti hyvin
+yhteensopivia SKU:26244:n optoeristettyjen DI-tulojen kanssa. Sama tilatieto
+on kaytettavissa seka halytykseen etta valojenohjaukseen HA:ssa.
+NC-kytkenta varmistaa, etta johtokatko tai piirin vika nakyy aktiivisena
+halytys-/vikatilana eika jaa huomaamatta.
+
+Istumalaatikko ja peran teltta ovat sama fyysinen paikka - yksi anturi,
+kayttotilanne valitaan HA:ssa halytysjarjestelmaa kytkettaessa.
+
+**Anturit**
+
+| Tila | Malli | Peruste |
+|---|---|---|
+| Salonki | Paradox NV5MF tai Bosch ISC-BPR2-W12 | Kuiva sisatila |
+| Keulakajuutta | Paradox NV5MF tai Bosch ISC-BPR2-W12 | Kuiva sisatila |
+| Istumalaatikko / avotila | Bosch ISC-BDL2-WP12G (IP55, dual-tech) | Saa + veneen liike. Dual-tech vaatii PIR + mikroaalto yhta aikaa - vahentaa vaaria halytyksia |
+
+Sisatila-anturit valitaan samasta mallista -> yksi varaosa kattaa molemmat.
+
+**Kytkentaperiaate**
+
+```text
+12V (+)  ->  PIR VCC
+GND      ->  PIR GND
+PIR NC   ->  SKU:26244 DI-tulo
+```
+
+NC-kytkenta: piiri on normaalitilassa suljettu. Havainto tai johtokatko
+tuottaa aktiivisen halytys-/vikatilan.
+
+**Halytysjarjestelman toimintaperiaate HA:ssa**
+
+Halytysten kytkenta ja anturien aktivointi hoidetaan kokonaan HA:ssa.
+Kayttaja kytkee halytykset paalle HA:n kayttoliittymasta (tabletti/puhelin).
+Kytkennan yhteydessa valitaan sisaltyyko istumalaatikon anturi vai ei -
+telttakaytossa se otetaan mukaan, purjehduksella jattetaan pois.
+
+```text
+HA: Halytykset paalle
+	-> kayttaja valitsee: sisatilat / sisatilat + istumalaatikko
+	-> HA seuraa valittuja DI-tiloja
+	-> liikehavainto -> HA-halytys (push / aani / merkkivalo)
+```
+
+Valojenohjauksen puolella sama PIR-tilatieto voidaan kayttaa DD-08:n mukaisen
+valaistusautomaation ohjaukseen. Halytys- ja valotilat erotetaan HA:ssa
+toimintamoodien perusteella.
+
+**DI-resurssien kaytto (SKU:26244)**
+
+| DI-kanava | Kaytto |
+|---|---|
+| DI-x | Salonki PIR |
+| DI-x | Keulakajuutta PIR |
+| DI-x | Istumalaatikko PIR |
+
+3 DI-tuloa.
+
+**Vikasietoisuus**
+
+- NC-kytkenta varmistaa johtokatkon tai piirin vian havaitsemisen.
+- HA:n vika tarkoittaa, etta halytykset eivat toimi - hyvaksytty rajoite,
+	koska halytysjarjestelma on mukavuus- eika turvallisuustoiminto tassa
+	jarjestelmassa.
+
+**Seuraukset**
+
+- Relekanaviin ei tule muutosta.
+- SKU:26244 DI-tuloista varataan 3 kpl PIR-ilmaisimille.
+- Hankintalistaan lisataan 3 PIR-ilmaisinta.
+- Todo-listaan lisataan hankinta-, testaus- ja HA-konfigurointitehtavat.
