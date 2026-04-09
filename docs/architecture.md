@@ -149,7 +149,8 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 - Sulake suojaa johdotuksen ja kuorman
 - Rele/MOSFET ohjaa, ei suojaa
 - Kriittisissä kuormissa säilyy käsikäyttö
-- AUTO_PL, FRIDGE, HEATER ja BILGE ohjataan kenttätasolla (ei rele-ESP-kanavissa), koska kuormat ylittävät 10A relekestoluokan.
+- AUTO_PL, FRIDGE, HEATER, BILGE_MID ja BILGE_LARGE ohjataan kenttätasolla (ei rele-ESP-kanavissa), koska kuormat ylittävät 10A relekestoluokan.
+- BILGE_SMALL (<10A) ohjataan Rele-ESP 2:lta, ja sen kellukekytkin luetaan Rele-ESP 2:n DI-tuloon paikallislogiikalla.
 - Kriittiset kuormat toteutetaan 1-0-Auto -ohituksella.
 
 ---

@@ -28,6 +28,8 @@ Seuraavat kuormat ovat rele-ESP:n ulkopuolella ja ohjataan kenttätasolla:
 | AUTO_PL | Autopilotti (ST5000) | 15A (F13) | 1-0-Auto | Käytössä | >10A, ei rele-ESP:lle |
 | FRIDGE | Jääkaappi (Danfoss) | 15A (F21) | 1-0-Auto | Hankkimatta | >10A, ei rele-ESP:lle |
 | HEATER | Lämmitin (VEVOR 5kW) | 15A (F20) | 1-0-Auto | Hankkimatta | >10A, ei rele-ESP:lle |
-| BILGE | Bilssipumppu | 15A (F22) | 1-0-Auto | Hankkimatta | >10A, ei rele-ESP:lle |
+| BILGE_SMALL | Bilssipumppu pieni | 10A (F22) | Rele-ESP 2 + kelluke (DI) | Hankkimatta | <10A, paikallinen ESP-logiikka |
+| BILGE_MID | Bilssipumppu keski | 15A (F23) | Kelluke suoraan + sulake | Hankkimatta | Sahkomekaaninen, ei rele-ESP |
+| BILGE_LARGE | Bilssipumppu suuri | 20A (F24) | Kelluke suoraan + sulake | Hankkimatta | Sahkomekaaninen, ei rele-ESP |
 
 Peruste: rele-ESP:n käytettävä kuormitusraja on 10A.

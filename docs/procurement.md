@@ -24,17 +24,20 @@
 - [ ] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
 - [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
 - [ ] PC817-optoerottimet (RPi 5 J2 hard reset)
-- [ ] MCP23017 I2C I/O-laajentimet (8 lisäpainiketta)
+- [ ] 2x Waveshare SKU:15391 (MCP23017 IO Expansion Board, Expands 16 I/O Pins) (lisäpainikkeille)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)
 - [ ] 12V -> 12V DC-Regulaattori (IT-laitteille)
 - [ ] 12V -> 5V DC/DC-muunnin (I2C-eristetyn mittauspuolen syöttö)
 
 ## C2. Täydentävät releet
-- [ ] 30A/40A ulkoiset releet (tarpeen mukaan)
-- [ ] Parempi ratkaisu: autoreleitä tai DIN-kiskokantoja SKU:26244-kanaville, joilla ohjataan keskisuuria kuormia (10A-20A)
+- [ ] 30A/40A ulkoiset releet (tarpeen mukaan) autoreleitä tai DIN-releitä SKU:26244-kanaville, joilla ohjataan keskisuuria kuormia (10A-20A)
 
 ## D. LVI ja Valvonta
 - [x] Mastokamera (Tapo C500)
 - [ ] Jääkaappi (Danfoss kompressori)
-- [ ] Bilssipumppu (Johnson L2200)
+- [ ] Bilssipumppu pieni (BILGE_SMALL, <10A)
+- [ ] Bilssipumppu keski (BILGE_MID)
+- [ ] Bilssipumppu suuri (BILGE_LARGE)
+- [ ] Kellukkakytkimet (3 kpl, yksi per pilssipumppu)
+- [ ] Mekaaninen 12V aanimerkki / summeri (pilssihalytys)
 - [ ] Lämmitin (VEVOR 5kW Diesel)

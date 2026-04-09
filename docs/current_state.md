@@ -120,7 +120,7 @@ Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernet
 
 Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitteet eivät ole vielä hankittuja:
 - Jääkaappi (Danfoss, FRIDGE)
-- Bilssipumppu (BILGE)
+- Bilssipumput (BILGE_SMALL, BILGE_MID, BILGE_LARGE)
 - Lämmitin VEVOR 5kW Diesel (HEATER)
 
 ### Releiden ulkopuoliset kuormat (kenttätaso)
@@ -128,9 +128,11 @@ Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitt
 - AUTO_PL (autopilotti, ST5000) - käytössä
 - FRIDGE (jääkaappi) - hankkimatta
 - HEATER (lämmitin) - hankkimatta
-- BILGE (bilssipumppu) - hankkimatta
+- BILGE_SMALL (bilssipumppu pieni) - hankkimatta, ohjaus Rele-ESP 2 + kelluke (DI)
+- BILGE_MID (bilssipumppu keski) - hankkimatta, sahkomekaaninen kelluke + sulake
+- BILGE_LARGE (bilssipumppu suuri) - hankkimatta, sahkomekaaninen kelluke + sulake
 
-Peruste: kuormat ylittävät rele-ESP:n 10A kuormitusrajan.
+Peruste: vain BILGE_SMALL (<10A) ohjataan rele-ESP:lta; BILGE_MID ja BILGE_LARGE pysyvat kenttatasolla.
 
 ---
 

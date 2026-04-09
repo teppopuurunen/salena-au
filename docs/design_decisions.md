@@ -186,3 +186,28 @@ Keskisuuret kuormat (10A–20A) ohjataan ulkoisilla autorehlyillä tai DIN-disko
 - Ulkoiset releet mahdollistavat merkittävästi suuremman kuorman ilman moduulin rikkoutumista.
 - DIN-kisko-asennus vastaa teollisen automaation parhaita käytäntöjä ja helpottaa huoltoa.
 - Ratkaisu on kustannustehokas: yksi ulkoinen rele maksaa alle 30EUR verrattuna 50EUR Modbus-moduuliin.
+
+---
+
+## DD-17: Pilssipumppuautomaatio turvallisuuskriittisena toimintona
+
+**Paatos**
+- Pilssipumput jaetaan ohjaustavan mukaan:
+	- **BILGE_SMALL (<10A)** ohjataan **Rele-ESP 2** -kanavalta.
+	- **BILGE_SMALL:n kellukekytkin** kytketaan **Rele-ESP 2:n DI-tuloon**.
+	- **BILGE_MID** ja **BILGE_LARGE** toimivat kenttatasolla suoraan sahkomekaanisella kellukekytkimella ja sulakkeella.
+- DD-12:n rajaus sailyy: yli 10A kuormia ei ohjata rele-ESP:lta.
+- Automaatio on valvova ja halyttava kerros, ei ensisijainen kaynnistysmekanismi.
+
+**Perustelu**
+- Pilssipumppaus on turvallisuuskriittinen toiminto ja sen on toimittava ilman RPi:ta, HA:ta tai Ethernetia.
+- Pienimman pumpun paikallinen ohjaus mahdollistaa automaattisen kaynnistyksen ilman keskuskonetta.
+- Keskikokoinen ja suurin pumppu pidetaan yksinkertaisena kenttatason sahkomekaanisena toteutuksena.
+
+**Paikallinen logiikka (vain BILGE_SMALL, Rele-ESP 2)**
+- DI = 1 (kelluke ylhaalla) -> rele ON -> pumppu kay
+- DI = 0 (kelluke alhaalla) -> rele OFF -> pumppu seis
+
+**Vikasietoisuus**
+- Rele-ESP 2 / Ethernet / RPi / HA vika: BILGE_MID ja BILGE_LARGE toimivat edelleen kenttatasolla.
+- Mittausvian vaikutus: valvonta heikkenee, mutta pumppaus ei esty.
