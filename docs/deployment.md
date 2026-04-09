@@ -1,6 +1,6 @@
 # Deployment ja etäkehitys
 
-**Dokumentti:** Salena AU Remote-SSH + Container Tools + Tailscale -kehitysympäristö  
+**Dokumentti:** Salena AU Remote-SSH + Container Tools + Tailscale + ESPHome -kehitysympäristö  
 **Päivitetty:** 04/2026  
 **Tila:** Suunniteltu, toteutus vaiheittain
 
@@ -8,7 +8,7 @@
 
 ## Yhteenveto
 
-Home Assistant -kontti hallinnoidaan VS Code:sta Remote-SSH-yhteyden yli Tailscale-VPN:n turvalla. Container Tools -laajennus tarjoaa graafisen käyttöliittymän Docker/Podman-hallintaan ilman SSH-komentoja.
+Home Assistant -kontti hallinnoidaan VS Code:sta Remote-SSH-yhteyden yli Tailscale-VPN:n turvalla. Container Tools -laajennus tarjoaa graafisen käyttöliittymän Docker/Podman-hallintaan ilman SSH-komentoja. ESP32-laitteet mallinnetaan ESPHome-konfiguraatioina (yksi tiedosto per laite).
 
 ---
 
@@ -25,7 +25,8 @@ Raspberry Pi 5 (Salena-vene)
   ├─ Tailscale daemon
   ├─ SSH daemon
   └─ Docker/Podman
-       └─ Home Assistant kontti (core-rpi5/docker-compose.yml)
+    └─ Home Assistant kontti (core-rpi5/docker-compose.yml)
+      └─ ESPHome configit (/config/esphome/*.yaml)
 ```
 
 ---
@@ -42,6 +43,7 @@ Raspberry Pi 5 (Salena-vene)
 - Tailscale asennettuna ja aktiivisena
 - SSH daemon käynnissä (oletus Raspbian:ssa)
 - Docker tai Podman asennettuna
+- Home Assistantiin lisattuna ESPHome-integraatio (kun varsinainen kayttoonotto alkaa)
 
 ---
 
@@ -84,6 +86,29 @@ Kun olet kytketty Remote-SSH:lla:
 2. Navigoi `core-rpi5/docker-compose.yml`
 3. Oikeanklikkaa → **Docker: Compose Up**
 4. Tarkastele logeja Output-paneelista
+
+### 4. ESPHome runkotiedostot kaikille ESP:ille
+
+Luo valmiiksi yksi tiedosto per laite:
+
+- `core-rpi5/home-assistant/esphome/rele-esp-1.yaml`
+- `core-rpi5/home-assistant/esphome/rele-esp-2.yaml`
+- `core-rpi5/home-assistant/esphome/mittaus-esp.yaml`
+
+Tavoite tassa vaiheessa: tiedosto on olemassa, nimetty oikein, varsinainen firmware/logiikka lisataan myohemmin.
+
+---
+
+## ESPHome + MQTT toimintamalli
+
+Suositus on kayttaa Home Assistantia keskuksena ja MQTT:ta integraatiovaylana:
+
+- Rele-ESP 1: paikallinen relelogiikka + RS485 Modbus master, tilatiedot MQTT:hon
+- Rele-ESP 2: paikallinen I/O + releohjaukset, tilatiedot MQTT:hon
+- Mittaus-ESP: INA228/INA3221 mittaukset, sensoridata MQTT:hon
+- Home Assistant: lukee MQTT-topicit, visualisoi ja tekee automaatiot
+
+Tama erottaa kenttalogiikan (ESP) ja automaatiologiikan (HA), mutta pitaa telemetrian yhdessa paikassa.
 
 ---
 
@@ -148,6 +173,9 @@ services:
 - `core-rpi5/home-assistant/automations.yaml` – automaatiot
 - `core-rpi5/home-assistant/scripts.yaml` – skriptit
 - `core-rpi5/home-assistant/scenes.yaml` – näkymät
+- `core-rpi5/home-assistant/esphome/rele-esp-1.yaml` – ESPHome runko (Rele-ESP 1)
+- `core-rpi5/home-assistant/esphome/rele-esp-2.yaml` – ESPHome runko (Rele-ESP 2)
+- `core-rpi5/home-assistant/esphome/mittaus-esp.yaml` – ESPHome runko (Mittaus-ESP)
 
 ---
 
@@ -178,6 +206,7 @@ services:
 4. ☐ Ensimmäinen HA startup ja testaus
 5. ☐ SignalK-integraatio HA:han (integraatiot → HTTP REST)
 6. ☐ MQTT-väylän integraatio (Mosquitto + HA)
-7. ☐ ESP32-ohjainten integraatio HA:han (modbus-tcp tai MQTT)
+7. ☐ ESPHome rungot käyttöön (3 x ESP)
+8. ☐ ESP32-ohjainten integraatio HA:han (MQTT ensisijainen, modbus-tcp vain tarpeen mukaan)
 
 ---
