@@ -338,7 +338,7 @@ Lisaksi maaritetaan seuraavat mediasisallot:
 **Seuraukset**
 
 - Mekaaninen asennus vaatii mahonkisen kaantotelineen mitoituksen ja
-	tarinankestavan kiinnityksen.
+	tärinänkestävän kiinnityksen.
 - Kayttoliittymaprofiilit on suunniteltava niin, etta navigointinakema on
 	ensisijainen ajossa.
 - Mediasisallot tulee tallettaa paikallisesti, jotta ne toimivat myos ilman

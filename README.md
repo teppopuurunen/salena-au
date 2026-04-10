@@ -8,17 +8,17 @@ Salena AU modernisoi klassisen Amigo 40 Salenan sähkö- ja automaatiojärjestel
 
 Salena on mahongista valmistettu Amigo 40, rakennettu vuonna 1977
 prototyypiksi lasikuitusarjalle. Linjoiltaan se edustaa klassista
-skandinaavista purjeveneperinnetta ja muistuttaa Colin Archerin tai
+skandinaavista purjeveneperinnettä ja muistuttaa Colin Archerin tai
 Arvid Laurinin kosterien siluettia.
 
 Valmis ja hyvaksi havaittu mahonkiprototyyppi toimi muottina koko
 lasikuitusarjalle. Kaikki Amigo 40 -veneet pohjautuvat Salenan linjoihin.
 
-Sahkojarjestelma on lahes alkuperainen. 2000-luvulla on uusittu akut,
-erotuskytkenta ja lisatty CTEK-lataus. Volvo Penta vaihdettiin vuonna 1993.
+Sähköjärjestelmä on lähes alkuperäinen. 2000-luvulla on uusittu akut,
+erotuskytkentä ja lisätty CTEK-lataus. Volvo Penta vaihdettiin vuonna 1993.
 
-Salena AU -projekti tuo veneen sahko- ja automaatiojarjestelmat 2020-luvulle.
-Automaatio piilotetaan mahdollisuuksien mukaan, ja veneen alkuperaista ilmetta
+Salena AU -projekti tuo veneen sähkö- ja automaatiojärjestelmät 2020-luvulle.
+Automaatio piilotetaan mahdollisuuksien mukaan, ja veneen alkuperäistä ilmettä
 sekä klassista luonnetta kunnioitetaan kaikissa ratkaisuissa.
 
 ---
