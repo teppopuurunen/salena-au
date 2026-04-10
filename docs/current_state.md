@@ -32,6 +32,33 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Reititin: Huawei B818-263 4G LTE
 - Perässä kytkin: Teltonika TSW101
 
+### Salonkinaytto ja yhteiskaytto
+
+**Laite**
+- Blackstorm 24.5" Full HD -naytto (M245BN, 12V DC)
+- Liitannat: HDMI x2, DisplayPort, USB, audio out
+
+**Suunniteltu asennus**
+- HDMI-kaapeli Raspberry Pi 5:lta naytolle
+- kaantyva mahonkinen seinateline salongin seinalle
+- suuntaus karttapoydalle, kipparille tai matkustajille tilanteen mukaan
+
+**Suunniteltu kaytto**
+- plotteri- ja mittarinakymat sisatiloihin
+- mastokameran kuvan katselu salongista
+- kaynnistyksen tervetulotoivotus
+- Salena-logo tai sponsorimainos
+- naytonsaastaja: videokooste purjehdus- ja veneilyhetkista
+
+**Kayttolaitteet karttapoydalla**
+- Bluetooth-nappaimisto
+- Bluetooth-hiiri
+
+**Tila**
+- Naytto on hankittu
+- Mekaaninen asennus ja kaantotelineen toteutus seuraavana vaiheena
+- Sisaltoprofiilit toteutetaan osana UI/kioski-kayttoonottoa
+
 ---
 
 ## Autopilotti

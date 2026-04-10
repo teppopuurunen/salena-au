@@ -1,5 +1,28 @@
 # Salena AU - Järjestelmämäärittely v5.1.0
 
+Salena AU modernisoi klassisen Amigo 40 Salenan sähkö- ja automaatiojärjestelmät vaiheittain ja turvallisesti niin, että veneen alkuperäinen ilme säilyy, manuaalinen käyttö toimii aina, ja digitaaliset työkalut tuovat näkyvyyttä sekä hallintaa ilman pilviriippuvuutta.
+
+## Salena
+
+<img src="docs/images/Salena.jpg" alt="Salena laiturissa" width="420">
+
+Salena on mahongista valmistettu Amigo 40, rakennettu vuonna 1977
+prototyypiksi lasikuitusarjalle. Linjoiltaan se edustaa klassista
+skandinaavista purjeveneperinnetta ja muistuttaa Colin Archerin tai
+Arvid Laurinin kosterien siluettia.
+
+Valmis ja hyvaksi havaittu mahonkiprototyyppi toimi muottina koko
+lasikuitusarjalle. Kaikki Amigo 40 -veneet pohjautuvat Salenan linjoihin.
+
+Sahkojarjestelma on lahes alkuperainen. 2000-luvulla on uusittu akut,
+erotuskytkenta ja lisatty CTEK-lataus. Volvo Penta vaihdettiin vuonna 1993.
+
+Salena AU -projekti tuo veneen sahko- ja automaatiojarjestelmat 2020-luvulle.
+Automaatio piilotetaan mahdollisuuksien mukaan, ja veneen alkuperaista ilmetta
+sekä klassista luonnetta kunnioitetaan kaikissa ratkaisuissa.
+
+---
+
 **Projekti:** Integroitu veneautomaatio- ja navigointijärjestelmä (Amigo 40 “Salena”)  
 **Tavoite:** Luotettava, huollettava ja vaiheittain laajennettava kokonaisuus, jossa automaatio täydentää veneen perustoimintoja mutta ei koskaan ole niiden edellytys.
 

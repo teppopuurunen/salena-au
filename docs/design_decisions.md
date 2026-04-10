@@ -304,3 +304,42 @@ toimintamoodien perusteella.
 - SKU:26244 DI-tuloista varataan 3 kpl PIR-ilmaisimille.
 - Hankintalistaan lisataan 3 PIR-ilmaisinta.
 - Todo-listaan lisataan hankinta-, testaus- ja HA-konfigurointitehtavat.
+
+---
+
+## DD-19: Salonkinaytto karttapoydan ja kipparin kayttoon
+
+**Paatos**
+
+Asennetaan Blackstorm 24.5" Full HD -naytto (M245BN, 12V DC) salongin seinalla
+kaantyvalla mahonkisella telineella niin, etta naytto voidaan suunnata
+karttapoydalle, kipparille ja matkustajille.
+
+Naytto liitetaan HDMI:lla Raspberry Pi 5 -jarjestelmaan. Naytolla esitetaan
+navigointi- ja mittarinakymat seka mastokameran kuva.
+
+Karttapoydalle lisataan Bluetooth-nappaimisto ja Bluetooth-hiiri kayttoa varten.
+
+Lisaksi maaritetaan seuraavat mediasisallot:
+- kaynnistyksen tervetulotoivotus
+- Salena-logo tai sponsorimainos
+- naytonsaastajaksi videokooste parhaista purjehdus- ja veneilyhetkista
+
+**Perustelu**
+
+- Sama naytto palvelee seka navigointia etta salonkikayttoa ilman erillisia
+	paneeleita.
+- Kaantyva teline parantaa ergonomiaa eri kayttotilanteissa (kippari /
+	karttapoyta / matkustajat).
+- 12V-syotto on veneasennukseen luonteva eika vaadi erillista invertteria.
+- Sisaltoprofiilit (tervetulo, logo/mainos, screensaver) tekevat naytosta
+	myos viestinta- ja tunnelmaelementin satamassa ja vieraskaytossa.
+
+**Seuraukset**
+
+- Mekaaninen asennus vaatii mahonkisen kaantotelineen mitoituksen ja
+	tarinankestavan kiinnityksen.
+- Kayttoliittymaprofiilit on suunniteltava niin, etta navigointinakema on
+	ensisijainen ajossa.
+- Mediasisallot tulee tallettaa paikallisesti, jotta ne toimivat myos ilman
+	internetyhteytta.

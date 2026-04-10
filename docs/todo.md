@@ -160,3 +160,25 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
 - [ ] Pilotoi 1 ohjain (paikallinen käyttö)
 - [ ] Testaa PWM-taajuudet ja mahdolliset häiriöt
 - [ ] Lisää integraatio vasta lopuksi
+
+---
+
+## 8) Salonkinäyttö (DD-19)
+
+- [ ] Suunnittele mahonkisen kääntötelineen mitat ja liikeradat
+  - [ ] tarkista esteetön kääntö karttapöytä / kippari / matkustajat -asentoihin
+  - [ ] varmista kaapelien taivutussäteet käännössä
+- [ ] Asenna Blackstorm 24.5" Full HD -näyttö salongin seinälle
+  - [ ] HDMI-kaapeli Raspberry Pi 5:lta näytölle
+  - [ ] 12V-syöttö näytölle (sulake + johdinpoikkipinta dokumentoituna)
+- [ ] Ota karttapöydällä BT-ohjaimet käyttöön
+  - [ ] parita Bluetooth-näppäimistö
+  - [ ] parita Bluetooth-hiiri
+- [ ] Toteuta käynnistyksen tervetulonäkymä
+  - [ ] sisältö: tervetulotoivotus + Salena-logo tai sponsorimainos
+- [ ] Toteuta näytönsäästäjä
+  - [ ] koosta paikallinen videokooste parhaista purjehdus- ja veneilyhetkistä
+  - [ ] varmista automaattinen paluu navigointinäkymään aktiivisessa käytössä
+- [ ] Testaa katselukulmat ja luettavuus käytännössä
+  - [ ] päivä / ilta / satama / purjehdus
+  - [ ] kirjaa havainto ja tarvittavat asennussäädöt
