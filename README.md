@@ -11,7 +11,7 @@ prototyypiksi lasikuitusarjalle. Linjoiltaan se edustaa klassista
 skandinaavista purjeveneperinnettä ja muistuttaa Colin Archerin tai
 Arvid Laurinin kosterien siluettia.
 
-Valmis ja hyvaksi havaittu mahonkiprototyyppi toimi muottina koko
+Valmis ja hyväksi havaittu mahonkiprototyyppi toimi muottina koko
 lasikuitusarjalle. Kaikki Amigo 40 -veneet pohjautuvat Salenan linjoihin.
 
 Sähköjärjestelmä on lähes alkuperäinen. 2000-luvulla on uusittu akut,
@@ -222,7 +222,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - 3 × Waveshare SKU:26244 (Modbus RTU IO): hankkimatta
 - Mittaus-ESP (SKU: 28771): hankkimatta, firmware tekemättä
 - Mittauskomponentit (INA228, INA3221, shuntit, ISO1540): hankkimatta
-- PWM-valaistuksen suunnitelu ja toteutus tehdään myöhemmin
+- PWM-valaistuksen suunnittelu ja toteutus tehdään myöhemmin
 
 ---
 
