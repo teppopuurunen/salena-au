@@ -26,6 +26,8 @@ sekä klassista luonnetta kunnioitetaan kaikissa ratkaisuissa.
 **Projekti:** Integroitu veneautomaatio- ja navigointijärjestelmä (Amigo 40 “Salena”)  
 **Tavoite:** Luotettava, huollettava ja vaiheittain laajennettava kokonaisuus, jossa automaatio täydentää veneen perustoimintoja mutta ei koskaan ole niiden edellytys.
 
+📊 **[Projektin yleiskatsaus – arkkitehtuurikaaviot, komponenttistatus ja eteneminen →](docs/overview.md)**
+
 ---
 
 ## 1. Yleiskuvaus
