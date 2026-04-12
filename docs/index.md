@@ -4,6 +4,7 @@ Tämä hakemisto sisältää Salena AU -järjestelmän “current truth” -doku
 
 ## Yleisdokumentit (docs/)
 
+- `overview.md` – **Projektin yleiskatsaus** (arkkitehtuurikaaviot, komponenttistatus, eteneminen)
 - `architecture.md` – Järjestelmäarkkitehtuuri (kerrokset, vastuut, rajapinnat)
 - `current_state.md` – Todellinen nykytila (mikä on käytössä nyt)
 - `design_decisions.md` – Keskeiset suunnittelupäätökset (miksi näin)
