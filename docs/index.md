@@ -9,6 +9,7 @@ Tämä hakemisto sisältää Salena AU -järjestelmän “current truth” -doku
 - `current_state.md` – Todellinen nykytila (mikä on käytössä nyt)
 - `design_decisions.md` – Keskeiset suunnittelupäätökset (miksi näin)
 - `deployment.md` – VS Code Remote-SSH + Container Tools etäkehitys (Tailscale VPN:n yli)
+- `ui_dashboard.md` – Käyttöliittymä- ja Dashboard-arkkitehtuuri (HA Master Dash, laitteet, etäyhteys)
 - `network.md` – Verkko ja väylät (Ethernet/Wi-Fi/USB/RS422/RS485 Modbus/I2C)
 - `procurement.md` – Hankinnat ja varaukset
 - `todo.md` – Seuraavat työvaiheet (testipenkki, layout, firmware)
