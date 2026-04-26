@@ -18,6 +18,66 @@ Järjestelmä jakautuu kolmeen tasoon:
 
 ---
 
+## Fyysinen sijoittelu ja sähkösolmut (tarkennus)
+
+### I. Sijoittelu ja solmut
+
+| Sijainti | Komponentit | Rooli |
+|---|---|---|
+| Peräsolmu (akkutila) | Startti-, hupi- ja IT-akut (LiFePO4), 3 x pääshuntti, päämiinuskisko, Victron Orion DC-DC, Victron MPPT:t, Mittaus-ESP 1 | Energian tuotanto, varastointi ja pääakkujen seuranta |
+| Kabiinisolmu (kaappi) | Raspberry Pi 5, 2 x Rele-ESP, Mittaus-ESP 2, 2 x Teltonika TSW101, 2 x Motonet-sulakerasia, 1-0-Auto -teollisuuskytkimet | Järjestelmän aivot, kuormien ohjaus, IT-infra ja kulutuksen seuranta (pumput) |
+
+### II. Miinuslinja ja shuntit (tähtimaadoitus)
+
+Tämä on järjestelmän sähköinen peruskivi: kaikki virta pakotetaan kulkemaan shunttien läpi.
+
+**Akut -> shuntit**
+- Startti (-) -> Startti-shuntti (250A)
+- Hupi (-) -> Hupi-shuntti (250A)
+- IT-akku (-) -> IT-shuntti (esim. 50A/100A)
+- Akun navoissa ei pidetä muita miinusjohtoja, jotka ohittaisivat shuntin.
+
+**Shuntit -> päämiinuskisko**
+- Kaikkien kolmen shuntin kuormapuolet yhdistetään järeään päämiinuskiskoon.
+
+**Päämiinuskisko -> paluut**
+- Moottorin lohko (maadoitus)
+- Kabiinin hupi-sulakerasian miinus (16 mm2)
+- Kabiinin IT-sulakerasian miinus (16 mm2)
+- Latureiden (Orion, MPPT, Ctek) miinusjohdot
+
+### III. Syöttöjohtojen mitoitus (2 m veto perästä kabiiniin)
+
+Mitoitus perustuu jännitehäviön minimointiin (clean power -periaate).
+
+| Linja | Koko (mm2) | Perustelu |
+|---|---|---|
+| Startti (+/-) | 25 mm2 | Volvo Penta 2003 käynnistysvirta |
+| Hupi plus | 16 mm2 | Päävirta jääkaapille, lämmittimelle ja pumpuille |
+| Hupi miinus | 16 mm2 | Erillinen paluutie hupikuormille, ei häiriöitä IT-puolelle |
+| IT plus | 16 mm2 | Victron Orionilta stabiili jännite RPi:lle ja ESP:ille |
+| IT miinus | 16 mm2 | Häiriötön referenssimiinus herkkää mittausdataa varten |
+
+### IV. Automaatio ja mittaus (ESP-yksiköt)
+
+- **Mittaus-ESP 1 (perä):** lukee I2C-väylällä (eristetty ISO1540) pääakkujen shuntit (INA228) ja lähettää datan Ethernetillä kabiiniin.
+- **Mittaus-ESP 2 (kabiini):** lukee pilssipumppujen plussapuolen shuntit (INA3221).
+- **Rele-ESP 1 ja 2 (kabiini):** ohjaavat 12V-kuormia; painikkeet kytketty suoraan DI-tuloihin paikallislogiikkaa varten.
+- **1-0-Auto-ohitus:** mekaaninen ohitus säilyy; "1"-asennossa kytkin ohittaa ESP-releen.
+
+### V. Verkko ja IT-infra
+
+- **Reititin:** Huawei B818 (DHCP-master ja internet-gateway)
+- **Kytkimet:** 2 x Teltonika TSW101 (PoE+), syöttävät datan ja virran ESP-moduuleille
+
+**Topologia**
+- RPi 5 -> Huawei LAN 1 (ei-PoE)
+- Teltonika 1 -> Huawei LAN 2 (uplink)
+- Teltonika 2 -> Teltonika 1 (daisy-chain) tai tähteen suoraan Huaweihin
+- Kaikki ESP:t -> Teltonikan PoE-portteihin (portit 1-4)
+
+---
+
 ## Tavoitteet ja reunaehdot
 
 ### Päätavoitteet
