@@ -203,10 +203,10 @@ services:
 1. ✓ Tailscale asennus (alla)
 2. ✓ SSH-config (alla)
 3. ✓ Docker-compose pohja (alla)
-4. ☐ Ensimmäinen HA startup ja testaus
-5. ☐ SignalK-integraatio HA:han (integraatiot → HTTP REST)
-6. ☐ MQTT-väylän integraatio (Mosquitto + HA)
-7. ☐ ESPHome rungot käyttöön (3 x ESP)
+4. ✓ Ensimmäinen HA startup ja testaus
+5. ✓ SignalK-integraatio HA:han (integraatiot → HTTP REST)
+6. ✓ MQTT-väylän integraatio (Mosquitto + HA)
+7. ✓ ESPHome rungot käyttöön (3 x ESP)
 8. ☐ ESP32-ohjainten integraatio HA:han (MQTT ensisijainen, modbus-tcp vain tarpeen mukaan)
 
 ---

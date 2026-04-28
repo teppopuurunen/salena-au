@@ -2,5 +2,101 @@ esphome:
   name: rele-esp-2
   friendly_name: Rele ESP 2
 
-# Placeholder runko. Varsinainen logiikka lisataan myohemmin.
-# Tavoiterooli: paikallinen I/O ja releohjaus.
+
+# Rele-ESP 2 (ESP32-S3-ETH-8DI-8RO)
+# - 8 relelähtöä, 8 DI-tuloa
+# - Jokaiselle releelle oma painike (input)
+# - MCP23017 I2C GPIO-laajennin (8 lisäpainiketta, optionaalinen)
+# - Paikallinen I/O ja releohjaus, ei Modbus-masteria
+# - Toimii itsenäisesti, ohjaus myös Ethernetin yli
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+  power_pin: GPIO12
+
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
+# 8 relelähtöä (GPIO10-17 esimerkkinä, tarkista HW)
+switch:
+  - platform: gpio
+    pin: GPIO10
+    name: "Rele 1"
+  - platform: gpio
+    pin: GPIO11
+    name: "Rele 2"
+  - platform: gpio
+    pin: GPIO12
+    name: "Rele 3"
+  - platform: gpio
+    pin: GPIO13
+    name: "Rele 4"
+  - platform: gpio
+    pin: GPIO14
+    name: "Rele 5"
+  - platform: gpio
+    pin: GPIO15
+    name: "Rele 6"
+  - platform: gpio
+    pin: GPIO16
+    name: "Rele 7"
+  - platform: gpio
+    pin: GPIO17
+    name: "Rele 8"
+
+# 8 DI-tuloa (GPIO2-9 esimerkkinä, tarkista HW)
+binary_sensor:
+  - platform: gpio
+    pin: GPIO2
+    name: "Painike 1"
+  - platform: gpio
+    pin: GPIO3
+    name: "Painike 2"
+  - platform: gpio
+    pin: GPIO4
+    name: "Painike 3"
+  - platform: gpio
+    pin: GPIO5
+    name: "Painike 4"
+  - platform: gpio
+    pin: GPIO6
+    name: "Painike 5"
+  - platform: gpio
+    pin: GPIO7
+    name: "Painike 6"
+  - platform: gpio
+    pin: GPIO8
+    name: "Painike 7"
+  - platform: gpio
+    pin: GPIO9
+    name: "Painike 8"
+
+# MCP23017 I2C GPIO-laajennin (8 lisäpainiketta, optionaalinen)
+# mcp23017:
+#   - id: 'mcp23017_hub'
+#     address: 0x20
+#
+# binary_sensor:
+#   - platform: mcp23017
+#     mcp23017: mcp23017_hub
+#     pin: 0
+#     name: "Lisäpainike 1"
+#   ...

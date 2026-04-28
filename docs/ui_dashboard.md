@@ -16,6 +16,87 @@ Salena AU -järjestelmän käyttöliittymä on suunniteltu tarjoamaan optimaalin
 
 Järjestelmän keskitettynä hallintaliittymänä toimii Home Assistant (HA), johon kaikki data ja ohjaukset integroidaan yhdeksi näkymäksi.
 
+### Navigointi dashboard-näkymien välillä
+
+Kaikkiin dashboard-näkymiin toteutetaan yhtenäinen valikko (esim. sivupalkki tai yläpalkin tabit), jonka avulla käyttäjä voi siirtyä helposti eri näkymien (Purjehdus, Sähkö/järjestelmä, Satama/mukavuus) välillä. Home Assistantin oletusnavigaatio mahdollistaa tämän, mutta suunnittelussa varmistetaan, että kaikki tärkeät näkymät ovat helposti saavutettavissa kaikilla laitteilla.
+
+#### Esimerkkivalikko (lyhyet nimet)
+
+Home Assistantin dashboardin navigaatiovalikko voidaan toteuttaa esimerkiksi näin (YAML):
+
+```yaml
+views:
+	- title: Purjehdus
+		path: purjehdus
+		icon: mdi:sail-boat
+		# ... Purjehdusnäkymän kortit ...
+	- title: Sähkö
+		path: sahko
+		icon: mdi:car-battery
+		# ... Sähkö- ja järjestelmänäkymän kortit ...
+	- title: Satama
+		path: satama
+		icon: mdi:anchor
+		# ... Satama- ja mukavuusnäkymän kortit ...
+```
+
+Tällöin dashboardin ylä- tai sivupalkissa näkyy kolme lyhytnimistä välilehteä: Purjehdus, Sähkö ja Satama.
+
+#### Esimerkkirakenne: pääsivu, sivupaneeli ja karttapaneeli
+
+```yaml
+views:
+	- title: Etusivu
+		path: etusivu
+		icon: mdi:home
+		layout:
+			type: sidebar
+		cards:
+			- type: picture
+				image: /local/salena_logo.png
+				tap_action:
+					action: none
+			- type: grid
+				columns: 1
+				cards:
+					- type: button
+						name: Purjehdus
+						icon: mdi:sail-boat
+						tap_action:
+							action: navigate
+							navigation_path: /purjehdus
+					- type: button
+						name: Sähkö
+						icon: mdi:car-battery
+						tap_action:
+							action: navigate
+							navigation_path: /sahko
+					- type: button
+						name: Satama
+						icon: mdi:anchor
+						tap_action:
+							action: navigate
+							navigation_path: /satama
+	- title: Purjehdus
+		path: purjehdus
+		icon: mdi:sail-boat
+		panel: true
+		cards:
+			- type: iframe
+				url: https://signal-k-kartta-url
+				aspect_ratio: 100%
+	- title: Sähkö
+		path: sahko
+		icon: mdi:car-battery
+		# ... Sähkö- ja järjestelmänäkymän kortit ...
+	- title: Satama
+		path: satama
+		icon: mdi:anchor
+		# ... Satama- ja mukavuusnäkymän kortit ...
+```
+
+Tässä mallissa Etusivu näyttää logon ja isot valikkonapit, Purjehdus-näkymä on panel-asettelulla (kartta täysikokoisena), ja navigointi onnistuu helposti sivupaneelista tai pääsivulta.
+
 ### Järjestelmäintegraatio
 
 - **Signal K ↔ HA:** Kaikki navigointidata (nopeus, syvyys, tuuli, GPS) tuodaan Signal K:sta HA-entiteeteiksi.

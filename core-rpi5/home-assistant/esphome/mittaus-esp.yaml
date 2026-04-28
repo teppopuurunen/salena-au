@@ -2,5 +2,68 @@ esphome:
   name: mittaus-esp
   friendly_name: Mittaus ESP
 
-# Placeholder runko. Varsinainen logiikka lisataan myohemmin.
-# Tavoiterooli: INA228 + INA3221 mittausdata Ethernet/MQTT kautta.
+
+# Integroitu mittaus-ESP (SKU:28771 / ESP32-S3-POE-ETH)
+# - Lukee pääakun shuntin (INA228, I2C, eristetty ISO1540)
+# - Lukee pienkuormien shuntit (INA3221, I2C, eristetty ISO1540)
+# - Välittää mittausdatan Ethernetin ja MQTT:n yli Home Assistantille/SignalK:lle
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+  power_pin: GPIO12
+
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
+i2c:
+  sda: GPIO8
+  scl: GPIO9
+  scan: true
+  id: bus_a
+
+# INA228 pääakku (esim. 250A shuntti)
+# Requires custom component or ESPHome external component if ei natiivituki
+# Example (jos tuki löytyy):
+# ina228:
+#   - address: 0x40
+#     shunt_resistance: 0.0002
+#     current:
+#       name: "Pääakkuvirta"
+#     power:
+#       name: "Pääakku Power"
+#     bus_voltage:
+#       name: "Pääakku Jännite"
+
+# INA3221 pienkuormat (3 kanavaa)
+# Example (jos tuki löytyy):
+# ina3221:
+#   - address: 0x41
+#     channel_1:
+#       shunt_resistance: 0.002
+#       name: "Kuorma 1 Virta"
+#     channel_2:
+#       shunt_resistance: 0.002
+#       name: "Kuorma 2 Virta"
+#     channel_3:
+#       shunt_resistance: 0.002
+#       name: "Kuorma 3 Virta"
+
+# Huom: Jos ESPHome ei tue suoraan INA228/INA3221, käytä custom componenttia tai external_components.

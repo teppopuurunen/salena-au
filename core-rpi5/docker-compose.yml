@@ -16,6 +16,7 @@ services:
     volumes:
       - ./home-assistant:/config
       - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
 
     environment:
       TZ: Europe/Helsinki
@@ -54,5 +55,26 @@ services:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
+    environment:
+      TZ: Europe/Helsinki
+
+  signalk:
+    image: signalk/signalk-server:latest
+    container_name: signalk
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./signalk:/home/node/.signalk
+    environment:
+      TZ: Europe/Helsinki
+
+  esphome:
+    image: esphome/esphome:latest
+    container_name: esphome
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./home-assistant/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
     environment:
       TZ: Europe/Helsinki
