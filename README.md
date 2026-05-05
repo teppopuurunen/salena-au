@@ -5,7 +5,15 @@ DIY smart boat automation project for a 1977 Amigo 40 sailboat.
 Salena AU modernizes a classic wooden sailboat into a reliable, fail-safe smart boat system using ESP32 controllers, MQTT communication, and a Raspberry Pi running Home Assistant and SignalK.
 
 ## Keywords
-salena-au, smart boat, boat automation, esp32 boat, marine electronics, mqtt, home assistant, 12v system, sailing automation
+- salena-au
+- smart boat
+- boat automation
+- esp32 boat
+- marine electronics
+- mqtt
+- home assistant
+- 12v system
+- sailing automation
 
 ---
 
