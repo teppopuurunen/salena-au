@@ -1,4 +1,5 @@
 This repository contains a DIY smart boat system for Amigo 40 sailboat.
+
 Keywords: salena-au, smart boat, esp32 boat, marine automation, mqtt, home assistant# Salena AU - Järjestelmämäärittely v5.1.0
 # Salena AU – Smart Boat Automation (ESP32, MQTT, Home Assistant)
 
