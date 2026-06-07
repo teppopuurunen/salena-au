@@ -2,13 +2,11 @@ esphome:
   name: rele-esp-1
   friendly_name: Rele ESP 1
 
-
 # Rele-ESP 1 (ESP32-S3-ETH-8DI-8RO)
-# - 8 relelähtöä, 8 DI-tuloa
-# - Jokaiselle releelle oma painike (input)
-# - MCP23017 I2C GPIO-laajennin (8 lisäpainiketta)
-# - RS485 Modbus master (Waveshare I/O)
-# - Toimii itsenäisesti, ohjaus myös Ethernetin yli
+# - Moottorin ohjaus ja turvalukitukset (Volvo Penta 2003)
+# - D+ hard interlock estää startin, jos moottori käy
+# - Optoeristetyt hälytystulot luetaan keskeytyspohjaisesti
+# - Starttimoottorin kulutus lasketaan virtuaalishunttina (ms tarkkuus)
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -30,86 +28,219 @@ api:
 
 ota:
 
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_user
-  password: !secret mqtt_password
+globals:
+  - id: starter_balance_ah
+    type: float
+    restore_value: yes
+    initial_value: '100.0'
+  - id: starter_session_ah
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+  - id: starter_last_event_ah
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+  - id: starter_cmd_started_ms
+    type: uint32_t
+    restore_value: no
+    initial_value: '0'
+  - id: starter_model_last_ms
+    type: uint32_t
+    restore_value: no
+    initial_value: '0'
 
-# 8 relelähtöä (GPIO10-17 esimerkkinä, tarkista HW)
+sensor:
+  - platform: template
+    id: starter_balance_ah_sensor
+    name: "Starttiakku saldo (virtuaalinen)"
+    unit_of_measurement: "Ah"
+    accuracy_decimals: 4
+    update_interval: never
+  - platform: template
+    id: starter_last_event_ah_sensor
+    name: "Starttimoottorin kulutus / viime käynnistys"
+    unit_of_measurement: "Ah"
+    accuracy_decimals: 5
+    update_interval: never
+
 switch:
   - platform: gpio
+    id: engine_ignition_15
     pin: GPIO10
-    name: "Rele 1"
+    name: "Moottori virrat (napa 15)"
+
   - platform: gpio
+    id: engine_start_50_raw
     pin: GPIO11
-    name: "Rele 2"
-  - platform: gpio
-    pin: GPIO12
-    name: "Rele 3"
+    internal: true
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - lambda: |-
+          const uint32_t now_ms = millis();
+          id(starter_cmd_started_ms) = now_ms;
+          id(starter_model_last_ms) = now_ms;
+          id(starter_session_ah) = 0.0f;
+      - logger.log: "Starttirele ON (napa 50), virtuaalishunttilaskenta käynnissä"
+    on_turn_off:
+      - lambda: |-
+          id(starter_last_event_ah) = id(starter_session_ah);
+      - sensor.template.publish:
+          id: starter_last_event_ah_sensor
+          state: !lambda return id(starter_last_event_ah);
+      - sensor.template.publish:
+          id: starter_balance_ah_sensor
+          state: !lambda return id(starter_balance_ah);
+      - logger.log: "Starttirele OFF (napa 50)"
+
+  - platform: template
+    id: engine_start_50
+    name: "Moottori startti (napa 50)"
+    lambda: |-
+      return id(engine_start_50_raw).state;
+    turn_on_action:
+      - if:
+          condition:
+            binary_sensor.is_on: alternator_d_plus_running
+          then:
+            - logger.log:
+                level: WARN
+                format: "Startti estetty: D+ aktiivinen (moottori käy)"
+          else:
+            - switch.turn_on: engine_start_50_raw
+    turn_off_action:
+      - switch.turn_off: engine_start_50_raw
+
+  # Muut relelähdöt jätetään kuormille / varauksille
   - platform: gpio
     pin: GPIO13
-    name: "Rele 4"
+    name: "Relekanava 4"
   - platform: gpio
     pin: GPIO14
-    name: "Rele 5"
+    name: "Relekanava 5"
   - platform: gpio
     pin: GPIO15
-    name: "Rele 6"
+    name: "Relekanava 6"
   - platform: gpio
     pin: GPIO16
-    name: "Rele 7"
+    name: "Relekanava 7"
   - platform: gpio
     pin: GPIO17
-    name: "Rele 8"
+    name: "Relekanava 8"
 
-# 8 DI-tuloa (GPIO2-9 esimerkkinä, tarkista HW)
 binary_sensor:
+  # Optokanava 1: Volvo öljynpainehälytys (napa 15 -> 1k/2W -> opto LED)
   - platform: gpio
-    pin: GPIO2
-    name: "Painike 1"
-  - platform: gpio
-    pin: GPIO3
-    name: "Painike 2"
-  - platform: gpio
-    pin: GPIO4
-    name: "Painike 3"
-  - platform: gpio
-    pin: GPIO5
-    name: "Painike 4"
-  - platform: gpio
-    pin: GPIO6
-    name: "Painike 5"
-  - platform: gpio
-    pin: GPIO7
-    name: "Painike 6"
-  - platform: gpio
-    pin: GPIO8
-    name: "Painike 7"
-  - platform: gpio
-    pin: GPIO9
-    name: "Painike 8"
+    id: volvo_oil_pressure_alarm
+    pin:
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Volvo öljynpainehälytys"
+    on_press:
+      - logger.log:
+          level: WARN
+          format: "Keskeytys: öljynpainehälytys aktiivinen"
 
-# MCP23017 I2C GPIO-laajennin (8 lisäpainiketta)
-# mcp23017:
-#   - id: 'mcp23017_hub'
-#     address: 0x20
-#
-# binary_sensor:
-#   - platform: mcp23017
-#     mcp23017: mcp23017_hub
-#     pin: 0
-#     name: "Lisäpainike 1"
-#   ...
+  # Optokanava 2: Volvo jäähdytysvesihälytys (napa 15 -> 1k/2W -> opto LED)
+  - platform: gpio
+    id: volvo_coolant_alarm
+    pin:
+      number: GPIO3
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Volvo jäähdytysvesihälytys"
+    on_press:
+      - logger.log:
+          level: WARN
+          format: "Keskeytys: jäähdytysvesihälytys aktiivinen"
 
-# RS485/Modbus master (esim. UART2)
-# uart:
-#   tx_pin: GPIO20
-#   rx_pin: GPIO21
-#   baud_rate: 9600
-# modbus:
-#   uart_id: uart2
-#
-# modbus_controller:
-#   - id: io_module
-#     address: 0x01
-#     ...
+  # Optokanava 3: D+ käyntitieto (napa D+ -> 1k/2W -> opto LED)
+  - platform: gpio
+    id: alternator_d_plus_running
+    pin:
+      number: GPIO4
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Moottori käy (D+)"
+    on_press:
+      - logger.log: "D+ nousi: moottori käy"
+      - if:
+          condition:
+            switch.is_on: engine_start_50_raw
+          then:
+            - switch.turn_off: engine_start_50_raw
+            - logger.log:
+                level: WARN
+                format: "Starttirele pakko-ohjattu OFF: D+ aktivoitui"
+
+  # Optokanavat 4-8: muut eristetyt tilatiedot
+  - platform: gpio
+    pin:
+      number: GPIO5
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Pilssi kohokytkin 1 (12V, 1k/2W)"
+
+  - platform: gpio
+    pin:
+      number: GPIO6
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Pilssi kohokytkin 2 (12V, 1k/2W)"
+
+  - platform: gpio
+    pin:
+      number: GPIO7
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "PoE 48V valvonta (4k7/2W)"
+
+  - platform: gpio
+    pin:
+      number: GPIO8
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Optokanava 7 varaus"
+
+  - platform: gpio
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+      inverted: true
+    use_interrupt: true
+    name: "Optokanava 8 varaus"
+
+interval:
+  - interval: 100ms
+    then:
+      - if:
+          condition:
+            switch.is_on: engine_start_50_raw
+          then:
+            - lambda: |-
+                const uint32_t now_ms = millis();
+                const uint32_t dt_ms = now_ms - id(starter_model_last_ms);
+                id(starter_model_last_ms) = now_ms;
+
+                const float elapsed_s = (now_ms - id(starter_cmd_started_ms)) / 1000.0f;
+                float modeled_current_a = 160.0f;
+
+                if (elapsed_s < 0.3f) {
+                  modeled_current_a = 320.0f;
+                } else if (elapsed_s < 0.8f) {
+                  modeled_current_a = 220.0f;
+                } else {
+                  modeled_current_a = 140.0f;
+                }
+
+                const float consumed_ah = modeled_current_a * (dt_ms / 3600000.0f);
+                id(starter_session_ah) += consumed_ah;
+                id(starter_balance_ah) -= consumed_ah;

@@ -3,7 +3,7 @@
 ## 1. Yleisasetukset
 - **Laite:** ESP32-S3-ETH-8DI-8RO
 - **Väylä:** Ethernet (RJ45)
-- **Protokolla:** MQTT / REST
+- **Protokolla:** paikallinen Ethernet/API + RS485 Modbus RTU
 - **Syöttö:** PoE
 - **Kuormajännite:** 12V DC
 
@@ -44,3 +44,16 @@ Peruste: rele-ESP:n käytettävä kuormitusraja on 10A.
 
 Yhteensa 3 DI-varausta liiketunnistukselle. Lopulliset DI-kanavat paatetaan
 johdotus- ja layout-vaiheessa.
+
+## 5. Moottorin turvakanavat (optoerotettu, suora ESP32-keskeytys)
+
+| Kanava | Signaali | Etuvastus | Logiikka |
+|:---|:---|:---|:---|
+| Opto 1 | Volvo öljynpainehälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
+| Opto 2 | Volvo jäähdytysvesihälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
+| Opto 3 | D+ käyntitieto | 1kΩ / 2W | D+ aktiivinen estää starttireleen (hard interlock) |
+| Opto 4 | Pilssi kohokytkin 1 (12V) | 1kΩ / 2W | Tilatieto |
+| Opto 5 | Pilssi kohokytkin 2 (12V) | 1kΩ / 2W | Tilatieto |
+| Opto 6 | PoE 48V valvonta | 4.7kΩ / 2W | Tilatieto |
+| Opto 7 | Varaus | - | Tilatieto |
+| Opto 8 | Varaus | - | Tilatieto |

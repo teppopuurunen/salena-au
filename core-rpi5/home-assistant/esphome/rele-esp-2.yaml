@@ -8,7 +8,7 @@ esphome:
 # - Jokaiselle releelle oma painike (input)
 # - MCP23017 I2C GPIO-laajennin (8 lisäpainiketta, optionaalinen)
 # - Paikallinen I/O ja releohjaus, ei Modbus-masteria
-# - Toimii itsenäisesti, ohjaus myös Ethernetin yli
+# - Toimii itsenäisesti, ohjaus paikallisesti Ethernet/API-väylällä
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -29,11 +29,6 @@ logger:
 api:
 
 ota:
-
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_user
-  password: !secret mqtt_password
 
 # 8 relelähtöä (GPIO10-17 esimerkkinä, tarkista HW)
 switch:

@@ -9,7 +9,7 @@ Järjestelmä on jaettu kolmeen sähköisesti eristettyyn kokonaisuuteen kriitti
 
 * **Starttiakku**: Omistettu Volvo Penta 2003 (1997) -moottorin käynnistykseen.
 * **Hupiakusto**: Syöttää yleistä kulutusta, kuten valot, pumput ja jääkaapin.
-* **Brain-akku (UPS)**: Pyhitetty elektroniikalle (Raspberry Pi, 2x rele-ESP + 1x Mittaus-ESP, reititin, kytkin, kamerat). Toimii puskurina jännitevaihteluita vastaan.
+* **UPS-akku**: Pyhitetty elektroniikalle (Raspberry Pi, 2x rele-ESP + 1x Mittaus-ESP, reititin, kytkin, kamerat). Toimii puskurina jännitevaihteluita vastaan.
 
 ---
 
@@ -45,7 +45,7 @@ Paneelit on jaettu kahteen itsenäiseen piiriin varjostuksen hallinnan parantami
 ## 4. Hallinta ja Erotus
 
 * **Blue Sea 7649 Add-A-Battery**: Sisältää 65A ACR-latausreleen ja Dual Circuit Plus -pääkytkimen. Järjestelmä yhdistää akut automaattisesti latauksen ajaksi ja erottaa ne kulutuksen aikana.
-* **Victron Orion-Tr Smart Isolated**: Eristää Brain-akun galvaanisesti muusta verkosta. Tämä suojaa herkkää elektroniikkaa jännitepiikeiltä ja maasilmukoilta, jotka voisivat häiritä Ethernet-liikennettä.
+* **Victron Orion-Tr Smart Isolated**: Eristää UPS-akun galvaanisesti muusta verkosta. Tämä suojaa herkkää elektroniikkaa jännitepiikeiltä ja maasilmukoilta, jotka voisivat häiritä Ethernet-liikennettä.
 
 ---
 
@@ -54,6 +54,6 @@ Kaikki komponentit on sijoitettu akkutilaan jännitehäviöiden minimoimiseksi:
 
 * **Jäähdytys**: Laitteet on asennettu pystysuoraan seinälle ilmankierron varmistamiseksi (erityisesti Orion ja Ctek).
 * **Suojaus**: ESP32-piirit on sijoitettu erilliseen IP-suojattuun koteloon suojaan akun mahdollisilta kaasuilta.
-* **Kytkennät**: Kaikki laitteet on kytketty yhteiseen järeään miinus-kokoojakiskoon potentiaalierojen välttämiseksi.
-
+* **Kytkennät**: Kaikki laitteet on kytketty yhteiseen järeään maapulttiin potentiaalierojen välttämiseksi.
+* **Mittausperiaate**: Kaikki virta- ja jännitemittaukset tehdään high-side-periaatteella plus-linjoista. INA228/INA3221 GND ankkuroidaan samaan maapulttiin.
 

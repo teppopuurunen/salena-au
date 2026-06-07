@@ -2,11 +2,19 @@ esphome:
   name: mittaus-esp
   friendly_name: Mittaus ESP
 
+# Mittaus-ESP (SKU 28771 / ESP32-S3-POE-ETH)
+# Topologia:
+# - 1 x MIKROE-1878 (ISO1540) erottaa ESP32:n I2C-puolen mittausväylästä
+# - Kaikki INA228/INA3221-anturit ovat erotetulla mittauspuolella
+# - Mittauspuolen GND ankkuroituu veneen yhteiseen maapulttiin (absoluuttinen 0V)
+# - Kaikki virta- ja jännitemittaukset tehdään high-side + linjoista
 
-# Integroitu mittaus-ESP (SKU:28771 / ESP32-S3-POE-ETH)
-# - Lukee pääakun shuntin (INA228, I2C, eristetty ISO1540)
-# - Lukee pienkuormien shuntit (INA3221, I2C, eristetty ISO1540)
-# - Välittää mittausdatan Ethernetin ja MQTT:n yli Home Assistantille/SignalK:lle
+substitutions:
+  ina228_house_shunt_ohm: "0.00025"
+  ina228_start_vsr_shunt_ohm: "0.00075"
+  ina228_ups_shunt_ohm: "0.00075"
+  ina3221_bilge_shunt_ohm: "0.0015"
+  ina3221_expansion_shunt_ohm: "0.00375"
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -28,42 +36,39 @@ api:
 
 ota:
 
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_user
-  password: !secret mqtt_password
-
 i2c:
   sda: GPIO8
   scl: GPIO9
   scan: true
-  id: bus_a
+  id: isolated_measurement_bus
 
-# INA228 pääakku (esim. 250A shuntti)
-# Requires custom component or ESPHome external component if ei natiivituki
-# Example (jos tuki löytyy):
-# ina228:
-#   - address: 0x40
-#     shunt_resistance: 0.0002
-#     current:
-#       name: "Pääakkuvirta"
-#     power:
-#       name: "Pääakku Power"
-#     bus_voltage:
-#       name: "Pääakku Jännite"
+# I2C-osoitteet (erotettu mittauspuoli):
+# - INA228 #1 hupiakku, shuntti 300A/75mV -> 0.00025 ohm @ 0x40
+# - INA228 #2 startti/VSR latauslinja, shuntti 100A/75mV -> 0.00075 ohm @ 0x41
+# - INA228 #3 UPS-akku, shuntti 100A/75mV -> 0.00075 ohm @ 0x45
+# - INA3221 #1 (bilssit), oletusosoite @ 0x42
+#   - Ch1: Bilssipumppu 1, shuntti 50A/75mV -> 0.0015 ohm
+#   - Ch2: Bilssipumppu 2, shuntti 50A/75mV -> 0.0015 ohm
+#   - Ch3: Laajennuskanava 1, shuntti 20A/75mV -> 0.00375 ohm
+# - INA3221 #2 (laajennukset), osoite juotospadilla muutettu @ 0x43
+#   - Ch1: Laajennuskanava 2, shuntti 20A/75mV -> 0.00375 ohm
+#   - Ch2: Laajennuskanava 3, shuntti 20A/75mV -> 0.00375 ohm
+#   - Ch3: Laajennuskanava 4, shuntti 20A/75mV -> 0.00375 ohm
+#
+# INA3221-kortit käyttävät ulkoisia shuntteja ("The Shunt Hack").
 
-# INA3221 pienkuormat (3 kanavaa)
-# Example (jos tuki löytyy):
-# ina3221:
-#   - address: 0x41
-#     channel_1:
-#       shunt_resistance: 0.002
-#       name: "Kuorma 1 Virta"
-#     channel_2:
-#       shunt_resistance: 0.002
-#       name: "Kuorma 2 Virta"
-#     channel_3:
-#       shunt_resistance: 0.002
-#       name: "Kuorma 3 Virta"
+text_sensor:
+  - platform: template
+    name: "I2C mittaustopologia"
+    update_interval: 6h
+    lambda: |-
+      return {"ISO1540 erottaa ESP32- ja mittauspuolen; kaikki INA-anturit erotetulla väylällä"};
 
-# Huom: Jos ESPHome ei tue suoraan INA228/INA3221, käytä custom componenttia tai external_components.
+  - platform: template
+    name: "INA3221 osoitteet"
+    update_interval: 6h
+    lambda: |-
+      return {"INA3221#1=0x42, INA3221#2=0x43 (juotospadi muutettu)"};
+
+# Varsinaiset INA228/INA3221 komponentit liitetään tähän tiedostoon,
+# kun valittu ESPHome-komponentti/external_component on lukittu.

@@ -24,27 +24,22 @@ Järjestelmä jakautuu kolmeen tasoon:
 
 | Sijainti | Komponentit | Rooli |
 |---|---|---|
-| Peräsolmu (akkutila) | Startti-, hupi- ja IT-akut (LiFePO4), 3 x pääshuntti, päämiinuskisko, Victron Orion DC-DC, Victron MPPT:t, Mittaus-ESP 1 | Energian tuotanto, varastointi ja pääakkujen seuranta |
-| Kabiinisolmu (kaappi) | Raspberry Pi 5, 2 x Rele-ESP, Mittaus-ESP 2, 2 x Teltonika TSW101, 2 x Motonet-sulakerasia, 1-0-Auto -teollisuuskytkimet | Järjestelmän aivot, kuormien ohjaus, IT-infra ja kulutuksen seuranta (pumput) |
+| Peräsolmu (akkutila) | Startti-, hupi- ja UPS-akut, 3 x high-side pääshuntti, yhteinen maapultti, Victron Orion DC-DC, Victron MPPT:t, Mittaus-ESP (SKU:28771) | Energian tuotanto, varastointi ja pääakkujen seuranta |
+| Kabiinisolmu (kaappi) | Raspberry Pi 5, 2 x Rele-ESP, 2 x Teltonika TSW101, 2 x Motonet-sulakerasia, 1-0-Auto -teollisuuskytkimet, DIN-kisko Modbus-relekotelo (SKU:26244) | Järjestelmän aivot, kuormien ohjaus, IT-infra |
 
 ### II. Miinuslinja ja shuntit (tähtimaadoitus)
 
 Tämä on järjestelmän sähköinen peruskivi: kaikki virta pakotetaan kulkemaan shunttien läpi.
 
-**Akut -> shuntit**
-- Startti (-) -> Startti-shuntti (250A)
-- Hupi (-) -> Hupi-shuntti (250A)
-- IT-akku (-) -> IT-shuntti (esim. 50A/100A)
-- Akun navoissa ei pidetä muita miinusjohtoja, jotka ohittaisivat shuntin.
+**Yksi absoluuttinen maa**
+- Kaikkien akkujen miinusnavat, moottorin lohko ja kaikkien laitteiden GND kytketään samaan järeään maapulttiin.
+- Mittauspiirien (INA228/INA3221) GND ankkuroidaan samaan maapulttiin absoluuttisen 0V referenssin ylläpitämiseksi.
+- Mittaus tehdään high-side-periaatteella plus-linjoista, ei miinusjohdoista.
 
-**Shuntit -> päämiinuskisko**
-- Kaikkien kolmen shuntin kuormapuolet yhdistetään järeään päämiinuskiskoon.
-
-**Päämiinuskisko -> paluut**
-- Moottorin lohko (maadoitus)
-- Kabiinin hupi-sulakerasian miinus (16 mm2)
-- Kabiinin IT-sulakerasian miinus (16 mm2)
-- Latureiden (Orion, MPPT, Ctek) miinusjohdot
+**High-side shuntit + linjoilla**
+- Hupiakku: 300A/75mV shuntti (`0.00025` ohm)
+- Starttiakku/VSR-latauslinja: 100A/75mV shuntti (`0.00075` ohm)
+- UPS-akku: 100A/75mV shuntti (`0.00075` ohm)
 
 ### III. Syöttöjohtojen mitoitus (2 m veto perästä kabiiniin)
 
@@ -60,8 +55,7 @@ Mitoitus perustuu jännitehäviön minimointiin (clean power -periaate).
 
 ### IV. Automaatio ja mittaus (ESP-yksiköt)
 
-- **Mittaus-ESP 1 (perä):** lukee I2C-väylällä (eristetty ISO1540) pääakkujen shuntit (INA228) ja lähettää datan Ethernetillä kabiiniin.
-- **Mittaus-ESP 2 (kabiini):** lukee pilssipumppujen plussapuolen shuntit (INA3221).
+- **Mittaus-ESP (perä):** lukee I2C-väylällä (1 × ISO1540-erotin) kaikki INA228- ja INA3221-kanavat ja lähettää datan Ethernet/PoE:lla Raspberry Pi 5:lle.
 - **Rele-ESP 1 ja 2 (kabiini):** ohjaavat 12V-kuormia; painikkeet kytketty suoraan DI-tuloihin paikallislogiikkaa varten.
 - **1-0-Auto-ohitus:** mekaaninen ohitus säilyy; "1"-asennossa kytkin ohittaa ESP-releen.
 
@@ -170,9 +164,15 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 
 **Mittausperiaate**
 - Mittaus-ESP lukee INA-piirit ja välittää datan Ethernetin yli.
-- Pääakku: INA228 (MIKROE-4810) + 5705-HoFL2-250A-50mV-0.1%.
-- Pienkuormat: INA3221 (MIKROE-4126) + 3 x HoFL2-20A-75mV-0.1%.
-- I2C-väylä erotetaan ISO1540-erottimella (MIKROE-1878).
+- 3 × INA228 high-side mittaukseen:
+  - Hupiakku `0.00025` ohm
+  - Startti/VSR `0.00075` ohm
+  - UPS `0.00075` ohm
+- 2 × Adafruit INA3221 (The Shunt Hack, ulkoiset shuntit), 6 kanavaa:
+  - Bilssi 1-2: `0.0015` ohm
+  - Laajennus 1-4: `0.00375` ohm
+- I2C-väylä erotetaan 1 × ISO1540-erottimella (MIKROE-1878).
+- Toisen INA3221-kortin osoite muutetaan juotospadilla väyläkonfliktin estämiseksi.
 
 **Laitetiedot**
 - SKU: 28771
@@ -258,6 +258,7 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 - Verkko ja palvelut ovat lisäkerros, eivät edellytys
 - Käyttöönotto etenee testipenkki ensin -periaatteella
 - IT-verkon syöttö toteutetaan releen NC-koskettimen kautta (fail-safe oletuksena päällä).
+- D+ signaalin hard interlock estää starttireleen ohjauksen välittömästi moottorin käydessä.
 
 ---
 

@@ -1,8 +1,8 @@
-# Salena AU – Smart Boat Automation System (ESP32, MQTT, Home Assistant)
+# Salena AU – Smart Boat Automation System (ESP32 + paikallinen Ethernet/PoE)
 
 DIY smart boat automation project for a 1977 Amigo 40 sailboat.
 
-Salena AU modernizes a classic wooden sailboat into a reliable, fail-safe smart boat system using ESP32 controllers, MQTT communication, and a Raspberry Pi running Home Assistant and SignalK.
+Salena AU modernizes a classic wooden sailboat into a reliable, fail-safe smart boat system using ESP32 controllers and a fully local Raspberry Pi 5 data layer over Ethernet/PoE.
 
 ## Keywords
 - salena-au
@@ -10,7 +10,6 @@ Salena AU modernizes a classic wooden sailboat into a reliable, fail-safe smart 
 - boat automation
 - esp32 boat
 - marine electronics
-- mqtt
 - home assistant
 - 12v system
 - sailing automation
@@ -171,11 +170,15 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Tankkien mittaukset
 - Virran- ja jänniteseuranta
 
-**Mittausperiaate**
-- Pääakku: INA228 (MIKROE-4810, 20-bit) + 5705-HoFL2-250A-50mV-0.1% shuntti
-- Pienkuormat (3 kpl pilssipumppuja): INA3221 (MIKROE-4126, 3-kanavainen) + 3 × HoFL2-20A-75mV-0.1% shuntit
-- I2C-väylä erotetaan ISO1540-erottimella (MIKROE-1878).
-- Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan.
+**Mittausperiaate (high-side + yhteinen maapultti)**
+- 1 × MIKROE-1878 (ISO1540) erottaa ESP32 I2C-puolen mittausväylästä
+- INA228 #1 / hupiakku: shuntti 300A/75mV, koodiarvo `0.00025` ohm
+- INA228 #2 / starttiakku-VSR latauslinja: shuntti 100A/75mV, koodiarvo `0.00075` ohm
+- INA228 #3 / UPS-akku: shuntti 100A/75mV, koodiarvo `0.00075` ohm
+- 2 × Adafruit INA3221 (The Shunt Hack ulkoisille shunteille, toisen levyn osoite muutettu)
+  - Bilssi 1 & 2: 50A/75mV -> `0.0015` ohm
+  - Laajennuskanavat 1-4: 20A/75mV -> `0.00375` ohm
+- Kaikkien mittauspiirien GND on ankkuroitu veneen yhteiseen maapulttiin (absoluuttinen 0V).
 
 **Tila**
 - Laitteisto hankkimatta
