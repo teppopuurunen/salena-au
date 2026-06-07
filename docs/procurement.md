@@ -25,7 +25,10 @@
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
 - [ ] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
-- [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
+- [x] 3x ESP32-S3-POE-ETH (SKU: 28771)
+	- Mittaus-ESP: lampotilat, kosteudet, tankit, pilssipumput
+	- Akku-ESP: akkujen ja latureiden virta-/jannitemittaukset
+	- Valo-ESP: alyvalojen ohjaus (suunnitteilla)
 - [ ] SparkFun Opto-isolator Breakout (4 kpl, yht. 8 kanavaa)
 - [ ] 1kΩ / 2W etuvastukset (12V optokanaville)
 - [ ] 4.7kΩ / 2W etuvastus (PoE 48V optokanavalle)

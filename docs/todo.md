@@ -109,21 +109,39 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
 
 ---
 
-## 5) Mittaus-ESP (kun relepilotointi on valmis)
+## 5) ESP32-S3-POE-ETH tehtavat (uusi jarjestys)
 
-- [ ] Päätä minimimittauspaketti:
-  - [ ] 1 tankki
-  - [ ] 1 akkujännite
-  - [ ] 1 virta (päävirta tai kuormavirta)
-- [ ] Luo ESPHome runkotiedosto mittausohjaimelle:
+### 5.1 Mittaus-ESP (1. vaihe)
+
+- [ ] Toteuta Mittaus-ESP:n minimikokonaisuus:
+  - [ ] lampotilat
+  - [ ] kosteudet
+  - [ ] tankkimittaukset
+  - [ ] pilssipumppuihin liittyvat tilatiedot
+- [ ] Luo ja paivita runkotiedosto:
   - [ ] `core-rpi5/home-assistant/esphome/mittaus-esp.yaml`
 - [ ] Toteuta firmware ja Ethernet/PoE-datan ulostulo
+
+### 5.2 Akku-ESP (2. vaihe)
+
+- [ ] Luo Akku-ESP runkotiedosto:
+  - [ ] `core-rpi5/home-assistant/esphome/akku-esp.yaml`
+- [ ] Toteuta akkujen ja latureiden virta-/jannitemittaukset:
+  - [ ] 3 x INA228 (hupi, startti/VSR, UPS)
+  - [ ] 2 x INA3221 (bilssit + 4 laajennuskanavaa)
 - [ ] Dokumentoi kalibrointi ja rajat
 - [ ] Pilssipumppujen virta- ja tilakalibrointi (DD-17):
   - [ ] Luo hakemisto `docs/calibration/`
   - [ ] Luo tiedostot `bilge_pump1.md`, `bilge_pump2.md`, `bilge_pump3.md`
   - [ ] Kirjaa jokaiselle pumpulle: normivirta, kuivakayntivirta, kaynnistyspiikki, kellukkeen DI-taso
   - [ ] Maarita pumppukohtaiset halytysrajat kalibrointidatan perusteella
+
+### 5.3 Valo-ESP (3. vaihe, suunnittelu)
+
+- [ ] Luo Valo-ESP runkotiedosto:
+  - [ ] `core-rpi5/home-assistant/esphome/valo-esp.yaml`
+- [ ] Maarita alyvalojen ohjauksen rajapinnat ja ryhmat
+- [ ] Paata toteutusmalli (paikallinen logiikka + HA-nakyma)
 
 ---
 
@@ -139,7 +157,7 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
   - [ ] Lisää integraatiot tarpeen mukaan
 - [ ] Lisää 3–5 ensimmäistä entiteettiä:
   - [ ] Releet (ESPHome API)
-  - [ ] Mittaukset (Mittaus-ESP, ESPHome API)
+  - [ ] Mittaukset (Mittaus-ESP + Akku-ESP, ESPHome API)
   - [ ] Autopilotti tila (read-only)
 - [ ] Ota paikallinen ESPHome API käyttöön HA:ssa
 - [ ] Pilssihalytykset (valvova, ei ohjaava):

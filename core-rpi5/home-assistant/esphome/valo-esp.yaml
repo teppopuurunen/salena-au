@@ -1,0 +1,30 @@
+esphome:
+  name: valo-esp
+  friendly_name: Valo ESP
+
+# Valo-ESP (SKU 28771 / ESP32-S3-POE-ETH)
+# Rooli:
+# - Alyvalojen ohjaus (suunnitteilla)
+# - Ryhmat, scene-logiikka ja mahdolliset PWM-lahdot maaritellaan myohemmin
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+  power_pin: GPIO12
+
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+
+# Varsinaiset valoentiteetit ja ohjauslogiikka lisataan suunnitteluvaiheen paatoksen jalkeen.

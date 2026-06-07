@@ -113,7 +113,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 
 **Rajapinnat**
 - Ethernet → rele-ESP:t (ENSISIJAINEN ohjaus- ja tilaväylä)
-- Ethernet → Mittaus-ESP (PoE)
+- Ethernet → Mittaus-ESP, Akku-ESP ja Valo-ESP (PoE)
 - USB–RS422 → autopilotti (Raymarine ST5000)
 
 **Hallinta ja resetointi**
@@ -167,8 +167,25 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Yhteys Raspberry Pi:hin Ethernetin kautta (PoE)
 
 **Käyttö**
-- Tankkien mittaukset
-- Virran- ja jänniteseuranta
+- Lämpötilat
+- Kosteudet
+- Tankkimittaukset
+- Pilssipumppujen tilatietoihin liittyvät mittaukset ja valvonnat
+
+**Tila**
+- Laitteisto hankittu
+- Firmware toteutetaan seuraavassa vaiheessa
+
+### 5.3 Akku-ESP
+
+**Tyyppi**
+- SKU: 28771
+- Part No.: ESP32-S3-POE-ETH
+- Yhteys Raspberry Pi:hin Ethernetin kautta (PoE)
+
+**Käyttö**
+- Akustojen virta- ja jänniteseuranta
+- Latureiden virta- ja jännitemittaukset
 
 **Mittausperiaate (high-side + yhteinen maapultti)**
 - 1 × MIKROE-1878 (ISO1540) erottaa ESP32 I2C-puolen mittausväylästä
@@ -181,8 +198,22 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Kaikkien mittauspiirien GND on ankkuroitu veneen yhteiseen maapulttiin (absoluuttinen 0V).
 
 **Tila**
-- Laitteisto hankkimatta
-- Firmware odottaa toteutusta
+- Laitteisto hankittu
+- Firmware toteutetaan Mittaus-ESP-vaiheen jälkeen
+
+### 5.4 Valo-ESP
+
+**Tyyppi**
+- SKU: 28771
+- Part No.: ESP32-S3-POE-ETH
+- Yhteys Raspberry Pi:hin Ethernetin kautta (PoE)
+
+**Käyttö**
+- Älyvalojen ohjaus (suunnitteilla)
+
+**Tila**
+- Laitteisto hankittu
+- Toteutus suunnitteluvaiheessa
 
 ## 6. Autopilotin NMEA-integraatio (tiivistetty)
 
@@ -204,14 +235,14 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 - **Ethernet**
   - ESP32-S3 ↔ Raspberry Pi (ohjaus ja tilat)
-  - Mittaus-ESP → Raspberry Pi (PoE)
+  - Mittaus-ESP, Akku-ESP ja Valo-ESP → Raspberry Pi (PoE)
   - Reititin: Huawei B818-263 4G LTE
   - Kytkin: Teltonika TSW101 (hankittu)
 - **RS485 Modbus RTU**
   - Rele-ESP 1 (master) ↔ Modbus I/O -moduulit (SKU:26244)
   - Tilatiedot ja ulkoisen releohjauksen väylä
 - **I2C (eristetty)**
-  - Mittaus-ESP ↔ INA228 + INA3221 mittausmoduulit
+  - Akku-ESP ↔ INA228 + INA3221 mittausmoduulit
   - ISO1540-erottimella erotettu
 - **USB**
   - autopilotti NMEA 0183 (RS422)
@@ -243,8 +274,9 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - UPS HAT (WS-27966): hankkimatta
 - Kytkin: Teltonika TSW101 hankittu
 - 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE, hankittu)
+- 3 × ESP32-S3-POE-ETH (Mittaus-ESP, Akku-ESP, Valo-ESP): hankittu
 - 3 × Waveshare SKU:26244 (Modbus RTU IO): hankkimatta
-- Mittaus-ESP (SKU: 28771): hankkimatta, firmware tekemättä
+- Mittaus-ESP, Akku-ESP ja Valo-ESP firmwaret: tekemättä
 - Mittauskomponentit (INA228, INA3221, shuntit, ISO1540): hankkimatta
 - PWM-valaistuksen suunnittelu ja toteutus tehdään myöhemmin
 
@@ -255,7 +287,9 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 Salena AU on vikasietoinen ja selkeästi kerrostettu venejärjestelmä, jossa:
 - navigointi ja käyttöliittymät sijaitsevat Raspberry Pi:ssä,
 - kuormien ohjaus ja indikointi toteutetaan kaksiväylien (RS485 Modbus + Ethernet) kautta,
-- tarkka virranmittaus hoituu erillisellä I2C-mittauslinjalla (INA228 + INA3221, eristetty ISO1540:lla),
+- mittaukset on jaettu kahdelle ESP:lle (Mittaus-ESP: lämpötilat/kosteudet/tankit/pilssit, Akku-ESP: virrat/jännitteet),
+- tarkka virranmittaus hoituu Akku-ESP:n erillisellä I2C-mittauslinjalla (INA228 + INA3221, eristetty ISO1540:lla),
+- Valo-ESP on varattu älyvalojen ohjaukseen (suunnitteilla),
 - 2× rele-ESP (Rele-ESP 1 = RS485 master, Rele-ESP 2 = paikallinen I/O) ja 3× Modbus I/O -moduuli (SKU:26244) muodostavat ohjaus- ja tilatietojen väylän,
 - manuaalinen käyttö ja sulakesuojaus säilyvät aina.
 

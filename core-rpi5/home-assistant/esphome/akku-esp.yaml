@@ -1,0 +1,36 @@
+esphome:
+  name: akku-esp
+  friendly_name: Akku ESP
+
+# Akku-ESP (SKU 28771 / ESP32-S3-POE-ETH)
+# Rooli:
+# - Akkujen ja latureiden virta-/jannitemittaukset
+# - INA228 + INA3221 mittauslinja (I2C erotettuna ISO1540:lla)
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+  power_pin: GPIO12
+
+logger:
+  level: DEBUG
+
+api:
+
+ota:
+
+i2c:
+  sda: GPIO8
+  scl: GPIO9
+  scan: true
+  id: isolated_battery_bus
+
+# INA228/INA3221 komponentit lisataan, kun lopullinen pinni- ja anturikartta lukitaan.

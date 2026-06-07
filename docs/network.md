@@ -18,7 +18,7 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 
 ### Ethernet
 - **ESP32-S3 rele-ESP:t** ↔ Raspberry Pi (ohjaus- ja tilaväylä)
-- **Mittaus-ESP** → Raspberry Pi (PoE, virran ja tankkidatan toimitus)
+- **Mittaus-ESP / Akku-ESP / Valo-ESP** → Raspberry Pi (PoE)
 - Tavoite: deterministinen ja helposti debugattava liikenne
 - Reititin: Huawei B818-263 4G LTE
 - Kytkin: Teltonika TSW101 (hankittu)
@@ -31,7 +31,7 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 - Häiriönkestävyys: RS485-väylä sopii sähkökeskukseen ja veneen häiriöympäristöön
 
 ### I2C (eristetty)
-- **Mittaus-ESP** ↔ Mittausmoduulit (INA228 + INA3221)
+- **Akku-ESP** ↔ Mittausmoduulit (INA228 + INA3221)
 - Galvaaninen erotus: 1 × ISO1540-erotin (MIKROE-1878)
 - INA228-kanavat (high-side):
   - Hupiakku `0.00025` ohm (300A/75mV)

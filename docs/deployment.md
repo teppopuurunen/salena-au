@@ -105,7 +105,9 @@ Suositus on kayttaa Home Assistantia keskuksena ja ESPHome API:a integraatiovayl
 
 - Rele-ESP 1: paikallinen relelogiikka + RS485 Modbus master + D+ startti-interlock
 - Rele-ESP 2: paikallinen I/O + releohjaukset
-- Mittaus-ESP: INA228/INA3221 mittaukset eristetyllä I2C-väylällä
+- Mittaus-ESP: lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat
+- Akku-ESP: INA228/INA3221 mittaukset eristetyllä I2C-väylällä
+- Valo-ESP: älyvalojen ohjaus (suunnitteilla)
 - Home Assistant: lukee paikalliset entiteetit ja visualisoi
 
 Tama erottaa kenttalogiikan (ESP) ja automaatiologiikan (HA), mutta pitaa telemetrian yhdessa paikassa ilman pilviriippuvuuksia.
@@ -176,6 +178,8 @@ services:
 - `core-rpi5/home-assistant/esphome/rele-esp-1.yaml` – ESPHome runko (Rele-ESP 1)
 - `core-rpi5/home-assistant/esphome/rele-esp-2.yaml` – ESPHome runko (Rele-ESP 2)
 - `core-rpi5/home-assistant/esphome/mittaus-esp.yaml` – ESPHome runko (Mittaus-ESP)
+- `core-rpi5/home-assistant/esphome/akku-esp.yaml` – ESPHome runko (Akku-ESP)
+- `core-rpi5/home-assistant/esphome/valo-esp.yaml` – ESPHome runko (Valo-ESP)
 
 ---
 

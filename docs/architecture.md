@@ -24,7 +24,7 @@ Järjestelmä jakautuu kolmeen tasoon:
 
 | Sijainti | Komponentit | Rooli |
 |---|---|---|
-| Peräsolmu (akkutila) | Startti-, hupi- ja UPS-akut, 3 x high-side pääshuntti, yhteinen maapultti, Victron Orion DC-DC, Victron MPPT:t, Mittaus-ESP (SKU:28771) | Energian tuotanto, varastointi ja pääakkujen seuranta |
+| Peräsolmu (akkutila) | Startti-, hupi- ja UPS-akut, 3 x high-side pääshuntti, yhteinen maapultti, Victron Orion DC-DC, Victron MPPT:t, Mittaus-ESP + Akku-ESP (SKU:28771) | Energian tuotanto, varastointi ja pääakkujen seuranta |
 | Kabiinisolmu (kaappi) | Raspberry Pi 5, 2 x Rele-ESP, 2 x Teltonika TSW101, 2 x Motonet-sulakerasia, 1-0-Auto -teollisuuskytkimet, DIN-kisko Modbus-relekotelo (SKU:26244) | Järjestelmän aivot, kuormien ohjaus, IT-infra |
 
 ### II. Miinuslinja ja shuntit (tähtimaadoitus)
@@ -55,7 +55,8 @@ Mitoitus perustuu jännitehäviön minimointiin (clean power -periaate).
 
 ### IV. Automaatio ja mittaus (ESP-yksiköt)
 
-- **Mittaus-ESP (perä):** lukee I2C-väylällä (1 × ISO1540-erotin) kaikki INA228- ja INA3221-kanavat ja lähettää datan Ethernet/PoE:lla Raspberry Pi 5:lle.
+- **Mittaus-ESP (perä):** lukee lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat ja lähettää datan Ethernet/PoE:lla Raspberry Pi 5:lle.
+- **Akku-ESP (perä):** lukee I2C-väylällä (1 × ISO1540-erotin) INA228- ja INA3221-kanavat ja lähettää datan Ethernet/PoE:lla Raspberry Pi 5:lle.
 - **Rele-ESP 1 ja 2 (kabiini):** ohjaavat 12V-kuormia; painikkeet kytketty suoraan DI-tuloihin paikallislogiikkaa varten.
 - **1-0-Auto-ohitus:** mekaaninen ohitus säilyy; "1"-asennossa kytkin ohittaa ESP-releen.
 
@@ -112,7 +113,9 @@ Mitoitus perustuu jännitehäviön minimointiin (clean power -periaate).
 
 **Rajapinnat**
 - Ethernet ↔ ESP32-S3 rele- ja I/O-moduulit
-- Ethernet ↔ Mittaus-ESP (tankit, virrat, jännitteet, PoE)
+- Ethernet ↔ Mittaus-ESP (lämpötilat, kosteudet, tankit, pilssit, PoE)
+- Ethernet ↔ Akku-ESP (virrat, jännitteet, PoE)
+- Ethernet ↔ Valo-ESP (älyvalot, PoE)
 - USB–RS422 ↔ Raymarine ST5000 (autopilotti)
 
 **Kriittisyys**
@@ -155,15 +158,16 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Ulkoinen releohjaus: DO-lähdöt (Darlington sinking)
 - Keskisuuret kuormat: autoreleet tai DIN-kiskokannalliset releet SKU:26244-kanaville (10A-20A)
 
-#### Mittaus-ESP
+#### Mittaus-ESP + Akku-ESP + Valo-ESP
 
 **Rooli**
-- Tankkimittaukset
-- Virran- ja jänniteseuranta
+- Mittaus-ESP: lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat
+- Akku-ESP: virran- ja jänniteseuranta
+- Valo-ESP: älyvalojen ohjaus (suunnitteilla)
 - Datan välitys Raspberry Pi:lle
 
 **Mittausperiaate**
-- Mittaus-ESP lukee INA-piirit ja välittää datan Ethernetin yli.
+- Akku-ESP lukee INA-piirit ja välittää datan Ethernetin yli.
 - 3 × INA228 high-side mittaukseen:
   - Hupiakku `0.00025` ohm
   - Startti/VSR `0.00075` ohm
@@ -234,7 +238,7 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 ### Ensisijaiset yhteydet
 - **Ethernet:** ESP32-S3 ↔ Raspberry Pi (ohjaus/tilat)
 - **RS485 Modbus RTU:** Rele-ESP 1 (master) ↔ kenttämoduulit (SKU:26244)
-- **I2C (eristetty):** Mittaus-ESP ↔ INA228/INA3221 mittausmoduulit
+- **I2C (eristetty):** Akku-ESP ↔ INA228/INA3221 mittausmoduulit
 - **USB:** autopilotti-adapteri (RS422)
 
 **Verkkolaitteet**
@@ -276,7 +280,9 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 Salena AU on kerroksellinen ja modulaarinen kokonaisuus, jossa:
 - Raspberry Pi 5 hoitaa navigoinnin ja integraatiot
 - Rele-ESP 1 hoitaa RS485 Modbus -masteroinnin ja Rele-ESP 2 paikallisen I/O-ohjauksen
-- Mittaus-ESP hoitaa INA-mittauslinjan (INA228 + INA3221, eristetty I2C)
+- Akku-ESP hoitaa INA-mittauslinjan (INA228 + INA3221, eristetty I2C)
+- Mittaus-ESP hoitaa lämpötila-, kosteus-, tankki- ja pilssidatan
+- Valo-ESP on varattu älyvalojen ohjaukseen
 - 12 V kenttätaso on suojattu sulakkein ja säilyttää manuaalisen käytettävyyden
 
 Järjestelmä kehittyy vaiheittain ilman, että veneen perustoiminnot muuttuvat riippuvaisiksi automaatiosta.

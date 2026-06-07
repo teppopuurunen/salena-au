@@ -21,7 +21,7 @@ perusperiaate on, että veneen perustoiminnot toimivat ilman automaatiota.
 Järjestelmä jakautuu kolmeen tasoon:
 
 1. Älytaso: Raspberry Pi 5 (OpenPlotter, SignalK, OpenCPN)
-2. Automaatiotaso: Rele-ESP-yksiköt, Mittaus-ESP, RS485 Modbus
+2. Automaatiotaso: Rele-ESP-yksiköt, Mittaus-ESP, Akku-ESP, Valo-ESP, RS485 Modbus
 3. Kenttätaso: 12 V kuormat, sulakkeet, 1-0-Auto-ohitukset
 
 Keskeiset väylät:
@@ -49,7 +49,9 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Rele-ESP 1 | ESP32-S3-ETH-8DI-8RO | Hankittu |
 | Rele-ESP 2 | ESP32-S3-ETH-8DI-8RO | Hankittu |
 | Kytkin | Teltonika TSW101 | Hankittu |
-| Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankkimatta |
+| Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
+| Akku-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
+| Valo-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
 | Modbus I/O | Waveshare SKU:26244 (3 kpl) | Hankkimatta |
 | INA228-moduulit | 3 x INA228 (high-side) | Hankkimatta |
 | INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | Hankkimatta |
@@ -74,9 +76,11 @@ Lisätiedot: [procurement.md](procurement.md), [hardware/relay_map.md](../hardwa
 | SignalK | RPi 5 | Käytössä |
 | OpenCPN + Suomen merikartat | RPi 5 | Käytössä |
 | Home Assistant (kontti) | RPi 5 | Ei tuotannossa |
-| Paikallinen Ethernet/PoE datakerros | RPi 5 + Mittaus-ESP | Käytössä arkkitehtuuritasolla |
+| Paikallinen Ethernet/PoE datakerros | RPi 5 + Mittaus-ESP + Akku-ESP + Valo-ESP | Käytössä arkkitehtuuritasolla |
 | Rele-ESP firmware (ESPHome) | Rele-ESP 1 ja 2 | Tekemättä |
 | Mittaus-ESP firmware | Mittaus-ESP | Tekemättä |
+| Akku-ESP firmware | Akku-ESP | Tekemättä |
+| Valo-ESP firmware | Valo-ESP | Tekemättä |
 
 Lisätiedot: [current_state.md](current_state.md), [deployment.md](deployment.md)
 

@@ -103,9 +103,9 @@ Kokonaisuus on jaettu kahteen väylään:
 - I2C: tarkka virranmittaus (galvaanisesti erotettu)
 - RS485 Modbus: tilatiedot ja releohjaus
 
-### 1. Tarkka virranmittaus (I2C-väylä)
+### 1. Akku-ESP: tarkka virranmittaus (I2C-väylä)
 
-Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin yli.
+Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin yli.
 
 **Päämittaukset (3 x INA228, high-side)**
 - Hupiakku: 300A/75mV shuntti (`0.00025` ohm)
@@ -145,6 +145,12 @@ Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernet
 - Ulkoiset releet SKU:26244-kanaville, joissa kuormat ovat 10A-20A
 - 12V -> 5V DC/DC-muunnin I2C-mittauspuolen eristettyyn syöttöön
 
+### 4. 3 x ESP32-S3-POE-ETH työnjako
+
+- Mittaus-ESP: lämpötilat, kosteudet, tankit, pilssipumppuihin liittyvät mittaukset/tilat
+- Akku-ESP: akkujen ja latureiden virta- ja jännitemittaukset
+- Valo-ESP: älyvalojen ohjaus (suunnitteilla)
+
 ---
 
 ## Suunnitellut mutta ei vielä toteutetut osiot
@@ -169,21 +175,20 @@ Peruste: vain BILGE_SMALL (<10A) ohjataan rele-ESP:lta; BILGE_MID ja BILGE_LARGE
 
 ---
 
-### Mittaus-ESP
+### 3 x ESP32-S3-POE-ETH (Mittaus-ESP, Akku-ESP, Valo-ESP)
 
 **Laitetiedot**
 - SKU: 28771
 - Part No.: ESP32-S3-POE-ETH
 
 **Suunniteltu käyttö**
-- tankkimittaukset
-- virran- ja jänniteseuranta
-- 3 x INA228 (hupi, startti/VSR, UPS)
-- 2 x INA3221 (bilssit + 4 laajennuskanavaa)
-- I2C-eristys ISO1540:lla (MIKROE-1878)
+- Mittaus-ESP: lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat
+- Akku-ESP: virran- ja jänniteseuranta (akut + laturit), 3 x INA228 + 2 x INA3221
+- Valo-ESP: älyvalojen ohjaus (suunnitteilla)
 
 **Tila**
-- Ei hankittu – ks. [relay_map.md](../hardware/relay_map.md)
+- 3 kpl hankittu
+- Firmwaret toteutetaan vaiheittain työnjaon mukaisessa järjestyksessä
 
 ### RPi 5 hallinta ja resetointi
 
@@ -237,5 +242,7 @@ Peruste: vain BILGE_SMALL (<10A) ohjataan rele-ESP:lta; BILGE_MID ja BILGE_LARGE
 1. Sähkökeskuksen mitoitus ja layout (mitat, sijoitteluperiaatteet)
 2. Autopilotin testipenkki: RS422-datan kaappaus ja lokitus
 3. Rele-ESP pilotointi: 1 painike → 1 rele → 1 kuorma (paikallinen logiikka)
-4. Mittaus-ESP pilotointi: 1–3 mittausta luotettavasti Ethernet/PoE:n yli
-5. Home Assistant käyttöliittymäksi (ei-kriittinen), kun dataa on mitä näyttää
+4. Mittaus-ESP pilotointi: lämpötilat, kosteudet, tankit ja pilssipumppujen tilat
+5. Akku-ESP pilotointi: akkujen ja latureiden virta- ja jännitemittaukset
+6. Valo-ESP suunnittelu: älyvalojen ohjaus ja rajapinnat
+7. Home Assistant käyttöliittymäksi (ei-kriittinen), kun dataa on mitä näyttää
