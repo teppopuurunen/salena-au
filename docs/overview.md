@@ -1,7 +1,7 @@
 # Projektin yleiskatsaus
 
 **Dokumentti:** Salena AU projektin yleiskuva  
-**Päivitetty:** 04/2026  
+**Päivitetty:** 07.06.2026  
 **Tila:** Current truth -tiivistelmä
 
 ---

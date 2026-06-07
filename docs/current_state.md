@@ -1,6 +1,6 @@
 # Nykytila
 
-**Päivitetty:** 04/2026  
+**Päivitetty:** 07.06.2026  
 **Projekti:** Salena AU – integroitu veneautomaatio- ja navigointijärjestelmä  
 **Vene:** Amigo 40 “Salena”
 

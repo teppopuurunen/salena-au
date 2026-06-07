@@ -1,4 +1,4 @@
-# Salena AU – Smart Boat Automation System (ESP32 + paikallinen Ethernet/PoE)
+# Salena AU – Smart Boat Automation System (ESP32 + local Ethernet/PoE)
 
 DIY smart boat automation project for a 1977 Amigo 40 sailboat.
 
@@ -266,7 +266,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 ---
 
-## 9. Projektin nykytila (04/2026)
+## 9. Projektin nykytila (07.06.2026)
 
 - Raspberry Pi 5: OpenPlotter, SignalK ja OpenCPN käytössä
 - NVMe toiminnassa (SSD käytössä)
