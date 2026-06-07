@@ -16,7 +16,6 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Raspberry Pi 5
 - WS-27709 PCIe → M.2 NVMe HAT+
 - NVMe SSD
-- WS-27966 UPS HAT (E)
 - Syöttö: Lenovo 65W USB-C DC Travel Adapter
 
 **Ohjelmisto**
@@ -28,9 +27,9 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Navigointi toimii normaalisti
 - SignalK jakaa dataa sisäverkossa
 - Tallennus NVMe-levylle
-- UPS HAT tukee hallittua sammutusta ja parantaa virrankatkokestävyyttä
+- UPS HAT (WS-27966) ei ole vielä hankittu
 - Reititin: Huawei B818-263 4G LTE
-- Perässä kytkin: Teltonika TSW101
+- Perässä kytkin: Teltonika TSW101 (hankittu)
 
 ### Salonkinaytto ja yhteiskaytto
 

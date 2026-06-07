@@ -21,7 +21,7 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 - **Mittaus-ESP** → Raspberry Pi (PoE, virran ja tankkidatan toimitus)
 - Tavoite: deterministinen ja helposti debugattava liikenne
 - Reititin: Huawei B818-263 4G LTE
-- Kytkin: Teltonika TSW101 (hankkimatta)
+- Kytkin: Teltonika TSW101 (hankittu)
 
 ### RS485 Modbus RTU
 - **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244)

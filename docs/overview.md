@@ -42,13 +42,13 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Raspberry Pi 5 (8 GB) | RPi 5 | Käytössä |
 | NVMe HAT+ | WS-27709 | Käytössä |
 | NVMe SSD | 256/512 GB | Käytössä |
-| UPS HAT (E) | WS-27966 | Käytössä |
+| UPS HAT (E) | WS-27966 | Hankkimatta |
 | RS422-USB-adapteri | ST5000 integraatio | Hankittu |
 | Reititin | Huawei B818-263 | Käytössä |
 | Salonkinäyttö | Blackstorm M245BN 24.5" | Hankittu |
 | Rele-ESP 1 | ESP32-S3-ETH-8DI-8RO | Hankittu |
 | Rele-ESP 2 | ESP32-S3-ETH-8DI-8RO | Hankittu |
-| Kytkin | Teltonika TSW101 | Hankkimatta |
+| Kytkin | Teltonika TSW101 | Hankittu |
 | Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankkimatta |
 | Modbus I/O | Waveshare SKU:26244 (3 kpl) | Hankkimatta |
 | INA228-moduulit | 3 x INA228 (high-side) | Hankkimatta |

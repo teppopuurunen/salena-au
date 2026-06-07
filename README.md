@@ -206,7 +206,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
   - ESP32-S3 ↔ Raspberry Pi (ohjaus ja tilat)
   - Mittaus-ESP → Raspberry Pi (PoE)
   - Reititin: Huawei B818-263 4G LTE
-  - Kytkin: Teltonika TSW101 (hankkimatta)
+  - Kytkin: Teltonika TSW101 (hankittu)
 - **RS485 Modbus RTU**
   - Rele-ESP 1 (master) ↔ Modbus I/O -moduulit (SKU:26244)
   - Tilatiedot ja ulkoisen releohjauksen väylä
@@ -241,7 +241,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 - NVMe toiminnassa (SSD käytössä)
 - Syöttö: Lenovo 65W USB-C DC Travel Adapter
 - UPS HAT (WS-27966): hankkimatta
-- Kytkin: Teltonika TSW101 hankkimatta
+- Kytkin: Teltonika TSW101 hankittu
 - 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE, hankittu)
 - 3 × Waveshare SKU:26244 (Modbus RTU IO): hankkimatta
 - Mittaus-ESP (SKU: 28771): hankkimatta, firmware tekemättä

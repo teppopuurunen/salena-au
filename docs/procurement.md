@@ -20,7 +20,7 @@
 - [x] SSD NVMe 256GB/512GB
 - [x] RS422 -> USB Adapteri (ST5000 varten)
 - [x] Reititin Huawei B818-263 4G LTE
-- [ ] Kytkin Teltonika TSW101
+- [x] Kytkin Teltonika TSW101
 
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
