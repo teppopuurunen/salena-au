@@ -51,8 +51,8 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Kytkin | Teltonika TSW101 | Hankkimatta |
 | Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankkimatta |
 | Modbus I/O | Waveshare SKU:26244 (3 kpl) | Hankkimatta |
-| INA228-moduuli | MIKROE-4810 | Hankkimatta |
-| INA3221-moduuli | MIKROE-4126 | Hankkimatta |
+| INA228-moduulit | 3 x INA228 (high-side) | Hankkimatta |
+| INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | Hankkimatta |
 | I2C-erotin | MIKROE-1878 (ISO1540) | Hankkimatta |
 | MPPT-säätimet | Victron SmartSolar 75/15 | Hankkimatta |
 | DC-DC laturi (IT-akku) | Victron Orion-Tr Smart 12/12-18A | Asennettu |
@@ -74,7 +74,7 @@ Lisätiedot: [procurement.md](procurement.md), [hardware/relay_map.md](../hardwa
 | SignalK | RPi 5 | Käytössä |
 | OpenCPN + Suomen merikartat | RPi 5 | Käytössä |
 | Home Assistant (kontti) | RPi 5 | Ei tuotannossa |
-| Mosquitto MQTT (kontti) | RPi 5 | Ei tuotannossa |
+| Paikallinen Ethernet/PoE datakerros | RPi 5 + Mittaus-ESP | Käytössä arkkitehtuuritasolla |
 | Rele-ESP firmware (ESPHome) | Rele-ESP 1 ja 2 | Tekemättä |
 | Mittaus-ESP firmware | Mittaus-ESP | Tekemättä |
 

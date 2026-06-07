@@ -123,11 +123,17 @@ Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-el
 
 **Päätös**  
 Virtamittaus toteutetaan kahdella eri tarkkuusluokalla:
-- **Pääakku**: INA228 (MIKROE-4810, 20-bit) + shuntti 5705-HoFL2-250A-50mV-0.1%
-- **Pienkuormat**: INA3221 (MIKROE-4126, 3-kanavainen) + 3× shuntti HoFL2-20A-75mV-0.1%
+- **Päämittaus**: 3 × INA228 high-side mittaukseen
+  - Hupiakku: `0.00025` ohm (300A/75mV)
+  - Starttiakku/VSR-latauslinja: `0.00075` ohm (100A/75mV)
+  - UPS-akku: `0.00075` ohm (100A/75mV)
+- **Pienkuormat**: 2 × Adafruit INA3221 (6 kanavaa, The Shunt Hack)
+  - Bilssi 1-2: `0.0015` ohm (50A/75mV)
+  - Laajennukset 1-4: `0.00375` ohm (20A/75mV)
+- Toisen INA3221-kortin I2C-osoite muutetaan juotospadilla.
 
 **Perustelu**  
-Kaksiportainen mittaus antaa riittävän tarkkuuden sekä pääakun SOC-seuraannalle (0,1 % laboratoriotarkkuus) että pienkuormien seurantaan. INA3221 mahdollistaa 3 pilssipumpun virran mittauksen samalla väylällä.
+Kaksiportainen mittaus antaa riittävän tarkkuuden sekä akkutaseelle että pienkuormien seurannalle. Yhden ISO1540-erottimen takana oleva mittausväylä estää maasilmukat ja pitää mittauksen täysin lokaalina.
 
 ---
 
@@ -343,3 +349,16 @@ Lisaksi maaritetaan seuraavat mediasisallot:
 	ensisijainen ajossa.
 - Mediasisallot tulee tallettaa paikallisesti, jotta ne toimivat myos ilman
 	internetyhteytta.
+
+---
+
+## DD-20: D+ hard interlock ja virtuaalishuntti startille
+
+**Paatos**
+- D+ signaali luetaan optoerotettuna suoraan ESP32:lle.
+- Jos D+ on aktiivinen (moottori käy), starttireleen ohjaus estetään ohjelmistossa välittömästi.
+- Starttimoottorin kulutus seurataan virtuaalishunttina: starttikäskyn kesto mitataan millisekunteina ja kulutus vähennetään starttiakun saldosta mallinnetulla virtaprofiililla.
+
+**Perustelu**
+- D+ estolukko suojaa mekaanisesti ja sähköisesti käynnistintä virhekäskyiltä moottorin käydessä.
+- Fyysinen starttishuntti ei ole luotettava hetkellisille satojen ampeerien virtapiikeille, joten virtuaalishuntti vähentää riskiä ja pitää energiataseen käyttökelpoisena.

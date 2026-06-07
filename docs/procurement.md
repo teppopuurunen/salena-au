@@ -4,10 +4,13 @@
 - [x] Pääkytkin & Rele (Blue Sea Systems Add-A-Battery)
 - [x] Akkupankki (v4.2 mukainen)
 - [ ] Victron SmartSolar MPPT 75/15 (LUKKOON LYÖTY)
-- [ ] Pääakun shuntti: 5705-HoFL2-250A-50mV-0.1%
-- [ ] Pienkuormien shuntit: 3 x HoFL2-20A-75mV-0.1%
-- [ ] MIKROE-4810 (INA228, 20-bit)
-- [ ] MIKROE-4126 (INA3221, 3-kanavainen)
+- [ ] Hupiakun shuntti: Milliohm 300A / 75mV (`0.00025` ohm)
+- [ ] Startti/VSR shuntti: Milliohm 100A / 75mV (`0.00075` ohm)
+- [ ] UPS-akun shuntti: Milliohm 100A / 75mV (`0.00075` ohm)
+- [ ] Pilssi-shuntit: 2 x Milliohm 50A / 75mV (`0.0015` ohm)
+- [ ] Laajennus-shuntit: 4 x Milliohm 20A / 75mV (`0.00375` ohm)
+- [ ] INA228 moduulit (3 kpl, high-side)
+- [ ] Adafruit INA3221 moduulit (2 kpl, The Shunt Hack)
 - [ ] MIKROE-1878 (ISO1540 I2C-eristin)
 
 ## B. Ohjaus ja IT (Core)
@@ -23,6 +26,9 @@
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
 - [ ] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
 - [ ] Mittaus-ESP / virtojen- ja tankkimittaus (PoE, SKU: 28771, Part No.: ESP32-S3-POE-ETH)
+- [ ] SparkFun Opto-isolator Breakout (4 kpl, yht. 8 kanavaa)
+- [ ] 1kΩ / 2W etuvastukset (12V optokanaville)
+- [ ] 4.7kΩ / 2W etuvastus (PoE 48V optokanavalle)
 - [ ] PC817-optoerottimet (RPi 5 J2 hard reset)
 - [ ] 2x Waveshare SKU:15391 (MCP23017 IO Expansion Board, Expands 16 I/O Pins) (lisäpainikkeille)
 - [ ] RST-painikkeet LED-renkaalla (24 kpl)

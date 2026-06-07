@@ -32,10 +32,16 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 
 ### I2C (eristetty)
 - **Mittaus-ESP** ↔ Mittausmoduulit (INA228 + INA3221)
-- Galvaaninen erotus: ISO1540-erottimet (MIKROE-1878)
-- Pääakku: INA228 (MIKROE-4810, 20-bit, shuntti 5705-HoFL2-250A)
-- Pienkuormat: INA3221 (MIKROE-4126, 3-kanavainen, 3× shuntti HoFL2-20A)
-- Eristys estää hupiakun miinuksen kytkeytymisen mittausväylän kautta Brain-elektroniikan maahan
+- Galvaaninen erotus: 1 × ISO1540-erotin (MIKROE-1878)
+- INA228-kanavat (high-side):
+  - Hupiakku `0.00025` ohm (300A/75mV)
+  - Startti/VSR `0.00075` ohm (100A/75mV)
+  - UPS `0.00075` ohm (100A/75mV)
+- INA3221-kanavat (2 korttia, 6 kanavaa, The Shunt Hack):
+  - Bilssi 1-2 `0.0015` ohm (50A/75mV)
+  - Laajennus 1-4 `0.00375` ohm (20A/75mV)
+- Toisen INA3221-kortin osoite muutetaan juotospadilla (0x42 + 0x43)
+- Kaikkien mittauspiirien GND ankkuroituu yhteiseen maapulttiin
 
 ### Wi-Fi
 - Käyttöliittymät (esim. selain/HA-näkymä)
@@ -50,6 +56,13 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 ## Home Assistant
 - HA on ei-kriittinen käyttöliittymäkerros
 - HA:n vika ei saa estää paikallista ohjausta tai perustoimintoja
+
+## Moottorin reaaliaikaiset turvalukitukset
+- Volvo öljynpaine- ja jäähdytysvesihälytykset luetaan optoerotettuna keskeytyksillä.
+- D+ optokanava toimii käyntitietona ja hard interlockina starttireleelle.
+- Optokanavien etuvastukset:
+  - 12V tilatiedot (öljy, lämpö, pilssikellukkeet, D+): 1k ohm / 2W
+  - PoE 48V valvonta: 4.7k ohm / 2W
 
 ---
 

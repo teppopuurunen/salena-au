@@ -108,13 +108,15 @@ Kokonaisuus on jaettu kahteen väylään:
 
 Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin yli.
 
-**Pääakku (hupiakun SOC-seuranta)**
-- Shuntti: 5705-HoFL2-250A-50mV-0.1% (250A, 0.1 %)
-- Mittausmoduuli: MIKROE-4810 (INA228, 20-bit)
+**Päämittaukset (3 x INA228, high-side)**
+- Hupiakku: 300A/75mV shuntti (`0.00025` ohm)
+- Starttiakku/VSR-latauslinja: 100A/75mV (`0.00075` ohm)
+- UPS-akku: 100A/75mV (`0.00075` ohm)
 
-**Pienkuormat (3 kpl pilssipumppuja)**
-- Shuntit: 3 x HoFL2-20A-75mV-0.1% (20A per pumppu)
-- Mittausmoduuli: MIKROE-4126 (INA3221, 3 kanavaa)
+**Pienkuormat ja pilssit (2 x INA3221, 6 kanavaa)**
+- Bilssi 1-2: 50A/75mV (`0.0015` ohm)
+- Laajennuskanavat 1-4: 20A/75mV (`0.00375` ohm)
+- Toisen INA3221-kortin osoite muutetaan juotospadilla (0x42 + 0x43)
 
 **Väylän suojaus (kriittinen)**
 - Erotin: MIKROE-1878 (ISO1540)
@@ -133,6 +135,11 @@ Mittaus-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernet
 
 **30A/40A ulkoiset releet (tarpeen mukaan)**
 - Autoreleitä tai DIN-kiskokannoilla niille SKU:26244-kanaville, joilla halutaan ohjata keskisuuria kuormia (10A-20A)
+
+**Moottorin turvalukitukset**
+- D+ käyntitieto luetaan optokanavasta suoraan ESP32-keskeytyksellä.
+- Starttireleen hard interlock on ohjelmistossa: D+ aktiivisena startti estetään.
+- Starttimoottorin kulutus seurataan virtuaalishunttina starttikäskyn keston perusteella.
 
 ### 3. Täydentävät asennusosat
 
@@ -172,8 +179,8 @@ Peruste: vain BILGE_SMALL (<10A) ohjataan rele-ESP:lta; BILGE_MID ja BILGE_LARGE
 **Suunniteltu käyttö**
 - tankkimittaukset
 - virran- ja jänniteseuranta
-- INA228 (MIKROE-4810) pääakun tarkkaan mittaukseen
-- INA3221 (MIKROE-4126) 3-kanavaiseen pienkuormamittaukseen
+- 3 x INA228 (hupi, startti/VSR, UPS)
+- 2 x INA3221 (bilssit + 4 laajennuskanavaa)
 - I2C-eristys ISO1540:lla (MIKROE-1878)
 
 **Tila**

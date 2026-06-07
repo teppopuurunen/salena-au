@@ -68,7 +68,7 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
 - [ ] Tee yksinkertainen statusrajapinta (valitse yksi):
   - [ ] HTTP `/status` JSON
   - [ ] UDP broadcast
-  - [ ] MQTT (vain jos broker on jo päätetty)
+  - [ ] ESPHome API (paikallinen Ethernet)
 - [ ] Pilssipumppu (DD-17) minimitoteutus:
   - [ ] Kytke BILGE_SMALL rele-ESP 2:n relekanavaan
   - [ ] Kytke BILGE_SMALL kellukekytkin rele-ESP 2:n DI-tuloon
@@ -138,10 +138,10 @@ Yleiset ohjeet: [docs/deployment.md](deployment.md)
   - [ ] Lisää `core-rpi5/home-assistant/configuration.yaml`
   - [ ] Lisää integraatiot tarpeen mukaan
 - [ ] Lisää 3–5 ensimmäistä entiteettiä:
-  - [ ] Releet (ESPHome + MQTT topicit)
-  - [ ] Mittaukset (Mittaus-ESP, ESPHome + MQTT)
+  - [ ] Releet (ESPHome API)
+  - [ ] Mittaukset (Mittaus-ESP, ESPHome API)
   - [ ] Autopilotti tila (read-only)
-- [ ] Ota MQTT käyttöön HA:ssa (Mosquitto-integraatio)
+- [ ] Ota paikallinen ESPHome API käyttöön HA:ssa
 - [ ] Pilssihalytykset (valvova, ei ohjaava):
   - [ ] Halytys jos pumppu kay > X min
   - [ ] Halytys jos pumppu kay > N kertaa / 24h

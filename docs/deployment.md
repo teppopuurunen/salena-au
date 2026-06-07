@@ -99,16 +99,16 @@ Tavoite tassa vaiheessa: tiedosto on olemassa, nimetty oikein, varsinainen firmw
 
 ---
 
-## ESPHome + MQTT toimintamalli
+## ESPHome + paikallinen Ethernet/API toimintamalli
 
-Suositus on kayttaa Home Assistantia keskuksena ja MQTT:ta integraatiovaylana:
+Suositus on kayttaa Home Assistantia keskuksena ja ESPHome API:a integraatiovaylana:
 
-- Rele-ESP 1: paikallinen relelogiikka + RS485 Modbus master, tilatiedot MQTT:hon
-- Rele-ESP 2: paikallinen I/O + releohjaukset, tilatiedot MQTT:hon
-- Mittaus-ESP: INA228/INA3221 mittaukset, sensoridata MQTT:hon
-- Home Assistant: lukee MQTT-topicit, visualisoi ja tekee automaatiot
+- Rele-ESP 1: paikallinen relelogiikka + RS485 Modbus master + D+ startti-interlock
+- Rele-ESP 2: paikallinen I/O + releohjaukset
+- Mittaus-ESP: INA228/INA3221 mittaukset eristetyllä I2C-väylällä
+- Home Assistant: lukee paikalliset entiteetit ja visualisoi
 
-Tama erottaa kenttalogiikan (ESP) ja automaatiologiikan (HA), mutta pitaa telemetrian yhdessa paikassa.
+Tama erottaa kenttalogiikan (ESP) ja automaatiologiikan (HA), mutta pitaa telemetrian yhdessa paikassa ilman pilviriippuvuuksia.
 
 ---
 
@@ -154,7 +154,7 @@ services:
   #   ...
 ```
 
-**Huomio:** `network_mode: host` on kriittinen, koska HA tarvitsee pääsyn veneen sisäverkkoon (ESP32:t, MQTT, jne.)
+**Huomio:** `network_mode: host` on kriittinen, koska HA tarvitsee pääsyn veneen sisäverkkoon (ESP32:t, SignalK, jne.)
 
 ---
 
@@ -205,8 +205,8 @@ services:
 3. ✓ Docker-compose pohja (alla)
 4. ✓ Ensimmäinen HA startup ja testaus
 5. ✓ SignalK-integraatio HA:han (integraatiot → HTTP REST)
-6. ✓ MQTT-väylän integraatio (Mosquitto + HA)
+6. ✓ Paikallisen Ethernet-väylän integraatio (ESPHome API + HA)
 7. ✓ ESPHome rungot käyttöön (3 x ESP)
-8. ☐ ESP32-ohjainten integraatio HA:han (MQTT ensisijainen, modbus-tcp vain tarpeen mukaan)
+8. ☐ ESP32-ohjainten integraatio HA:han (ESPHome API ensisijainen, modbus-tcp vain tarpeen mukaan)
 
 ---
