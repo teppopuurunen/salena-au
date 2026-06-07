@@ -42,27 +42,27 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Raspberry Pi 5 (8 GB) | RPi 5 | Käytössä |
 | NVMe HAT+ | WS-27709 | Käytössä |
 | NVMe SSD | 256/512 GB | Käytössä |
-| UPS HAT (E) | WS-27966 | Hankkimatta |
-| RS422-USB-adapteri | ST5000 integraatio | Hankittu |
+| UPS HAT (E) | WS-27966 | hankkimatta |
+| RS422-USB-adapteri | ST5000 integraatio | hankittu |
 | Reititin | Huawei B818-263 | Käytössä |
-| Salonkinäyttö | Blackstorm M245BN 24.5" | Hankittu |
-| Rele-ESP 1 | ESP32-S3-ETH-8DI-8RO | Hankittu |
-| Rele-ESP 2 | ESP32-S3-ETH-8DI-8RO | Hankittu |
-| Kytkin | Teltonika TSW101 | Hankittu |
-| Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
-| Akku-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
-| Valo-ESP | SKU:28771 / ESP32-S3-POE-ETH | Hankittu |
-| Modbus I/O | Waveshare SKU:26244 (3 kpl) | Hankkimatta |
-| INA228-moduulit | 3 x INA228 (high-side) | Hankkimatta |
-| INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | Hankkimatta |
-| I2C-erotin | MIKROE-1878 (ISO1540) | Hankkimatta |
-| MPPT-säätimet | Victron SmartSolar 75/15 | Hankkimatta |
+| Salonkinäyttö | Blackstorm M245BN 24.5" | hankittu |
+| Rele-ESP 1 | ESP32-S3-ETH-8DI-8RO | hankittu |
+| Rele-ESP 2 | ESP32-S3-ETH-8DI-8RO | hankittu |
+| Kytkin | Teltonika TSW101 | hankittu |
+| Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
+| Akku-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
+| Valo-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
+| Modbus I/O | Waveshare SKU:26244 (3 kpl) | hankkimatta |
+| INA228-moduulit | 3 x INA228 (high-side) | hankkimatta |
+| INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | hankkimatta |
+| I2C-erotin | MIKROE-1878 (ISO1540) | hankkimatta |
+| MPPT-säätimet | Victron SmartSolar 75/15 | hankkimatta |
 | DC-DC laturi (IT-akku) | Victron Orion-Tr Smart 12/12-18A | Asennettu |
 | Pääkytkin + ACR | Blue Sea 7649 | Asennettu |
 | Autopilotti | Raymarine ST5000 | Käytössä |
-| Jääkaappi | Danfoss kompressori | Hankkimatta |
-| Lämmitin | VEVOR 5 kW Diesel | Hankkimatta |
-| Bilssipumput | BILGE_SMALL/MID/LARGE | Hankkimatta |
+| Jääkaappi | Danfoss kompressori | hankkimatta |
+| Lämmitin | VEVOR 5 kW Diesel | hankkimatta |
+| Bilssipumput | BILGE_SMALL/MID/LARGE | hankkimatta |
 
 Lisätiedot: [procurement.md](procurement.md), [hardware/relay_map.md](../hardware/relay_map.md)
 

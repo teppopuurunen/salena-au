@@ -27,7 +27,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Navigointi toimii normaalisti
 - SignalK jakaa dataa sisäverkossa
 - Tallennus NVMe-levylle
-- UPS HAT (WS-27966) ei ole vielä hankittu
+- UPS HAT (WS-27966): hankkimatta
 - Reititin: Huawei B818-263 4G LTE
 - Perässä kytkin: Teltonika TSW101 (hankittu)
 
@@ -157,7 +157,7 @@ Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin 
 
 ### Hankkimatta olevat kuormat
 
-Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitteet eivät ole vielä hankittuja:
+Seuraavat [relay_map.md](../hardware/relay_map.md):ssä varatut kuormat ja laitteet ovat hankkimatta:
 - Jääkaappi (Danfoss, FRIDGE)
 - Bilssipumput (BILGE_SMALL, BILGE_MID, BILGE_LARGE)
 - Lämmitin VEVOR 5kW Diesel (HEATER)
