@@ -33,12 +33,14 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 
 **Failover-periaate (Modbus RTU)**
 - Rele-ESP 1: Aktiivinen Modbus RTU Master (RS-portti valmiina, rele-ESP 2:n ohjaus)
-- Rele-ESP 2: Varalla-Master (ottaa roolin välittömästi, jos Rele-ESP 1 tai sen RS485-portti kaatuu)
-- Vikatilanteessa: Rele-ESP 2 muuntautuu Master-tilaan ja jatkaa Modbus-väylän hallintaa katkeamattomasti
+- Rele-ESP 2: Varalla-Master (valvoo Rele-ESP 1:n heartbeatia)
+- Jos Rele-ESP 1 ei lähetä heartbeatia 3 sekuntiin tai sen RS485-portti kaatuu, Rele-ESP 2 ottaa Master-roolin
+- Vikatilanteessa Rele-ESP 2 jatkaa Modbus-väylän hallintaa katkeamattomasti
 
 ### RS485 Modbus RTU
 - **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244 DI/DO)
 - **Rele-ESP 1 (master)** ↔ Analogiamuunnokset (SKU:25767 AI, SKU:26211 AO)
+- **Rele-ESP 2 (varalla-master)** ottaa roolin, jos Rele-ESP 1:n heartbeat puuttuu yli 3 sekuntia
 - Tilatiedot: 24 optoeristettyä tuloa (DI) kohokytkimille, 1-0-Auto-asennoille ja releiden todellisille tiloille
 - Releohjaus: 24 transistorilähtöä (DO, Darlington sinking 500mA) ulkoisille HV- ja DIN-releille
 - Analoginen syöttö (AI): 0-5V tankkien pinnanmittaus, säätöpotentiometrit

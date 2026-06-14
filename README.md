@@ -79,7 +79,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - UPS-varmistus
 
 2) **Automaatiotaso (ESP32-S3 Ethernet + RS485 Modbus)**
-- 2 × rele-ESP (8 relelähtöä / moduuli, Rele-ESP 1 = RS485 master)
+- 2 × rele-ESP (8 relelähtöä / moduuli, Rele-ESP 1 = RS485 master, Rele-ESP 2 = varalla-master)
 - 3 × Waveshare SKU:26244 (Modbus RTU IO −tilatiedot ja ulkoinen releohjaus)
 - 1 × Waveshare SKU:25767 (Modbus AI −tankkien pinnanmittaus, anturit)
 - 1 × Waveshare SKU:26211 (Modbus AO −PWM-himmennys, säätötoimilaitteet)
@@ -144,11 +144,12 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 - Lisäksi 8 lisäpainiketta luetaan MCP23017 I2C-laajentimen kautta GPIO:lla.
 - Tilatiedot ja ohjaus verkon yli (RPi / HA)
 - **Rele-ESP 1:** RS485 Modbus -master kenttä-I/O-moduuleille
-- **Rele-ESP 2:** paikallinen I/O- ja releohjain
+- **Rele-ESP 2:** paikallinen I/O- ja releohjain sekä varalla-master
 
 **Periaate**
 - Toimii itsenäisesti myös ilman RPi:tä ja HA:ta.
 - Ohjaus ei ole Wi-Fi-riippuvainen.
+- Jos Rele-ESP 1:n heartbeat puuttuu yli 3 sekuntia, Rele-ESP 2 ottaa Modbus-masterin roolin.
 
 ### 5.1b Modbus RTU I/O -moduulit (3 × SKU:26244)
 
@@ -242,6 +243,7 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
   - Kytkin: Teltonika TSW101 (hankittu)
 - **RS485 Modbus RTU**
   - Rele-ESP 1 (master) ↔ Modbus I/O -moduulit (SKU:26244)
+  - Rele-ESP 2 (varalla-master) ottaa roolin, jos Rele-ESP 1:n heartbeat puuttuu yli 3 sekuntia
   - Tilatiedot ja ulkoisen releohjauksen väylä
 - **I2C (eristetty)**
   - Akku-ESP ↔ INA228 + INA3221 mittausmoduulit

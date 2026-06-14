@@ -149,7 +149,8 @@ Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin 
 
 **Master ja reititys**
 - RS485-master: Rele-ESP 1 (RS-portti valmiina)
-- Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena Ethernetin yli
+- Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena Ethernetin yli sekä varalla-masterina
+- Jos Rele-ESP 1:n heartbeat puuttuu yli 3 sekuntia, Rele-ESP 2 ottaa Modbus-masterin roolin
 
 **Tilatiedot ja ulkoinen releohjaus (indikointi)**
 - Moduulit: 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH)

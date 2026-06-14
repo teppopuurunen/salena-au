@@ -168,17 +168,19 @@ Säästää ESP32:n GPIO-resursseja ja helpottaa kaapelointia.
 
 ---
 
-## DD-15: RS485 Modbus master Rele-ESP 1:ssä
+## DD-15: RS485 Modbus master + failover
 
 **Päätös**  
 Rele-ESP 1:n sisäänrakennettu RS485-portti (EIA-485) toimii Modbus RTU -masterina kenttä-I/O-moduuleille (SKU:26244).
-Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena ilman Modbus-masterin roolia.
+Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena sekä varalla-masterina.
+Jos Rele-ESP 1 ei lähetä heartbeatia 3 sekuntiin, Rele-ESP 2 ottaa Modbus-masterin roolin.
 
 **Perustelu**  
 - Häiriönkestävä RS485-väylä sopii sähkökeskukseen ja veneen häiriöympäristöön.
 - Modbus RTU standardointi varmistaa modulaarisen ja laajennettavan rakenteen.
 - Rele-ESP 1:n RS-portti on valmiina eikä vaadi erillisiä muunnoksia.
-- Master-slave -malli helpottaa tilaitetojen ja releohjauksen koordinointia.
+- Master-slave -malli helpottaa tilatietojen ja releohjauksen koordinointia.
+- 3 sekunnin heartbeat-raja tekee failoverista yksiselitteisen ja testattavan.
 
 ---
 

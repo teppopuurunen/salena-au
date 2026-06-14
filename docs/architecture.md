@@ -146,7 +146,7 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Ohjaus ei ole Wi-Fi-riippuvainen (Wi-Fi vain käyttöliittymille)
 - **Rele-ESP 1 toimii RS485 Modbus -masterina** (RS-portti valmiina, aktiivinen hallinta)
 - **Rele-ESP 2 toimii varalla-masterina ja paikallisena I/O-releohjaimena**
-  - Kun Rele-ESP 1 tai sen RS485-portti kaatuu, Rele-ESP 2 ottaa Modbus-väylän Master-roolin välittömästi
+  - Jos Rele-ESP 1 ei lähetä heartbeatia 3 sekuntiin tai sen RS485-portti kaatuu, Rele-ESP 2 ottaa Modbus-väylän Master-roolin
   - Taataan vikasietoinen kuormanohjaus: mitään kuormaa ei jää ilman hallintaa
 
 #### Modbus RTU I/O -moduulit (DI/DO)
