@@ -81,6 +81,8 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 2) **Automaatiotaso (ESP32-S3 Ethernet + RS485 Modbus)**
 - 2 × rele-ESP (8 relelähtöä / moduuli, Rele-ESP 1 = RS485 master)
 - 3 × Waveshare SKU:26244 (Modbus RTU IO −tilatiedot ja ulkoinen releohjaus)
+- 1 × Waveshare SKU:25767 (Modbus AI −tankkien pinnanmittaus, anturit)
+- 1 × Waveshare SKU:26211 (Modbus AO −PWM-himmennys, säätötoimilaitteet)
 - 30A/40A ulkoiset releet SKU:26244-kanaville (keskisuuret kuormat)
 - Painikkeet suoraan inputeihin (paikallinen ohjaus)
 - Ethernet-yhteys RPi:hin

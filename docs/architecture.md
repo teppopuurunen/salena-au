@@ -149,16 +149,37 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
   - Kun Rele-ESP 1 tai sen RS485-portti kaatuu, Rele-ESP 2 ottaa Modbus-väylän Master-roolin välittömästi
   - Taataan vikasietoinen kuormanohjaus: mitään kuormaa ei jää ilman hallintaa
 
-#### Modbus RTU I/O -moduulit
+#### Modbus RTU I/O -moduulit (DI/DO)
 
 **Laitteet**
-- 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- 3 × Waveshare SKU:26244 (Modbus RTU IO 8CH DI/DO)
 - 30A/40A ulkoiset releet tarpeen mukaan SKU:26244 DO-kanavien taakse
 
 **Rooli**
-- Tilatiedot: optoeristetyt DI-tulot
-- Ulkoinen releohjaus: DO-lähdöt (Darlington sinking)
+- Tilatiedot: optoeristetyt DI-tulot (kohokytkimet, 1-0-Auto asenot, releiden todellinen tila)
+- Ulkoinen releohjaus: DO-lähdöt (Darlington sinking, 500mA)
 - Keskisuuret kuormat: autoreleet tai DIN-kiskokannalliset releet SKU:26244-kanaville (10A-20A)
+
+#### Modbus RTU Analogiamuunnokset (AI/AO)
+
+**Analoginen syöttö (AI) – Waveshare SKU:25767**
+- Lukee 0-5V analogisia signaaleja (tankkien pinnanmittaus, säätöpotentiometrit)
+- Käyttötarkoitus:
+  - Sepin pinnanmittaus: Simarine STR1 tutka (0-5V) → tankin täyttöastetta (%)
+  - Puhdasveden pinnanmittaus: Hydrostaattinen uppoanturi (0-5V)
+  - Dieseltankkien mittaus: 2 × KUS-sauvat signaalimuuntimien kautta (0-5V)
+  - Säätöpotentiometrit ohjaamon pyöreille säädöille (himmennin, lämpötila, jne)
+
+**Analoginen lähtö (AO) – Waveshare SKU:26211**
+- Antaa 0-10V ohjaussignaaleja (PWM-himmennykseen, säätöpotentiarometreihin)
+- Käyttötarkoitus:
+  - PWM-LED-himmennykselle portaaton säädön mahdollistus
+  - Säätöpotentiometrin paluusignaalit (0-10V) luetaan AI-tuloon, AO-lähtö ohjaa toimilaitteita
+
+**Väylä ja erotus**
+- Yhteydessä Modbus RTU -väylään (Rele-ESP 1 masteri)
+- Kierretty parikaapeli (varjo sähkökeskuksesta säätöpotentiometreille)
+- 10V referenssijännite tuodaan DC-DC-muuntimelta puhtaan signaalintason varmistamiseksi
 
 #### Mittaus-ESP + Akku-ESP + Valo-ESP
 

@@ -37,9 +37,12 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 - Vikatilanteessa: Rele-ESP 2 muuntautuu Master-tilaan ja jatkaa Modbus-väylän hallintaa katkeamattomasti
 
 ### RS485 Modbus RTU
-- **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244)
+- **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244 DI/DO)
+- **Rele-ESP 1 (master)** ↔ Analogiamuunnokset (SKU:25767 AI, SKU:26211 AO)
 - Tilatiedot: 24 optoeristettyä tuloa (DI) kohokytkimille, 1-0-Auto-asennoille ja releiden todellisille tiloille
 - Releohjaus: 24 transistorilähtöä (DO, Darlington sinking 500mA) ulkoisille HV- ja DIN-releille
+- Analoginen syöttö (AI): 0-5V tankkien pinnanmittaus, säätöpotentiometrit
+- Analoginen lähtö (AO): 0-10V PWM-himmetykselle ja säätötoimilaitteille
 - Keskisuuret kuormat (10A–20A): ulkoiset autorele/DIN-kiskokannalliset releet SKU:26244-lähtöjen perään
 - Häiriönkestävyys: RS485-väylä sopii sähkökeskukseen ja veneen häiriöympäristöön
 

@@ -159,6 +159,20 @@ Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin 
 **30A/40A ulkoiset releet (tarpeen mukaan)**
 - Autoreleitä tai DIN-kiskokannoilla niille SKU:26244-kanaville, joilla halutaan ohjata keskisuuria kuormia (10A-20A)
 
+### 2b. Analogiamuunnokset (AI/AO) – Modbus RTU
+
+**Analoginen syöttö (AI) – Waveshare SKU:25767**
+- Lukee 0-5V analogisia signaaleja Modbus RTU -väylällä
+- Käyttötarkoitus: tankkien pinnanmittaus, säätöpotentiometrit, antureiden signaalit
+- Yhteydessä Modbus-väylään (Rele-ESP 1 masteri)
+- Tila: **hankkimatta**
+
+**Analoginen lähtö (AO) – Waveshare SKU:26211**
+- Antaa 0-10V ohjaussignaaleja Modbus RTU -väylällä
+- Käyttötarkoitus: PWM-LED-himmennys portaattomasti, säätötoimilaitteet
+- Yhteydessä Modbus-väylään (Rele-ESP 1 masteri)
+- Tila: **hankkimatta**
+
 **Moottorin turvalukitukset**
 - D+ käyntitieto luetaan optokanavasta suoraan ESP32-keskeytyksellä.
 - Starttireleen hard interlock on ohjelmistossa: D+ aktiivisena startti estetään.

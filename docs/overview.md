@@ -57,6 +57,8 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Yamaha kaiuttimet | NS-AW194 (IPX3) | hankittu |
 | Cloudberry USB-PD laturit | 120W (3 kpl, 6.0A) | hankittu |
 | Modbus I/O | Waveshare SKU:26244 (3 kpl) | hankkimatta |
+| Modbus AI | Waveshare SKU:25767 (analoginen syöttö) | hankkimatta |
+| Modbus AO | Waveshare SKU:26211 (analoginen lähtö) | hankkimatta |
 | INA228-moduulit | 3 x INA228 (high-side) | hankkimatta |
 | INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | hankkimatta |
 | I2C-erotin | MIKROE-1878 (ISO1540) | hankkimatta |
