@@ -52,6 +52,10 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Mittaus-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
 | Akku-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
 | Valo-ESP | SKU:28771 / ESP32-S3-POE-ETH | hankittu |
+| Salonkinäyttö | Blackstorm M245BN 24.5" | hankittu |
+| NÖRDIC vahvistin | SGM-197 (12V, 2×40W, BT 5.0) | hankittu |
+| Yamaha kaiuttimet | NS-AW194 (IPX3) | hankittu |
+| Cloudberry USB-PD laturit | 120W (3 kpl, 6.0A) | hankittu |
 | Modbus I/O | Waveshare SKU:26244 (3 kpl) | hankkimatta |
 | INA228-moduulit | 3 x INA228 (high-side) | hankkimatta |
 | INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | hankkimatta |

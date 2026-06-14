@@ -58,6 +58,30 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Mekaaninen asennus ja kaantotelineen toteutus seuraavana vaiheena
 - Sisaltoprofiilit toteutetaan osana UI/kioski-kayttoonottoa
 
+### Audiosysteemi (salonki)
+
+**Vahvistin**
+- NÖRDIC SGM-197 (12V D-luokan digitaalivahvistin, 2×40W RMS, Bluetooth 5.0, AUX)
+- Syöttö: UPS-akusta (LiFePO4) Cloudberry USB-PD laturin kautta
+
+**Kaiuttimet**
+- Yamaha NS-AW194 (IPX3 säänkestävät)
+- Asennus: salongin seinille U-telineillä
+
+**USB-lataus ja Virta (Cloudberry-laturit)**
+- 3 × Cloudberry 120W USB-PD -autolaturit (6.0A)
+- Liitännät: USB-C + USB-A
+- Sijainti: sähköjakelukeskus
+- Varaus per laturi: oma sulake + tupakansytytin-adapteri
+
+**Laajennus**
+- Mahdollisuus 12V aktiiviselle penkinalussubwooferille
+
+**Tila**
+- Vahvistin ja kaiuttimet hankittu
+- Cloudberry-laturit hankittu (3 kpl)
+- Mekaaninen asennus ja kaapelointi seuraavana vaiheena
+
 ---
 
 ## Autopilotti

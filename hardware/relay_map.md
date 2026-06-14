@@ -47,13 +47,24 @@ johdotus- ja layout-vaiheessa.
 
 ## 5. Moottorin turvakanavat (optoerotettu, suora ESP32-keskeytys)
 
-| Kanava | Signaali | Etuvastus | Logiikka |
-|:---|:---|:---|:---|
-| Opto 1 | Volvo öljynpainehälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
-| Opto 2 | Volvo jäähdytysvesihälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
-| Opto 3 | D+ käyntitieto | 1kΩ / 2W | D+ aktiivinen estää starttireleen (hard interlock) |
-| Opto 4 | Pilssi kohokytkin 1 (12V) | 1kΩ / 2W | Tilatieto |
-| Opto 5 | Pilssi kohokytkin 2 (12V) | 1kΩ / 2W | Tilatieto |
-| Opto 6 | PoE 48V valvonta | 4.7kΩ / 2W | Tilatieto |
-| Opto 7 | Varaus | - | Tilatieto |
-| Opto 8 | Varaus | - | Tilatieto |
+Volvo Penta 2003 -moottorin turvakanavat luetaan SparkFun BOB-09118 -optoerottimien kautta suoraan ESP32:n GPIO-keskeytyksille.
+
+| Kanava | Signaali | Etuvastus | Laitteisto | Logiikka |
+|:---|:---|:---|:---|:---|
+| Opto 1 | Volvo öljynpainehälytys | 1kΩ / 2W | Volvo alkuperäinen anturi | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
+| Opto 2 | Volvo jäähdytysvesihälytys | 1kΩ / 2W | Volvo alkuperäinen anturi | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen |
+| Opto 3 | D+ käyntitieto | 1kΩ / 2W | Laturin D+-napa | D+ aktiivinen estää starttireleen (hard interlock) |
+| Opto 4 | Pilssi kohokytkin 1 (12V) | 1kΩ / 2W | Paikallinen kelluke | Tilatieto |
+| Opto 5 | Pilssi kohokytkin 2 (12V) | 1kΩ / 2W | Paikallinen kelluke | Tilatieto |
+| Opto 6 | PoE 48V valvonta | 4.7kΩ / 2W | Verkon valvonta | Tilatieto |
+| Opto 7 | Varaus | - | - | - |
+| Opto 8 | Varaus | - | - | - |
+
+**Laitteistotason suojaus**
+- SparkFun BOB-09118 optoerottimet (galvaanisesti erotetut)
+- Etuvastukset: 1kΩ / 2W (12V signaalit), 4.7kΩ / 2W (PoE 48V valvonta)
+- Hard Interlock: Kun D+ on aktiivinen, startti estetään ohjelmistossa
+
+**Virta-anturit (Kierrosluku)**
+- RPM luetaan laturin W-navasta tai induktiivisen anturin pulsseista
+- ESP32:n hardware-laskuri (PCNT) suoraan (ei CPU-intesiiviä pollaamista)

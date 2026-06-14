@@ -141,11 +141,13 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 - Galvaanisesti erotetut I/O:t
 - Syöttö: PoE
 
-**Periaate**
+**Periaate ja Failover**
 - Toimii itsenäisesti myös ilman RPi:tä ja ilman HA:ta
 - Ohjaus ei ole Wi-Fi-riippuvainen (Wi-Fi vain käyttöliittymille)
-- Rele-ESP 1 toimii RS485 Modbus -masterina (RS-portti valmiina)
-- Rele-ESP 2 toimii paikallisena I/O- ja releohjaimena
+- **Rele-ESP 1 toimii RS485 Modbus -masterina** (RS-portti valmiina, aktiivinen hallinta)
+- **Rele-ESP 2 toimii varalla-masterina ja paikallisena I/O-releohjaimena**
+  - Kun Rele-ESP 1 tai sen RS485-portti kaatuu, Rele-ESP 2 ottaa Modbus-väylän Master-roolin välittömästi
+  - Taataan vikasietoinen kuormanohjaus: mitään kuormaa ei jää ilman hallintaa
 
 #### Modbus RTU I/O -moduulit
 
@@ -161,22 +163,22 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 #### Mittaus-ESP + Akku-ESP + Valo-ESP
 
 **Rooli**
-- Mittaus-ESP: lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat
-- Akku-ESP: virran- ja jänniteseuranta
-- Valo-ESP: älyvalojen ohjaus (suunnitteilla)
+- **Mittaus-ESP:** lämpötilat, kosteudet, tankit ja pilssipumppuihin liittyvät mittaukset/tilat (sijainti: perä)
+- **Akku-ESP:** virran- ja jänniteseuranta (sijainti: perä, sähkökeskus). Lukee INA-piirien I2C-väylällä ja välittää datan Ethernetin yli
+- **Valo-ESP:** älyvalojen ohjaus (suunnitteilla, sijainti: TBD)
 - Datan välitys Raspberry Pi:lle
 
-**Mittausperiaate**
-- Akku-ESP lukee INA-piirit ja välittää datan Ethernetin yli.
-- 3 × INA228 high-side mittaukseen:
-  - Hupiakku `0.00025` ohm
-  - Startti/VSR `0.00075` ohm
-  - UPS `0.00075` ohm
+**Mittausperiaate (Akku-ESP)**
+- Akku-ESP lukee INA-piirit I2C-väylällä ja välittää datan Ethernetin yli
+- 3 × INA228 high-side mittaukseen (galvaanisesti erillään):
+  - Hupiakku: Milliohm 300A/75mV (`0.00025` ohm)
+  - Startti/VSR-latauslinja: Milliohm 100A/75mV (`0.00075` ohm)
+  - UPS-akku: Milliohm 100A/75mV (`0.00075` ohm)
 - 2 × Adafruit INA3221 (The Shunt Hack, ulkoiset shuntit), 6 kanavaa:
-  - Bilssi 1-2: `0.0015` ohm
-  - Laajennus 1-4: `0.00375` ohm
-- I2C-väylä erotetaan 1 × ISO1540-erottimella (MIKROE-1878).
-- Toisen INA3221-kortin osoite muutetaan juotospadilla väyläkonfliktin estämiseksi.
+  - Bilssi 1-2: Milliohm 50A/75mV (`0.0015` ohm)
+  - Laajennus 1-4: Milliohm 20A/75mV (`0.00375` ohm)
+- I2C-väylä erotetaan 1 × ISO1540-erottimella (MIKROE-1878)
+- Toisen INA3221-kortin osoite muutetaan juotospadilla väyläkonfliktin estämiseksi (0x42 + 0x43)
 
 **Laitetiedot**
 - SKU: 28771
@@ -252,6 +254,58 @@ Valaistusratkaisu on tässä vaiheessa tarkoituksella avoin. Sähkökeskukseen v
 ### Home Assistantin rooli
 - Home Assistant toimii käyttöliittymänä ja ei-kriittisenä automaatiokerroksena
 - Järjestelmä toimii ilman Home Assistantia
+
+### Taso 3 – Moottorin integraatio (Volvo Penta 2003)
+
+**Periaate**
+- Moottorin alkuperäinen paneeli säilyy rinnalla täysin toimintakuntoisena
+- Raskaat 12V-sähköt pidetään galvaanisesti erillään dataverkosta
+- Turvallisuus ja telemetria hoituvat ohjelmiston hard interlockilla
+
+**Ohjaus (ESP32 optoeristetyillä releillä)**
+- Rele-ESP 2:n DO-lähdöt maadoittavat apureleiden kelat
+- Napa 15 (virta) kytketään virtalukon rinnalle (1-0-Auto -kytkimellä)
+- Napa 50 (startti) käyttää 70A järeää relettä, jonka kelassa on 1N4007-estosuuntadiodi
+
+**Laitteistotason turvallisuus (optokanavat)**
+- Laturin D+-nasta: luetaan ESP32-keskeytyksellä SparkFun-optoerrottimen (BOB-09118) läpi
+- Öljynpainehälytys: luetaan optokanavasta (Volvo alkuperäinen anturi)
+- Jäähdytysvesihälytys: luetaan optokanavasta (Volvo alkuperäinen anturi)
+- Optokanavien etuvastukset: 1kΩ / 2W
+
+**Ohjelmiston Interlock-logiikka**
+- Hard Interlock: Kun D+ on aktiivinen (moottori käy), startin käynnistyminen estetään ohjelmassa
+- Öljynpaineen ja jäähdytysveden hälytykset aktivoivat summerin ja ESP32-keskeytyksen
+- Turvallisuusperiaate: ohjelmisto ei saa antaa starttireleen aktivoida itseään käynnissä olevan moottorin kanssa
+
+**Telemetria**
+- Kierrosluku (RPM): luetaan laturin W-navasta tai induktiivisen anturin pulsseista suoraan ESP32:n hardware-laskurilla (PCNT)
+- Startin kulutus: lasketaan matemaattisesti vetokäskyn keston perusteella (virtuaalishuntti)
+- Kaikki telemetria välitetään Ethernetin yli Raspberry Pi:lle
+
+### Taso 3 – IT-media ja Äänentoisto (Salonki)
+
+**Periaate**
+- Viihteen arkkitehtuuri on rakennettu energiatehokkaaksi ilman tyhjäkäyntihäviöitä tuottavia 230V inverttereitä
+- Äänijärjestelmä syötetään 12V LiFePO4-akusta, tuetaan Cloudberry USB-PD laturilla
+
+**Näyttö ja Plotteri**
+- Blackstorm M245BN 24.5", saa kuvan HDMI:llä Raspberry Pi:ltä (Home Assistant / Navigointi)
+- Syöttö: 12V DC, UPS-akusta
+
+**Audiosysteemi**
+- Vahvistin: NÖRDIC SGM-197 (kompakti 12V D-luokan digitaalivahvistin, BT 5.0, AUX, $2 \times 40\text{W}$ RMS)
+- Kaiuttimet: Yamaha NS-AW194 (IPX3 säänkestävät) salongissa U-asennustelineillä
+- Laajennus: mahdollisuus 12V aktiivisella penkinalussubwooferilla NÖRDIC:in Sub Out -liitännästä
+
+**Signaalireititys ja Maasilmukan esto**
+- Reitti: RPi $\rightarrow$ HDMI $\rightarrow$ Blackstorm-näyttö $\rightarrow$ 3.5mm/RCA $\rightarrow$ NÖRDIC-vahvistin
+- Jos maalenkit aiheuttavat digitaalista surinaa, RCA-linjaan lisätään passiivinen galvaaninen maaerotin (Ground Loop Isolator)
+
+**UPS ja Lataus (IT-verkko)**
+- Arctic Marine -sulakerasiasta otetaan virta Cloudberry 120W USB-PD -autolaturiin
+- Cloudberry: 6.0A autolaturit jännitenäytöllä (USB-C + USB-A)
+- Sähkökeskukseen varataan 3 x Cloudberry-laturille omat sulakkeet ja tupakansytytin-adapterit
 
 ---
 

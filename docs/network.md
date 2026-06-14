@@ -19,9 +19,22 @@ Tämä dokumentti kuvaa Salena AU -järjestelmän tiedonsiirron periaatteet ja r
 ### Ethernet
 - **ESP32-S3 rele-ESP:t** ↔ Raspberry Pi (ohjaus- ja tilaväylä)
 - **Mittaus-ESP / Akku-ESP / Valo-ESP** → Raspberry Pi (PoE)
+- **Topologia:** Huawei B818-263 reititin (master) → 2x Teltonika TSW101 kytkin (PoE)
+  - Teltonika 1: Pääkytkin (uplink Huaweihin, PoE-portit 1-4 ESPille)
+  - Teltonika 2: Varalla (daisy-chain Teltonika 1:een tai suoraan Huaweihin)
 - Tavoite: deterministinen ja helposti debugattava liikenne
 - Reititin: Huawei B818-263 4G LTE
 - Kytkin: Teltonika TSW101 (hankittu)
+
+**PoE-topologia (5 × ESP32-S3-POE-ETH)**
+- Rele-ESP 1 ja 2: Teltonika TSW101 PoE-portteihin (etusijalla 1-4)
+- Mittaus-ESP, Akku-ESP, Valo-ESP: Teltonika TSW101 PoE-portteihin
+- Kunkin ESP32 saa syöttönsä PoE-kaapelista (RJ45), mikä takaa nollalatenssin ja häiriöttömyyden
+
+**Failover-periaate (Modbus RTU)**
+- Rele-ESP 1: Aktiivinen Modbus RTU Master (RS-portti valmiina, rele-ESP 2:n ohjaus)
+- Rele-ESP 2: Varalla-Master (ottaa roolin välittömästi, jos Rele-ESP 1 tai sen RS485-portti kaatuu)
+- Vikatilanteessa: Rele-ESP 2 muuntautuu Master-tilaan ja jatkaa Modbus-väylän hallintaa katkeamattomasti
 
 ### RS485 Modbus RTU
 - **Rele-ESP 1 (master)** ↔ Modbus I/O -moduulit (SKU:26244)
@@ -128,10 +141,30 @@ kompassi- tai IMU-lähde.
 
 ---
 
-### Rajaukset
+### Moottorin reaaliaikaiset turvalukitukset (optokanavat)
 
-- Autopilotin tilaa tai telemetriaa ei saada luettua takaisin
-  NMEA 0183 -muodossa.
-- Useiden päällekkäisten reittilauseiden samanaikaista lähettämistä ei
-  suositella.
-- Paikkalauseet (esim. GGA, GLL) eivät ole tarpeellisia Track Control -käytössä.
+Volvo Penta 2003 -moottorin kriittiset signaalit luetaan optoerottetuina GPIO-keskeytyksillä:
+
+| Kanava | Signaali | Etuvastus | Logiikka | Laitteisto |
+|---|---|---|---|---|
+| Opto 1 | Volvo öljynpainehälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen | Volvo alkuperäinen anturi |
+| Opto 2 | Volvo jäähdytysvesihälytys | 1kΩ / 2W | Anturin maadoitus aktivoi summerin + ESP32 keskeytyksen | Volvo alkuperäinen anturi |
+| Opto 3 | D+ käyntitieto | 1kΩ / 2W | D+ aktiivinen estää starttireleen (hard interlock) | Laturin D+-napa |
+| Opto 4 | Pilssi kohokytkin 1 (12V) | 1kΩ / 2W | Tilatieto | Paikallinen kelluke |
+| Opto 5 | Pilssi kohokytkin 2 (12V) | 1kΩ / 2W | Tilatieto | Paikallinen kelluke |
+| Opto 6 | PoE 48V valvonta | 4.7kΩ / 2W | Tilatieto | Verkon valvonta |
+| Opto 7-8 | Varaus | - | - | - |
+
+**Hard Interlock -logiikka**
+- Kun D+ (opto 3) on aktiivinen, moottorin laturin lähtöjännite osoittaa, että moottori käy
+- Ohjelmisto estää starttireleen aktivoinnin välittömästi (ei saa käynnistää käynnissä olevaa moottoria)
+
+**Kierrosluku (RPM) -luenta**
+- Luetaan laturin W-navasta tai induktiivisen anturin pulsseista
+- ESP32:n hardware-laskuri (PCNT) lukee pulssit suoraan (ei ohjelmallista pollaamista)
+
+---
+
+## Merenkulkudata (NMEA)
+
+NMEA 2000 ja NMEA 0183 -liikenne tuodaan Raspberry Pi:lle erillisten USB-sovittimien (esim. Canable, Waveshare RS485/422) kautta, joista Signal K kääntää ne MQTT- ja web-muotoon.
