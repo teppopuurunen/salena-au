@@ -18,6 +18,7 @@ Waveshare UPS HAT (E) (WS-27966), I2C-väylä 1, osoite `0x2d`.
 | `electrical.batteries.ups.input.voltage` / `.current` / `.power` | V / A / W |
 | `electrical.batteries.ups.externalPower` | true/false |
 | `electrical.batteries.ups.cell1..4.voltage` | V |
+| `electrical.batteries.ups.cellSpread` | V (suurin kenno − pienin; seuraa, kasvaako ero) |
 
 ## Asennus
 

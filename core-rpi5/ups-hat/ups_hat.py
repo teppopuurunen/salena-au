@@ -92,10 +92,36 @@ def to_delta(d):
         vals.append((f"{SK_BASE}.capacity.timeRemaining", d["tte_min"] * 60))
     for i, mv in enumerate(d["cells_mv"], 1):
         vals.append((f"{SK_BASE}.cell{i}.voltage", mv / 1000))
+    vals.append((f"{SK_BASE}.cellSpread", (max(d["cells_mv"]) - min(d["cells_mv"])) / 1000))
     return {
         "updates": [{
             "$source": "ups-hat",
             "values": [{"path": p, "value": v} for p, v in vals],
+        }]
+    }
+
+
+META_UNITS = {
+    "input.voltage": ("V", "UPS HAT USB-C -sisäänmenon jännite"),
+    "input.current": ("A", "UPS HAT USB-C -sisäänmenon virta"),
+    "input.power": ("W", "UPS HAT USB-C -sisäänmenon teho"),
+    "cell1.voltage": ("V", "UPS-akun kenno 1"),
+    "cell2.voltage": ("V", "UPS-akun kenno 2"),
+    "cell3.voltage": ("V", "UPS-akun kenno 3"),
+    "cell4.voltage": ("V", "UPS-akun kenno 4"),
+    "cellSpread": ("V", "UPS-akun kennojen jännite-ero (suurin - pienin)"),
+}
+META_EVERY = 60  # lähetä meta uudelleen n. 5 min välein (SignalK-uudelleenkäynnistyksen varalta)
+
+
+def meta_delta():
+    return {
+        "updates": [{
+            "$source": "ups-hat",
+            "meta": [
+                {"path": f"{SK_BASE}.{p}", "value": {"units": u, "description": desc}}
+                for p, (u, desc) in META_UNITS.items()
+            ],
         }]
     }
 
@@ -117,6 +143,7 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     low_count = 0
     last_ext = None
+    loop = 0
     log.info("Käynnistetty: SoC-raja %d %%, kennoraja %d mV, CUT_OUTPUT=%s",
              SHUTDOWN_SOC, SHUTDOWN_CELL_MV, CUT_OUTPUT)
 
@@ -130,6 +157,9 @@ def main():
                 continue
 
             try:
+                if loop % META_EVERY == 0:
+                    sock.sendto(json.dumps(meta_delta()).encode(), SIGNALK_UDP)
+                loop += 1
                 sock.sendto(json.dumps(to_delta(d)).encode(), SIGNALK_UDP)
             except OSError as e:
                 log.error("SignalK UDP -lähetys epäonnistui: %s", e)
