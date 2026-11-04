@@ -42,8 +42,8 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | Raspberry Pi 5 (8 GB) | RPi 5 | Käytössä |
 | NVMe HAT+ | WS-27709 | Käytössä |
 | NVMe SSD | 256/512 GB | Käytössä |
-| UPS HAT (E) | WS-27966 | hankkimatta |
-| RS422-USB-adapteri | ST5000 integraatio | hankittu |
+| UPS HAT (E) | WS-27966 | asennettu (virta ja I2C OK, integraatio tekemättä) |
+| RS422-USB-adapteri | Waveshare SKU:23949 (ST5000 integraatio) | hankittu |
 | Reititin | Huawei B818-263 | Käytössä |
 | Salonkinäyttö | Blackstorm M245BN 24.5" | hankittu |
 | Rele-ESP 1 | ESP32-S3-ETH-8DI-8RO | hankittu |
@@ -56,9 +56,9 @@ Lisätiedot: [architecture.md](architecture.md), [network.md](network.md)
 | NÖRDIC vahvistin | SGM-197 (12V, 2×40W, BT 5.0) | hankittu |
 | Yamaha kaiuttimet | NS-AW194 (IPX3) | hankittu |
 | Cloudberry USB-PD laturit | 120W (3 kpl, 6.0A) | hankittu |
-| Modbus I/O | Waveshare SKU:26244 (3 kpl) | hankkimatta |
-| Modbus AI | Waveshare SKU:25767 (analoginen syöttö) | hankkimatta |
-| Modbus AO | Waveshare SKU:26211 (analoginen lähtö) | hankkimatta |
+| Modbus I/O | Waveshare SKU:26244 (3 kpl) | hankittu |
+| Modbus AI | Waveshare SKU:25767 (2 kpl, analoginen syöttö) | hankittu |
+| Modbus AO | Waveshare SKU:26211 (2 kpl, analoginen lähtö) | hankittu |
 | INA228-moduulit | 3 x INA228 (high-side) | hankkimatta |
 | INA3221-moduulit | 2 x Adafruit INA3221 (The Shunt Hack) | hankkimatta |
 | I2C-erotin | MIKROE-1878 (ISO1540) | hankkimatta |

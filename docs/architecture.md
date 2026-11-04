@@ -116,7 +116,7 @@ Mitoitus perustuu jännitehäviön minimointiin (clean power -periaate).
 - Ethernet ↔ Mittaus-ESP (lämpötilat, kosteudet, tankit, pilssit, PoE)
 - Ethernet ↔ Akku-ESP (virrat, jännitteet, PoE)
 - Ethernet ↔ Valo-ESP (älyvalot, PoE)
-- USB–RS422 ↔ Raymarine ST5000 (autopilotti)
+- USB–RS422 (Waveshare SKU:23949) ↔ Raymarine ST5000 (autopilotti)
 
 **Kriittisyys**
 - Ei kriittinen veneen perustoiminnalle
@@ -162,7 +162,7 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
 
 #### Modbus RTU Analogiamuunnokset (AI/AO)
 
-**Analoginen syöttö (AI) – Waveshare SKU:25767**
+**Analoginen syöttö (AI) – 2 × Waveshare SKU:25767**
 - Lukee 0-5V analogisia signaaleja (tankkien pinnanmittaus, säätöpotentiometrit)
 - Käyttötarkoitus:
   - Sepin pinnanmittaus: Simarine STR1 tutka (0-5V) → tankin täyttöastetta (%)
@@ -170,7 +170,7 @@ Automaatiotaso koostuu erillisistä, rajatuista ohjaimista. Jokaisella ohjaimell
   - Dieseltankkien mittaus: 2 × KUS-sauvat signaalimuuntimien kautta (0-5V)
   - Säätöpotentiometrit ohjaamon pyöreille säädöille (himmennin, lämpötila, jne)
 
-**Analoginen lähtö (AO) – Waveshare SKU:26211**
+**Analoginen lähtö (AO) – 2 × Waveshare SKU:26211**
 - Antaa 0-10V ohjaussignaaleja (PWM-himmennykseen, säätöpotentiarometreihin)
 - Käyttötarkoitus:
   - PWM-LED-himmennykselle portaaton säädön mahdollistus

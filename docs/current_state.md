@@ -1,6 +1,6 @@
 # Nykytila
 
-**Päivitetty:** 07.06.2026  
+**Päivitetty:** 05.11.2026  
 **Projekti:** Salena AU – integroitu veneautomaatio- ja navigointijärjestelmä  
 **Vene:** Amigo 40 “Salena”
 
@@ -27,7 +27,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Navigointi toimii normaalisti
 - SignalK jakaa dataa sisäverkossa
 - Tallennus NVMe-levylle
-- UPS HAT (WS-27966): hankkimatta
+- UPS HAT (WS-27966): hankittu ja asennettu – virransyöttö toimii, I2C-data luettavissa (väylä 1, osoite 0x2d), ohjelmistointegraatio tekemättä
 - Reititin: Huawei B818-263 4G LTE
 - Perässä kytkin: Teltonika TSW101 (hankittu)
 
@@ -90,7 +90,7 @@ Tämä dokumentti kuvaa projektin todellisen nykytilan: mikä on käytössä, mi
 - Raymarine ST5000
 
 **Integraatio**
-- Liitäntä Raspberry Pi:hin USB–RS422-adapterilla (valmistelussa)
+- Liitäntä Raspberry Pi:hin USB–RS422-adapterilla (Waveshare USB TO RS485/422, SKU:23949, hankittu)
 
 **Tila**
 - Autopilotti toimii itsenäisesti kuten alkuperäisessä kokoonpanossa
@@ -153,7 +153,7 @@ Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin 
 - Jos Rele-ESP 1:n heartbeat puuttuu yli 3 sekuntia, Rele-ESP 2 ottaa Modbus-masterin roolin
 
 **Tilatiedot ja ulkoinen releohjaus (indikointi)**
-- Moduulit: 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- Moduulit: 3 x Waveshare SKU:26244 (Modbus RTU IO 8CH) – hankittu
 - Tulot: 24 DI (optoeristetty) kohokytkimille, 1-0-Auto-asennoille ja releiden todellisille tiloille
 - Lähdöt: 24 DO (Darlington sinking, 500mA) ulkoisten DIN/Motonet-releiden ohjaukseen
 
@@ -162,17 +162,17 @@ Akku-ESP hoitaa INA-piirien lukemisen, aggregoinnin ja datan viennin Ethernetin 
 
 ### 2b. Analogiamuunnokset (AI/AO) – Modbus RTU
 
-**Analoginen syöttö (AI) – Waveshare SKU:25767**
+**Analoginen syöttö (AI) – 2 × Waveshare SKU:25767 (Modbus RTU Analog Input 8CH (B))**
 - Lukee 0-5V analogisia signaaleja Modbus RTU -väylällä
 - Käyttötarkoitus: tankkien pinnanmittaus, säätöpotentiometrit, antureiden signaalit
 - Yhteydessä Modbus-väylään (Rele-ESP 1 masteri)
-- Tila: **hankkimatta**
+- Tila: **hankittu (2 kpl)**
 
-**Analoginen lähtö (AO) – Waveshare SKU:26211**
+**Analoginen lähtö (AO) – 2 × Waveshare SKU:26211 (Modbus RTU Analog Output 8CH (B))**
 - Antaa 0-10V ohjaussignaaleja Modbus RTU -väylällä
 - Käyttötarkoitus: PWM-LED-himmennys portaattomasti, säätötoimilaitteet
 - Yhteydessä Modbus-väylään (Rele-ESP 1 masteri)
-- Tila: **hankkimatta**
+- Tila: **hankittu (2 kpl)**
 
 **Moottorin turvalukitukset**
 - D+ käyntitieto luetaan optokanavasta suoraan ESP32-keskeytyksellä.

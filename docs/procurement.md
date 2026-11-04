@@ -16,15 +16,17 @@
 ## B. Ohjaus ja IT (Core)
 - [x] Raspberry Pi 5 (8GB RAM)
 - [x] Waveshare NVMe HAT+ (WS-27709)
-- [ ] Waveshare UPS HAT (E) (WS-27966)
+- [x] Waveshare UPS HAT (E) (WS-27966) – asennettu, I2C OK (0x2d), integraatio tekemättä
 - [x] SSD NVMe 256GB/512GB
-- [x] RS422 -> USB Adapteri (ST5000 varten)
+- [x] RS422 -> USB Adapteri (ST5000 varten) – Waveshare USB TO RS485/422 (SKU:23949)
 - [x] Reititin Huawei B818-263 4G LTE
 - [x] Kytkin Teltonika TSW101
 
 ## C. I/O ja Solmut
 - [x] 2x ESP32-S3-ETH-8DI-8RO (Ethernet Relemoduuli)
-- [ ] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- [x] 3x Waveshare SKU:26244 (Modbus RTU IO 8CH)
+- [x] 2x Waveshare SKU:25767 (Modbus RTU Analog Input 8CH (B))
+- [x] 2x Waveshare SKU:26211 (Modbus RTU Analog Output 8CH (B))
 - [x] 3x ESP32-S3-POE-ETH (SKU: 28771)
 	- Mittaus-ESP: lampotilat, kosteudet, tankit, pilssipumput
 	- Akku-ESP: akkujen ja latureiden virta-/jannitemittaukset

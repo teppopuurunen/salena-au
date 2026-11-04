@@ -58,15 +58,8 @@ services:
     environment:
       TZ: Europe/Helsinki
 
-  signalk:
-    image: signalk/signalk-server:latest
-    container_name: signalk
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - ./signalk:/home/node/.signalk
-    environment:
-      TZ: Europe/Helsinki
+  # SignalK ei ole kontissa: se ajetaan OpenPlotterin natiivina palveluna
+  # (systemd: signalk.service, asetukset ~/.signalk, portti 3000).
 
   esphome:
     image: esphome/esphome:latest

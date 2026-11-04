@@ -81,8 +81,8 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 2) **Automaatiotaso (ESP32-S3 Ethernet + RS485 Modbus)**
 - 2 × rele-ESP (8 relelähtöä / moduuli, Rele-ESP 1 = RS485 master, Rele-ESP 2 = varalla-master)
 - 3 × Waveshare SKU:26244 (Modbus RTU IO −tilatiedot ja ulkoinen releohjaus)
-- 1 × Waveshare SKU:25767 (Modbus AI −tankkien pinnanmittaus, anturit)
-- 1 × Waveshare SKU:26211 (Modbus AO −PWM-himmennys, säätötoimilaitteet)
+- 2 × Waveshare SKU:25767 (Modbus AI −tankkien pinnanmittaus, anturit)
+- 2 × Waveshare SKU:26211 (Modbus AO −PWM-himmennys, säätötoimilaitteet)
 - 30A/40A ulkoiset releet SKU:26244-kanaville (keskisuuret kuormat)
 - Painikkeet suoraan inputeihin (paikallinen ohjaus)
 - Ethernet-yhteys RPi:hin
@@ -116,7 +116,7 @@ Keskeinen periaate: **vene toimii täysin ilman automaatiota**. Kaikki kriittise
 **Rajapinnat**
 - Ethernet → rele-ESP:t (ENSISIJAINEN ohjaus- ja tilaväylä)
 - Ethernet → Mittaus-ESP, Akku-ESP ja Valo-ESP (PoE)
-- USB–RS422 → autopilotti (Raymarine ST5000)
+- USB–RS422 (Waveshare USB TO RS485/422, SKU:23949) → autopilotti (Raymarine ST5000)
 
 **Hallinta ja resetointi**
 - Hard Reset toteutetaan optoerottimella (PC817) RPi 5:n J2-virtapainikeliitäntään.
@@ -270,16 +270,18 @@ ja tarvittaessa voidaan käyttää ulkoista suuntatietoa (HDG/HDT).
 
 ---
 
-## 9. Projektin nykytila (07.06.2026)
+## 9. Projektin nykytila (05.11.2026)
 
 - Raspberry Pi 5: OpenPlotter, SignalK ja OpenCPN käytössä
 - NVMe toiminnassa (SSD käytössä)
 - Syöttö: Lenovo 65W USB-C DC Travel Adapter
-- UPS HAT (WS-27966): hankkimatta
+- UPS HAT (WS-27966): hankittu ja asennettu – virransyöttö toimii, I2C-data luettavissa (väylä 1, osoite 0x2d), ohjelmistointegraatio tekemättä
 - Kytkin: Teltonika TSW101 hankittu
 - 2 × ESP32-S3-ETH-8DI-8RO rele-ESP:tä (PoE, hankittu)
 - 3 × ESP32-S3-POE-ETH (Mittaus-ESP, Akku-ESP, Valo-ESP): hankittu
-- 3 × Waveshare SKU:26244 (Modbus RTU IO): hankkimatta
+- 3 × Waveshare SKU:26244 (Modbus RTU IO): hankittu
+- 2 × Waveshare SKU:25767 (Modbus AI) ja 2 × SKU:26211 (Modbus AO): hankittu
+- USB–RS422-adapteri (Waveshare SKU:23949): hankittu
 - Mittaus-ESP, Akku-ESP ja Valo-ESP firmwaret: tekemättä
 - Mittauskomponentit (INA228, INA3221, shuntit, ISO1540): hankkimatta
 - PWM-valaistuksen suunnittelu ja toteutus tehdään myöhemmin

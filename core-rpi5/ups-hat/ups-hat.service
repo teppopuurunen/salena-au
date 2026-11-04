@@ -1,0 +1,15 @@
+[Unit]
+Description=Salena AU - UPS HAT (E) valvonta ja hallittu sammutus
+After=multi-user.target signalk.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/Salena-AU/core-rpi5/ups-hat/ups_hat.py
+Restart=always
+RestartSec=10
+# Environment=UPS_SHUTDOWN_SOC=20
+# Environment=UPS_SHUTDOWN_CELL_MV=3300
+# Environment=UPS_CUT_OUTPUT=1
+
+[Install]
+WantedBy=multi-user.target
